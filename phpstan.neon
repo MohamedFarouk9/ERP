@@ -1,0 +1,14 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app/
+        - modules/
+
+    # Level 8 is the required enterprise standard
+    level: 8
+
+    ignoreErrors:
+        -
+            identifier: missingType.generics
