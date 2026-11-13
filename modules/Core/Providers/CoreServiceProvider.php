@@ -6,12 +6,13 @@ namespace Modules\Core\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Modules\Core\Services\TenantContext;
 
 final class CoreServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        // Explicit module bindings, configuration, and contracts
+        $this->app->singleton(TenantContext::class);
     }
 
     public function boot(): void
