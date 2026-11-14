@@ -21,4 +21,3 @@ test('core module web route responds successfully', function () {
             'channel' => 'web',
         ]);
 });
-
