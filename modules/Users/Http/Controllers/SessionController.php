@@ -50,4 +50,3 @@ final class SessionController extends Controller
         ], 200);
     }
 }
-

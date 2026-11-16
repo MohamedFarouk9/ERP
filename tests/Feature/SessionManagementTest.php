@@ -53,4 +53,3 @@ test('it lists active sessions and allows revoking them', function () {
         ->assertStatus(200)
         ->assertJsonPath('message', 'Logged out successfully.');
 });
-

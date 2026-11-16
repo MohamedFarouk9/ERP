@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Users\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Modules\Users\Services\TotpService;
@@ -19,6 +21,18 @@ final class UsersServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         $this->registerMigrations();
+        $this->registerGateBridge();
+    }
+
+    protected function registerGateBridge(): void
+    {
+        Gate::before(function ($user, string $ability): ?bool {
+            if ($user instanceof User && str_contains($ability, '.')) {
+                return $user->hasPermissionTo($ability);
+            }
+
+            return null;
+        });
     }
 
     protected function registerRoutes(): void
@@ -40,4 +54,3 @@ final class UsersServiceProvider extends ServiceProvider
         }
     }
 }
-

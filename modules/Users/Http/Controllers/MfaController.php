@@ -105,4 +105,3 @@ final class MfaController extends Controller
         ], 200);
     }
 }
-

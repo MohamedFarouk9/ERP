@@ -24,4 +24,3 @@ final class VerifyMfaRequest extends FormRequest
         ];
     }
 }
-

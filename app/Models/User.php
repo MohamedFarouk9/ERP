@@ -16,6 +16,8 @@ use Modules\Users\Models\LoginHistory;
 use Modules\Users\Models\PasswordHistory;
 use Modules\Users\Models\UserActiveSession;
 use Modules\Users\Models\UserMfaSecret;
+use Modules\Users\Traits\Auditable;
+use Modules\Users\Traits\HasPermissions;
 
 /**
  * @property string $id
@@ -36,8 +38,10 @@ use Modules\Users\Models\UserMfaSecret;
  */
 class User extends Authenticatable
 {
+    use Auditable;
     use BelongsToTenant;
     use HasFactory;
+    use HasPermissions;
     use HasUlids;
     use Notifiable;
 

@@ -23,4 +23,3 @@ final class ConfirmMfaRequest extends FormRequest
         ];
     }
 }
-

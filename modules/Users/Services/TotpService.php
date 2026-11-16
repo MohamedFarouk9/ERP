@@ -9,7 +9,7 @@ final class TotpService
     private const BASE32_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 
     /**
-     * @param int<1, max> $byteLength
+     * @param  int<1, max>  $byteLength
      */
     public function generateSecret(int $byteLength = 20): string
     {

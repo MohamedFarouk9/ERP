@@ -96,4 +96,3 @@ test('resolve tenant middleware blocks suspended tenants', function () {
     // When tenant is suspended, middleware blocks access
     $response->assertStatus(403);
 });
-

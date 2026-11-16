@@ -94,4 +94,3 @@ test('it enables, confirms, and authenticates with MFA and recovery codes', func
         'code' => $recoveryCode,
     ])->assertStatus(422);
 });
-

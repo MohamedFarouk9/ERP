@@ -3,9 +3,12 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Modules\Users\Http\Controllers\AuditLogController;
 use Modules\Users\Http\Controllers\AuthController;
 use Modules\Users\Http\Controllers\MfaController;
+use Modules\Users\Http\Controllers\OrganizationController;
 use Modules\Users\Http\Controllers\ProfileController;
+use Modules\Users\Http\Controllers\RoleController;
 use Modules\Users\Http\Controllers\SessionController;
 
 // Public Authentication
@@ -32,4 +35,21 @@ Route::middleware(['auth', 'tenant', 'tenant.active'])->group(function (): void 
     Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
     Route::delete('/sessions/{sessionId}', [SessionController::class, 'destroy'])->name('sessions.destroy');
     Route::delete('/sessions', [SessionController::class, 'destroyAll'])->name('sessions.destroy-all');
+
+    // Role-Based Access Control (RBAC) & Custom Permissions
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/permissions', [RoleController::class, 'permissions'])->name('permissions.index');
+    Route::post('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
+    Route::post('/permissions/custom', [RoleController::class, 'assignCustomPermission'])->name('permissions.custom');
+
+    // Organizational Hierarchy: Departments & Teams
+    Route::get('/departments', [OrganizationController::class, 'departments'])->name('departments.index');
+    Route::post('/departments', [OrganizationController::class, 'storeDepartment'])->name('departments.store');
+    Route::get('/teams', [OrganizationController::class, 'teams'])->name('teams.index');
+    Route::post('/teams', [OrganizationController::class, 'storeTeam'])->name('teams.store');
+    Route::post('/teams/members', [OrganizationController::class, 'assignMember'])->name('teams.members.assign');
+
+    // Immutable Compliance Audit Trail
+    Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
 });
