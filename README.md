@@ -1,66 +1,138 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ERP Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modular Laravel application with multi-tenancy, RBAC, MFA, and audit logging.
 
-## About Laravel
+## Overview
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project implements a comprehensive Enterprise Resource Planning (ERP) system built on Laravel 11 with a modular architecture. The application is organized into separate modules that can be developed and maintained independently.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Current Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### ✅ Core Infrastructure (Completed)
 
-## Learning Laravel
+- **Multi-tenancy support** - Tenant resolution middleware and configuration
+- **User authentication** - Core authentication system with session management
+- **Docker environment** - Containerized development environment
+- **CI/CD workflow** - GitHub Actions for testing and deployment
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### ✅ Core Module (Completed)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Tenant model and database migration
+- Tenant resolution middleware (`EnsureTenantIsActive`, `ResolveTenantMiddleware`)
+- Tenant context service
+- BelongsToTenant trait for Eloquent models
+- Core routes and service provider
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### ✅ Users Module (Completed)
 
-## Laravel Sponsors
+- **User authentication** - Login, logout, registration
+- **Multi-factor authentication (MFA)** - TOTP-based setup and verification
+- **RBAC (Role-Based Access Control)** - Roles, permissions, and assignments
+- **Profile management** - User profile updates
+- **Department and team management** - Organizational structure
+- **Audit logging** - Complete audit trail of user actions
+- **Password and login history** - Tracking and history features
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+#### Auth Actions:
+- `AuthenticateUserAction` - User login
+- `ChangePasswordAction` - Password changes
+- `ConfirmMfaSetupAction` - MFA setup completion
+- `EnableMfaAction` - MFA enablement
+- `RevokeSessionAction` - Session revocation
+- `VerifyMfaTotpAction` - TOTP verification
+- `VerifyMfaRequest` - MFA verification request
+- `LoginRequest` - Login validation
+- `RegisterRequest` - Registration validation
 
-### Premium Partners
+#### Controllers:
+- `AuthController` - Authentication endpoints
+- `MfaController` - MFA management
+- `ProfileController` - Profile updates
+- `RoleController` - Role management
+- `OrganizationController` - Organization management
+- `SessionController` - Session management
+- `AuditLogController` - Audit log viewing
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+#### Models:
+- `User` - Extended with tenant and profile capabilities
+- `Role` - RBAC role management
+- `Permission` - Permission granularity
+- `Team` - Team grouping
+- `Department` - Department structure
+- `AuditLog` - Audit trail entries
+- `LoginHistory` - Login tracking
+- `PasswordHistory` - Password change history
+- `UserMfaSecret` - TOTP secret storage
+- `UserActiveSession` - Active session tracking
 
-## Contributing
+#### Database Migrations:
+- Users table with tenant and profile fields
+- RBAC tables (roles, permissions, model_has_roles, model_has_permissions, role_has_permissions)
+- MFA tables (mfa_secrets, login_histories, password_histories, user_sessions)
+- Organizations tables
+- Audit logs table
+- Login and password history tables
+- User sessions table
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Services:
+- `TotpService` - TOTP generation and verification
 
-## Code of Conduct
+#### Routes:
+- `modules/Users/routes/api.php` - API routes
+- `modules/Users/routes/web.php` - Web routes
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Service Provider:
+- `UsersServiceProvider` - Module registration
 
-## Security Vulnerabilities
+#### Traits:
+- `HasPermissions` - Permission checking trait
+- `Auditable` - Audit logging trait
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### HTTP Controllers and Requests:
+- Full set of controllers for authentication, MFA, profile, roles, organizations, sessions, and audit logs
+- Form requests for validation
 
-## License
+### 🔄 Next Steps
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. **Complete remaining module implementations**
+   - Additional feature modules (Finance, HR, Inventory, etc.)
+
+2. **Enhance existing features**
+   - Advanced RBAC permissions
+   - MFA backup codes
+   - Remember me functionality enhancements
+   - Profile picture/upload support
+
+3. **Testing and QA**
+   - Write comprehensive test coverage
+   - Implement feature tests for authentication flows
+   - Add integration tests for multi-tenancy
+
+4. **Documentation**
+   - API documentation
+   - Installation and setup guide
+   - Deployment instructions
+
+## Getting Started
+
+```bash
+# Install dependencies
+composer install
+npm install
+
+# Environment setup
+cp .env.example .env
+php artisan key:generate
+
+# Run migrations
+php artisan migrate
+
+# Start development server
+php artisan serve
+```
+
+## Architecture
+
+The application uses a **module-based architecture** where features are organized into separate modules under the `modules/` directory. The `Core` module provides foundational tenancy and authentication features, while the `Users` module extends these with full user management capabilities.
+
+Each module follows Laravel conventions and can be independently developed, tested, and deployed.
