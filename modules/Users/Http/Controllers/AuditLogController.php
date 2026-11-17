@@ -32,4 +32,3 @@ final class AuditLogController extends Controller
         return response()->json($logs, 200);
     }
 }
-

@@ -19,4 +19,3 @@ final class AssignRoleToUserAction
         $user->flushPermissionCache();
     }
 }
-

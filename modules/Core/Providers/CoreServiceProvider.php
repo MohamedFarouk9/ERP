@@ -6,6 +6,7 @@ namespace Modules\Core\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Modules\Core\Services\FeatureManager;
 use Modules\Core\Services\TenantContext;
 
 final class CoreServiceProvider extends ServiceProvider
@@ -13,6 +14,7 @@ final class CoreServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(TenantContext::class);
+        $this->app->singleton(FeatureManager::class);
     }
 
     public function boot(): void

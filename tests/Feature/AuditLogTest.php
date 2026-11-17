@@ -98,4 +98,3 @@ test('audit log api endpoint lists logs scoped to tenant', function () {
     $response->assertStatus(200)
         ->assertJsonStructure(['data', 'current_page', 'total']);
 });
-

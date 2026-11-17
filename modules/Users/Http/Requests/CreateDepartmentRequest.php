@@ -25,4 +25,3 @@ final class CreateDepartmentRequest extends FormRequest
         ];
     }
 }
-

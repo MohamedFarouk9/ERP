@@ -27,7 +27,7 @@ final class CreateRoleAction
     public function execute(array $data): Role
     {
         // this will get the current tenant id from the tenant context
-        $tenantId = $this->tenantContext->require()->id; 
+        $tenantId = $this->tenantContext->require()->id;
         $slug = ! empty($data['slug']) ? Str::slug($data['slug']) : Str::slug($data['name']);
 
         return DB::transaction(function () use ($tenantId, $data, $slug): Role {

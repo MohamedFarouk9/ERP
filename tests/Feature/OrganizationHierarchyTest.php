@@ -82,4 +82,3 @@ test('departments and teams are strictly isolated by tenant', function () {
 
     $context->reset();
 });
-

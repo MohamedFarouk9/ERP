@@ -8,6 +8,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Session\Middleware\StartSession;
+use Modules\Core\Http\Middleware\EnsureFeatureEnabled;
 use Modules\Core\Http\Middleware\EnsureTenantIsActive;
 use Modules\Core\Http\Middleware\ResolveTenantMiddleware;
 
@@ -27,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'tenant' => ResolveTenantMiddleware::class,
             'tenant.active' => EnsureTenantIsActive::class,
+            'feature' => EnsureFeatureEnabled::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

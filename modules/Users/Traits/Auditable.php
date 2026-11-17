@@ -54,4 +54,3 @@ trait Auditable
         ]);
     }
 }
-

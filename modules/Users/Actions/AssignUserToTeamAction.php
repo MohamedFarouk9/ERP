@@ -24,4 +24,3 @@ final class AssignUserToTeamAction
         $team->members()->detach($user->id);
     }
 }
-
