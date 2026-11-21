@@ -6,7 +6,9 @@ namespace Modules\Core\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Modules\Core\Services\FeatureManager;
 
 class FeatureController extends Controller
@@ -15,38 +17,36 @@ class FeatureController extends Controller
         protected FeatureManager $featureManager
     ) {}
 
-    public function index(): JsonResponse
+    public function index(): View
     {
-        return response()->json([
-            'data' => $this->featureManager->all(),
-        ]);
+        $availableModules = [
+            'accounting' => 'Accounting & General Ledger',
+            'inventory' => 'Inventory & Warehouses',
+            'sales' => 'Sales Orders & Invoices',
+            'payments' => 'Payments & Refunds',
+        ];
+
+        $statuses = $this->featureManager->all();
+
+        return view('admin.features.index', compact('availableModules', 'statuses'));
     }
 
-    public function show(string $feature): JsonResponse
+    public function toggle(Request $request, string $feature): JsonResponse|RedirectResponse
     {
-        return response()->json([
-            'feature' => $feature,
-            'is_enabled' => $this->featureManager->isEnabled($feature),
-        ]);
-    }
+        $enable = $request->boolean('is_enabled');
 
-    public function update(Request $request, string $feature): JsonResponse
-    {
-        $validated = $request->validate([
-            'is_enabled' => ['required', 'boolean'],
-            'metadata' => ['nullable', 'array'],
-        ]);
-
-        if ($validated['is_enabled']) {
-            $this->featureManager->enable($feature, null, $validated['metadata'] ?? []);
+        if ($enable) {
+            $this->featureManager->enable($feature);
         } else {
             $this->featureManager->disable($feature);
         }
 
-        return response()->json([
-            'message' => 'Feature status updated successfully.',
-            'feature' => $feature,
-            'is_enabled' => (bool) $validated['is_enabled'],
-        ]);
+        $message = "Feature [{$feature}] has been ".($enable ? 'enabled' : 'disabled').'.';
+
+        if ($request->expectsJson()) {
+            return response()->json(['message' => $message, 'is_enabled' => $enable]);
+        }
+
+        return back()->with('success', $message);
     }
 }

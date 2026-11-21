@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Admin;
+namespace Modules\Users\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\AdminLoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Modules\Users\Http\Requests\AdminLoginRequest;
 
 class AuthController extends Controller
 {

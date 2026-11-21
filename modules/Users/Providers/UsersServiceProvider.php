@@ -44,6 +44,12 @@ final class UsersServiceProvider extends ServiceProvider
                 ->name('api.v1.users.')
                 ->group($apiRoutes);
         }
+
+        $webRoutes = __DIR__.'/../routes/web.php';
+        if (file_exists($webRoutes)) {
+            Route::middleware('web')
+                ->group($webRoutes);
+        }
     }
 
     protected function registerMigrations(): void

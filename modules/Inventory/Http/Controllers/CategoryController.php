@@ -6,24 +6,20 @@ namespace Modules\Inventory\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Modules\Inventory\Actions\CreateCategoryAction;
+use Modules\Inventory\Actions\UpdateCategoryAction;
 use Modules\Inventory\Http\Requests\StoreCategoryRequest;
+use Modules\Inventory\Http\Requests\UpdateCategoryRequest;
 use Modules\Inventory\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request): JsonResponse
+    public function index(): View
     {
-        $query = Category::query()->with('children');
+        $categories = Category::with('parent')->withCount('products')->orderBy('name')->get();
 
-        if ($request->boolean('root_only')) {
-            $query->whereNull('parent_id');
-        }
-
-        $categories = $query->orderBy('name')->paginate(50);
-
-        return response()->json($categories);
+        return view('admin.categories.index', compact('categories'));
     }
 
     public function store(StoreCategoryRequest $request, CreateCategoryAction $action): JsonResponse
@@ -31,17 +27,30 @@ class CategoryController extends Controller
         $category = $action->execute($request->validated());
 
         return response()->json([
-            'message' => 'Category created successfully.',
+            'message' => "Category [{$category->name}] created successfully.",
             'data' => $category,
         ], 201);
     }
 
-    public function show(string $id): JsonResponse
+    public function update(UpdateCategoryRequest $request, string $id, UpdateCategoryAction $action): JsonResponse
     {
-        $category = Category::with(['parent', 'children', 'products'])->findOrFail($id);
+        $category = Category::findOrFail($id);
+        $updated = $action->execute($category, $request->validated());
 
         return response()->json([
-            'data' => $category,
+            'message' => "Category [{$updated->name}] updated successfully.",
+            'data' => $updated,
+        ]);
+    }
+
+    public function destroy(string $id): JsonResponse
+    {
+        $category = Category::findOrFail($id);
+        $name = $category->name;
+        $category->delete();
+
+        return response()->json([
+            'message' => "Category [{$name}] deleted successfully.",
         ]);
     }
 }

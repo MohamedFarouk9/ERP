@@ -5,23 +5,35 @@
 <div class="wrapper">
     <div class="page-wrapper">
         <div class="page-content">
-            <h4 class="mb-3">Warehouses</h4>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                    <h4 class="mb-0">Warehouses</h4>
+                    <small class="text-muted">Manage stock storage locations</small>
+                </div>
+                @can('inventory.warehouses.create')
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createWarehouseModal">
+                        <i class="bx bx-plus"></i> Add Warehouse
+                    </button>
+                @endcan
+            </div>
+
             <div class="card radius-10">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table align-middle mb-0">
+                        <table class="table table-striped table-bordered align-middle erp-datatable w-100">
                             <thead class="table-light">
                                 <tr>
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Address</th>
-                                    <th>Stock Items</th>
+                                    <th>Tracked Items</th>
                                     <th>Default</th>
                                     <th>Status</th>
+                                    <th class="text-end">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($warehouses as $warehouse)
+                                @foreach($warehouses as $warehouse)
                                     <tr>
                                         <td><code>{{ $warehouse->code }}</code></td>
                                         <td><strong>{{ $warehouse->name }}</strong></td>
@@ -33,17 +45,130 @@
                                                 {{ $warehouse->is_active ? 'Active' : 'Inactive' }}
                                             </span>
                                         </td>
+                                        <td class="text-end text-nowrap">
+                                            @can('inventory.warehouses.create')
+                                                <button class="btn btn-sm btn-outline-primary btn-edit-warehouse"
+                                                    data-id="{{ $warehouse->id }}"
+                                                    data-code="{{ $warehouse->code }}"
+                                                    data-name="{{ $warehouse->name }}"
+                                                    data-address="{{ $warehouse->address }}"
+                                                    data-default="{{ $warehouse->is_default ? 1 : 0 }}"
+                                                    data-active="{{ $warehouse->is_active ? 1 : 0 }}">
+                                                    <i class="bx bx-edit"></i>
+                                                </button>
+                                                <form class="d-inline ajax-delete-form" method="POST" action="{{ route('admin.warehouses.destroy', $warehouse->id) }}" data-title="Delete {{ $warehouse->code }}?">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bx bx-trash"></i></button>
+                                                </form>
+                                            @endcan
+                                        </td>
                                     </tr>
-                                @empty
-                                    <tr><td colspan="6" class="text-center text-muted py-4">No warehouses found.</td></tr>
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-3">{{ $warehouses->links() }}</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Create Warehouse Modal -->
+<div class="modal fade" id="createWarehouseModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content ajax-form" method="POST" action="{{ route('admin.warehouses.store') }}">
+            @csrf
+            <div class="modal-header">
+                <h5 class="modal-title">Add Warehouse</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Code *</label>
+                    <input type="text" name="code" class="form-control" required placeholder="WH-01">
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label">Name *</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Address</label>
+                    <input type="text" name="address" class="form-control">
+                </div>
+                <div class="col-12">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="is_default" value="1" id="cw_default">
+                        <label class="form-check-label" for="cw_default">Set as Default Warehouse</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create Warehouse</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Warehouse Modal -->
+<div class="modal fade" id="editWarehouseModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="editWarehouseForm" class="modal-content ajax-form" method="POST" action="">
+            @csrf
+            @method('PUT')
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Warehouse</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Code *</label>
+                    <input type="text" name="code" id="ew_code" class="form-control" required>
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label">Name *</label>
+                    <input type="text" name="name" id="ew_name" class="form-control" required>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Address</label>
+                    <input type="text" name="address" id="ew_address" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Default</label>
+                    <select name="is_default" id="ew_default" class="form-select">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Status</label>
+                    <select name="is_active" id="ew_active" class="form-select">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Update Warehouse</button>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection
+
+@push('scripts')
+<script>
+$(document).on('click', '.btn-edit-warehouse', function() {
+    var id = $(this).data('id');
+    $('#editWarehouseForm').attr('action', "{{ url('/admin/warehouses') }}/" + id);
+    $('#ew_code').val($(this).data('code'));
+    $('#ew_name').val($(this).data('name'));
+    $('#ew_address').val($(this).data('address') || '');
+    $('#ew_default').val($(this).data('default'));
+    $('#ew_active').val($(this).data('active'));
+    new bootstrap.Modal(document.getElementById('editWarehouseModal')).show();
+});
+</script>
+@endpush
