@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('payment_methods', function (Blueprint $table) {
+            $table->ulid('id')->primary();
+            $table->foreignUlid('tenant_id')->constrained('tenants')->cascadeOnDelete();
+            $table->string('code', 50);
+            $table->string('name', 150);
+            $table->enum('type', ['cash', 'bank_transfer', 'card', 'cheque', 'wallet']);
+            $table->foreignUlid('account_id')->nullable()->constrained('accounts')->nullOnDelete();
+            $table->boolean('is_active')->default(true);
+            $table->json('settings')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->unique(['tenant_id', 'code']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('payment_methods');
+    }
+};

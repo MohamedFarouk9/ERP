@@ -59,6 +59,14 @@ class UsersDatabaseSeeder extends Seeder
             ['sales', 'invoices', 'view', 'View Invoices'],
             ['sales', 'invoices', 'create', 'Create Invoices'],
             ['sales', 'invoices', 'issue', 'Issue Invoices'],
+            // Payments
+            ['payments', 'methods', 'view', 'View Payment Methods'],
+            ['payments', 'methods', 'create', 'Create Payment Methods'],
+            ['payments', 'transactions', 'view', 'View Payments'],
+            ['payments', 'transactions', 'create', 'Record Payments'],
+            ['payments', 'transactions', 'complete', 'Complete Payments'],
+            ['payments', 'refunds', 'view', 'View Refunds'],
+            ['payments', 'refunds', 'create', 'Process Refunds'],
         ];
 
         $allPermissions = [];
