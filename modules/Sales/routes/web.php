@@ -5,12 +5,16 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Modules\Sales\Http\Controllers\CustomerController;
 use Modules\Sales\Http\Controllers\InvoiceController;
+use Modules\Sales\Http\Controllers\SalesDashboardController;
 use Modules\Sales\Http\Controllers\SalesOrderController;
 
 Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth', 'tenant', 'tenant.active', 'feature:sales'])
     ->group(function (): void {
+        Route::get('/sales/dashboard', [SalesDashboardController::class, 'index'])
+            ->middleware('can:sales.orders.view')
+            ->name('sales.dashboard');
         // Customers
         Route::get('/customers', [CustomerController::class, 'index'])
             ->middleware('can:sales.customers.view')

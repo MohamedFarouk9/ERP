@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Inventory\Providers;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Modules\Inventory\Listeners\DeductStockOnSalesOrderConfirmed;
+use Modules\Sales\Events\SalesOrderConfirmed;
 
 final class InventoryServiceProvider extends ServiceProvider
 {
@@ -18,6 +21,8 @@ final class InventoryServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         $this->registerMigrations();
+
+        Event::listen(SalesOrderConfirmed::class, DeductStockOnSalesOrderConfirmed::class);
     }
 
     protected function registerRoutes(): void

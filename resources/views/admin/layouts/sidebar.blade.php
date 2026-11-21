@@ -12,12 +12,30 @@
     </div>
 
     <ul class="metismenu" id="menu">
-        <!-- MAIN DASHBOARD -->
+        <!-- DASHBOARDS -->
         <li>
-            <a href="{{ route('admin.dashboard') }}">
+            <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i></div>
-                <div class="menu-title">Dashboard</div>
+                <div class="menu-title">Dashboards</div>
             </a>
+            <ul>
+                <li><a href="{{ route('admin.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Executive Overview</a></li>
+                @if($featureManager->isEnabled('accounting'))
+                    @can('accounting.accounts.view')
+                        <li><a href="{{ route('admin.accounting.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Finance Dashboard</a></li>
+                    @endcan
+                @endif
+                @if($featureManager->isEnabled('inventory'))
+                    @can('inventory.products.view')
+                        <li><a href="{{ route('admin.inventory.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Inventory Dashboard</a></li>
+                    @endcan
+                @endif
+                @if($featureManager->isEnabled('sales'))
+                    @can('sales.orders.view')
+                        <li><a href="{{ route('admin.sales.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Sales Dashboard</a></li>
+                    @endcan
+                @endif
+            </ul>
         </li>
 
         <!-- ACCOUNTING MODULE -->

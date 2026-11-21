@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Sales\Providers;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Modules\Payments\Events\PaymentCompleted;
+use Modules\Sales\Listeners\UpdateInvoiceOnPaymentCompleted;
 
 final class SalesServiceProvider extends ServiceProvider
 {
@@ -18,6 +21,8 @@ final class SalesServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         $this->registerMigrations();
+
+        Event::listen(PaymentCompleted::class, UpdateInvoiceOnPaymentCompleted::class);
     }
 
     protected function registerRoutes(): void

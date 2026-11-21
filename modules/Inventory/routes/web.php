@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Modules\Inventory\Http\Controllers\CategoryController;
+use Modules\Inventory\Http\Controllers\InventoryDashboardController;
 use Modules\Inventory\Http\Controllers\ProductController;
 use Modules\Inventory\Http\Controllers\StockMovementController;
 use Modules\Inventory\Http\Controllers\WarehouseController;
@@ -12,6 +13,9 @@ Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth', 'tenant', 'tenant.active', 'feature:inventory'])
     ->group(function (): void {
+        Route::get('/inventory/dashboard', [InventoryDashboardController::class, 'index'])
+            ->middleware('can:inventory.products.view')
+            ->name('inventory.dashboard');
         // Products
         Route::get('/products', [ProductController::class, 'index'])
             ->middleware('can:inventory.products.view')

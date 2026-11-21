@@ -5,11 +5,15 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Modules\Accounting\Http\Controllers\AccountController;
 use Modules\Accounting\Http\Controllers\AccountingTransactionController;
+use Modules\Accounting\Http\Controllers\FinanceDashboardController;
 
 Route::prefix('admin/accounting')
     ->name('admin.accounting.')
     ->middleware(['auth', 'tenant', 'tenant.active', 'feature:accounting'])
     ->group(function (): void {
+        Route::get('/dashboard', [FinanceDashboardController::class, 'index'])
+            ->middleware('can:accounting.accounts.view')
+            ->name('dashboard');
         // Accounts CRUD
         Route::get('/accounts', [AccountController::class, 'index'])
             ->middleware('can:accounting.accounts.view')

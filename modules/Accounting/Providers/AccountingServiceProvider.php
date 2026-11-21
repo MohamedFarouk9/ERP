@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Accounting\Providers;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Modules\Accounting\Listeners\RecordInvoiceLedgerEntry;
+use Modules\Accounting\Listeners\RecordPaymentLedgerEntry;
+use Modules\Payments\Events\PaymentCompleted;
+use Modules\Sales\Events\InvoiceIssued;
 
 final class AccountingServiceProvider extends ServiceProvider
 {
@@ -18,6 +23,9 @@ final class AccountingServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         $this->registerMigrations();
+
+        Event::listen(InvoiceIssued::class, RecordInvoiceLedgerEntry::class);
+        Event::listen(PaymentCompleted::class, RecordPaymentLedgerEntry::class);
     }
 
     protected function registerRoutes(): void
