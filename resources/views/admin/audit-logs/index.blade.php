@@ -5,11 +5,14 @@
 <div class="wrapper">
     <div class="page-wrapper">
         <div class="page-content">
-            <h4 class="mb-3">Compliance Audit Trail</h4>
+            <div class="mb-3">
+                <h4 class="mb-0">Compliance Audit Trail</h4>
+                <small class="text-muted">Immutable security log of all tenant model creations, updates, and deletions</small>
+            </div>
             <div class="card radius-10">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table align-middle mb-0">
+                        <table id="auditLogsDataTable" class="table table-striped table-bordered align-middle w-100">
                             <thead class="table-light">
                                 <tr>
                                     <th>Timestamp</th>
@@ -19,25 +22,32 @@
                                     <th>IP Address</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @forelse($logs as $log)
-                                    <tr>
-                                        <td>{{ $log->created_at?->format('Y-m-d H:i:s') }}</td>
-                                        <td>{{ $log->user?->name ?? 'System' }}</td>
-                                        <td><span class="badge bg-dark text-uppercase">{{ $log->event }}</span></td>
-                                        <td><code>{{ class_basename($log->auditable_type) }} #{{ $log->auditable_id }}</code></td>
-                                        <td>{{ $log->ip_address ?? '-' }}</td>
-                                    </tr>
-                                @empty
-                                    <tr><td colspan="5" class="text-center text-muted py-4">No audit entries recorded.</td></tr>
-                                @endforelse
-                            </tbody>
                         </table>
                     </div>
-                    <div class="mt-3">{{ $logs->links() }}</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('#auditLogsDataTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('admin.audit-logs.data') }}",
+        pageLength: 25,
+        order: [[0, 'desc']],
+        columns: [
+            { data: 'created_at' },
+            { data: 'user_name', orderable: false },
+            { data: 'event', render: d => `<span class="badge bg-dark text-uppercase">${d}</span>` },
+            { data: 'target', render: d => `<code>${d}</code>` },
+            { data: 'ip_address' }
+        ]
+    });
+});
+</script>
+@endpush

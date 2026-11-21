@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Users\Http\Controllers\Web;
+namespace Modules\Users\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Modules\Users\Http\Requests\AdminLoginRequest;
 
-class AuthController extends Controller
+class AdminAuthController extends Controller
 {
     public function showLogin(): View|RedirectResponse
     {

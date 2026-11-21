@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+aj@extends('admin.layouts.app')
 @section('title', 'Module Feature Flags')
 
 @section('content')
@@ -6,20 +6,16 @@
     <div class="page-wrapper">
         <div class="page-content">
             <div class="d-flex align-items-center justify-content-between mb-3">
-                <h4 class="mb-0">Module Feature Flags</h4>
-            </div>
-
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <div>
+                    <h4 class="mb-0">Module Feature Flags</h4>
+                    <small class="text-muted">Enable or disable ERP modules dynamically for this tenant without touching code</small>
                 </div>
-            @endif
+            </div>
 
             <div class="card radius-10">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table align-middle mb-0">
+                        <table class="table table-striped table-bordered align-middle erp-datatable w-100">
                             <thead class="table-light">
                                 <tr>
                                     <th>Module</th>
@@ -41,7 +37,12 @@
                                         </td>
                                         <td class="text-end">
                                             @can('core.features.manage')
-                                                <form method="POST" action="{{ route('admin.features.toggle', $slug) }}" class="d-inline">
+                                                <form method="POST"
+                                                    action="{{ route('admin.features.toggle', $slug) }}"
+                                                    class="d-inline ajax-action-form"
+                                                    data-title="{{ $enabled ? 'Disable' : 'Enable' }} {{ $label }}?"
+                                                    data-text="This immediately updates sidebar visibility and route access for this tenant."
+                                                    data-confirm-text="Yes, {{ $enabled ? 'disable' : 'enable' }}!">
                                                     @csrf
                                                     <input type="hidden" name="is_enabled" value="{{ $enabled ? 0 : 1 }}">
                                                     <button type="submit" class="btn btn-sm {{ $enabled ? 'btn-outline-danger' : 'btn-outline-success' }}">

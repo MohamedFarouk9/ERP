@@ -5,85 +5,73 @@ declare(strict_types=1);
 namespace Modules\Users\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Modules\Users\Actions\AssignCustomPermissionAction;
-use Modules\Users\Actions\AssignRoleToUserAction;
+use Illuminate\View\View;
 use Modules\Users\Actions\CreateRoleAction;
+use Modules\Users\Actions\UpdateRoleAction;
 use Modules\Users\Http\Requests\CreateRoleRequest;
+use Modules\Users\Http\Requests\UpdateRoleRequest;
 use Modules\Users\Models\Permission;
 use Modules\Users\Models\Role;
 
-final class RoleController extends Controller
+class RoleController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(): View
     {
-        $roles = Role::with('permissions')->get();
+        $roles = Role::with('permissions:id')->withCount(['permissions', 'users'])->orderBy('name')->get();
+        $groupedPermissions = Permission::orderBy('module')->orderBy('resource')->get()->groupBy('module');
 
-        return response()->json([
-            'roles' => $roles,
-        ], 200);
-    }
-
-    public function permissions(): JsonResponse
-    {
-        $permissions = Permission::all();
-
-        return response()->json([
-            'permissions' => $permissions,
-        ], 200);
+        return view('admin.roles.index', compact('roles', 'groupedPermissions'));
     }
 
     public function store(CreateRoleRequest $request, CreateRoleAction $action): JsonResponse
     {
-        /** @var array{name: string, slug?: string|null, description?: string|null, permissions?: array<int, string>} $data */
-        $data = $request->validated();
-        $role = $action->execute($data);
+        $validated = $request->validated();
+        $role = $action->execute($validated);
+
+        if (! empty($validated['permissions']) && is_array($validated['permissions'])) {
+            $permIds = Permission::whereIn('id', $validated['permissions'])->pluck('id')->all();
+            $role->permissions()->sync($permIds);
+        }
 
         return response()->json([
-            'message' => 'Role created successfully.',
-            'role' => $role,
+            'message' => "Role [{$role->name}] created successfully.",
+            'data' => $role,
         ], 201);
     }
 
-    public function assign(Request $request, AssignRoleToUserAction $action): JsonResponse
+    public function update(UpdateRoleRequest $request, string $id, UpdateRoleAction $action): JsonResponse
     {
-        $request->validate([
-            'user_id' => ['required', 'string'],
-            'roles' => ['required', 'array'],
-            'roles.*' => ['string'],
-        ]);
-
-        /** @var User $user */
-        $user = User::findOrFail($request->input('user_id'));
-        /** @var array<int, string> $roles */
-        $roles = $request->input('roles');
-
-        $action->execute($user, $roles);
+        $role = Role::findOrFail($id);
+        $updated = $action->execute($role, $request->validated());
 
         return response()->json([
-            'message' => 'Roles assigned successfully.',
-        ], 200);
+            'message' => "Role [{$updated->name}] updated successfully.",
+            'data' => $updated,
+        ]);
     }
 
-    public function assignCustomPermission(Request $request, AssignCustomPermissionAction $action): JsonResponse
+    public function destroy(string $id): JsonResponse
     {
-        $request->validate([
-            'user_id' => ['required', 'string'],
-            'permission' => ['required', 'string'],
-            'is_granted' => ['boolean'],
-        ]);
+        $role = Role::findOrFail($id);
+        if ($role->is_system) {
+            return response()->json([
+                'message' => "System role [{$role->name}] cannot be deleted.",
+            ], 422);
+        }
 
-        /** @var User $user */
-        $user = User::findOrFail($request->input('user_id'));
-        $permission = (string) $request->input('permission');
-        $isGranted = (bool) $request->input('is_granted', true);
-
-        $action->execute($user, $permission, $isGranted);
+        $name = $role->name;
+        $role->delete();
 
         return response()->json([
-            'message' => 'Custom permission applied successfully.',
-        ], 200);
+            'message' => "Role [{$name}] deleted successfully.",
+        ]);
+    }
+
+    public function permissions(): View
+    {
+        $permissions = Permission::orderBy('module')->orderBy('resource')->get()->groupBy('module');
+
+        return view('admin.permissions.index', compact('permissions'));
     }
 }
