@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('ip_address', 45);
             $table->text('user_agent')->nullable();
             $table->string('device_name')->nullable();
-            $table->timestamp('last_active_at');
-            $table->timestamp('logged_in_at');
+            $table->timestamp('last_active_at')->nullable();
+            $table->timestamp('logged_in_at')->nullable();
             $table->timestamps();
 
             $table->index('user_id');
