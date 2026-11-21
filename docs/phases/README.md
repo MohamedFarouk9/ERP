@@ -11,6 +11,4 @@ This directory documents every phase of the ERP Static Modular Monolith architec
 6. [Phase 6: Inventory Module](06-inventory-module.md)
 7. [Phase 7: Sales Module](07-sales-module.md)
 8. [Phase 8: Payments Module](08-payments-module.md)
-
-## Upcoming Phases
-- **Phase 9**: Admin Dashboard Blade Integration (`resources/views/admin/`)
+9. [Phase 9: Admin Dashboard Blade Integration](09-dashboard-integration.md)

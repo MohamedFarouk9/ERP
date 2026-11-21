@@ -1,42 +1,33 @@
 @extends('admin.layouts.app')
-
 @section('title', 'Permissions')
 
 @section('content')
-<div class="page-wrapper">
-    <div class="page-content">
-        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-            <h4 class="mb-0">Permissions</h4>
-            @can('permissions.create')
-            <a href="{{ route('admin.permissions.create') }}" class="btn btn-primary">
-                <i class="bx bx-plus me-1"></i> Add Permission
-            </a>
-            @endcan
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    @foreach($permissionGroups as $group => $groupPermissions)
-                    <div class="col-md-3">
-                        <div class="mb-3">
-                            <strong class="d-block mb-2 text-uppercase small">{{ $group }}</strong>
-                            <ul class="list-unstyled">
-                                @foreach($groupPermissions as $permission)
-                                <li class="mb-1 d-flex justify-content-between align-items-center">
-                                    <span>{{ $permission->name }}</span>
-                                    <span class="badge bg-light text-muted">{{ $permission->roles->count() }} roles</span>
-                                </li>
-                                @endforeach
-                            </ul>
+<div class="wrapper">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <h4 class="mb-3">System Permissions</h4>
+            <div class="row">
+                @foreach($permissions as $module => $items)
+                    <div class="col-md-6 mb-3">
+                        <div class="card radius-10 h-100">
+                            <div class="card-header bg-light">
+                                <strong class="text-uppercase">{{ $module }} Module</strong>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    @foreach($items as $permission)
+                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                            <span>{{ $permission->name }}</span>
+                                            <code>{{ $permission->slug }}</code>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    @endforeach
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
 </div>
 @endsection
-
-
