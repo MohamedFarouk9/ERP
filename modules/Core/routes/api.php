@@ -14,7 +14,13 @@ Route::get('/ping', function () {
 });
 
 Route::middleware(['auth', 'tenant', 'tenant.active'])->prefix('features')->group(function () {
-    Route::get('/', [FeatureController::class, 'index'])->name('features.index');
-    Route::get('/{feature}', [FeatureController::class, 'show'])->name('features.show');
-    Route::put('/{feature}', [FeatureController::class, 'update'])->name('features.update');
+    Route::get('/', [FeatureController::class, 'index'])
+        ->middleware('can:core.features.view')
+        ->name('features.index');
+    Route::get('/{feature}', [FeatureController::class, 'show'])
+        ->middleware('can:core.features.view')
+        ->name('features.show');
+    Route::put('/{feature}', [FeatureController::class, 'update'])
+        ->middleware('can:core.features.manage')
+        ->name('features.update');
 });

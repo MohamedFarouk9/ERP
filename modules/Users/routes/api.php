@@ -11,10 +11,12 @@ use Modules\Users\Http\Controllers\ProfileController;
 use Modules\Users\Http\Controllers\RoleController;
 use Modules\Users\Http\Controllers\SessionController;
 
-// Public Authentication
-Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login/mfa', [AuthController::class, 'verifyMfa'])->name('login.mfa');
+// Public Authentication (rate limited)
+Route::middleware('throttle:10,1')->group(function (): void {
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/login/mfa', [AuthController::class, 'verifyMfa'])->name('login.mfa');
+});
 
 // Authenticated User Endpoints
 Route::middleware(['auth', 'tenant', 'tenant.active'])->group(function (): void {
@@ -37,19 +39,41 @@ Route::middleware(['auth', 'tenant', 'tenant.active'])->group(function (): void 
     Route::delete('/sessions', [SessionController::class, 'destroyAll'])->name('sessions.destroy-all');
 
     // Role-Based Access Control (RBAC) & Custom Permissions
-    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
-    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
-    Route::get('/permissions', [RoleController::class, 'permissions'])->name('permissions.index');
-    Route::post('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
-    Route::post('/permissions/custom', [RoleController::class, 'assignCustomPermission'])->name('permissions.custom');
+    Route::get('/roles', [RoleController::class, 'index'])
+        ->middleware('can:users.roles.view')
+        ->name('roles.index');
+    Route::post('/roles', [RoleController::class, 'store'])
+        ->middleware('can:users.roles.create')
+        ->name('roles.store');
+    Route::get('/permissions', [RoleController::class, 'permissions'])
+        ->middleware('can:users.permissions.view')
+        ->name('permissions.index');
+    Route::post('/roles/assign', [RoleController::class, 'assign'])
+        ->middleware('can:users.roles.assign')
+        ->name('roles.assign');
+    Route::post('/permissions/custom', [RoleController::class, 'assignCustomPermission'])
+        ->middleware('can:users.permissions.assign')
+        ->name('permissions.custom');
 
     // Organizational Hierarchy: Departments & Teams
-    Route::get('/departments', [OrganizationController::class, 'departments'])->name('departments.index');
-    Route::post('/departments', [OrganizationController::class, 'storeDepartment'])->name('departments.store');
-    Route::get('/teams', [OrganizationController::class, 'teams'])->name('teams.index');
-    Route::post('/teams', [OrganizationController::class, 'storeTeam'])->name('teams.store');
-    Route::post('/teams/members', [OrganizationController::class, 'assignMember'])->name('teams.members.assign');
+    Route::get('/departments', [OrganizationController::class, 'departments'])
+        ->middleware('can:users.departments.view')
+        ->name('departments.index');
+    Route::post('/departments', [OrganizationController::class, 'storeDepartment'])
+        ->middleware('can:users.departments.create')
+        ->name('departments.store');
+    Route::get('/teams', [OrganizationController::class, 'teams'])
+        ->middleware('can:users.teams.view')
+        ->name('teams.index');
+    Route::post('/teams', [OrganizationController::class, 'storeTeam'])
+        ->middleware('can:users.teams.create')
+        ->name('teams.store');
+    Route::post('/teams/members', [OrganizationController::class, 'assignMember'])
+        ->middleware('can:users.teams.assign')
+        ->name('teams.members.assign');
 
     // Immutable Compliance Audit Trail
-    Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
+    Route::get('/audit-logs', [AuditLogController::class, 'index'])
+        ->middleware('can:users.audit-logs.view')
+        ->name('audit-logs.index');
 });

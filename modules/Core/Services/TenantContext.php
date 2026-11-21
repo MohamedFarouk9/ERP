@@ -56,6 +56,16 @@ final class TenantContext
     }
 
     /**
+     * Get the current tenant ID or throw if none is set.
+     *
+     * @throws RuntimeException
+     */
+    public function requireId(): string
+    {
+        return $this->require()->id;
+    }
+
+    /**
      * Determine whether a tenant has been set.
      */
     public function has(): bool

@@ -7,7 +7,7 @@ namespace Modules\Accounting\Actions;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
-use Modules\Accounting\Models\AccountingPeriod;
+use Modules\Accounting\Models\Account;
 use Modules\Accounting\Models\AccountingTransaction;
 use Modules\Accounting\Models\AccountingTransactionLine;
 use Modules\Accounting\Models\FinancialPeriod;
@@ -54,6 +54,12 @@ class CreateAccountingTransactionAction
 
         if ($totalDebit !== $totalCredit) {
             throw new InvalidArgumentException("Accounting transaction is not balanced. Debits: {$totalDebit}, Credits: {$totalCredit}.");
+        }
+
+        $accountIds = array_values(array_unique(array_column($data['lines'], 'account_id')));
+        $validAccountCount = Account::whereIn('id', $accountIds)->count();
+        if ($validAccountCount !== count($accountIds)) {
+            throw new InvalidArgumentException('One or more accounts do not belong to the current tenant.');
         }
 
         if (! empty($data['financial_period_id'])) {
