@@ -25,6 +25,9 @@ return Application::configure(basePath: dirname(__DIR__))
             StartSession::class,
         ]);
 
+        $middleware->redirectGuestsTo(fn () => route('admin.login'));
+        $middleware->redirectUsersTo(fn () => route('admin.dashboard'));
+
         $middleware->alias([
             'tenant' => ResolveTenantMiddleware::class,
             'tenant.active' => EnsureTenantIsActive::class,
