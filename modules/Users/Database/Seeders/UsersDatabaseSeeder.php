@@ -76,6 +76,17 @@ class UsersDatabaseSeeder extends Seeder
             ['procurement', 'bills', 'view', 'View Vendor Bills'],
             ['procurement', 'bills', 'create', 'Create Vendor Bills'],
             ['procurement', 'bills', 'approve', 'Approve Vendor Bills'],
+            // HRM
+            ['hrm', 'employees', 'view', 'View Employees'],
+            ['hrm', 'employees', 'create', 'Manage Employees'],
+            ['hrm', 'attendance', 'view', 'View Attendance'],
+            ['hrm', 'attendance', 'create', 'Record Attendance'],
+            ['hrm', 'leaves', 'view', 'View Leave Requests'],
+            ['hrm', 'leaves', 'create', 'Submit Leave Requests'],
+            ['hrm', 'leaves', 'approve', 'Approve/Reject Leaves'],
+            ['hrm', 'payroll', 'view', 'View Payroll'],
+            ['hrm', 'payroll', 'create', 'Generate Payroll'],
+            ['hrm', 'payroll', 'pay', 'Pay Payroll'],
         ];
 
         $allPermissions = [];

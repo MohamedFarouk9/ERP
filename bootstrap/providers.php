@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Providers\AppServiceProvider;
 use Modules\Accounting\Providers\AccountingServiceProvider;
 use Modules\Core\Providers\CoreServiceProvider;
+use Modules\Hrm\Providers\HrmServiceProvider;
 use Modules\Inventory\Providers\InventoryServiceProvider;
 use Modules\Payments\Providers\PaymentsServiceProvider;
 use Modules\Procurement\Providers\ProcurementServiceProvider;
@@ -20,4 +21,5 @@ return [
     SalesServiceProvider::class,
     PaymentsServiceProvider::class,
     ProcurementServiceProvider::class,
+    HrmServiceProvider::class,
 ];

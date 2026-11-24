@@ -25,6 +25,7 @@ class FeatureController extends Controller
             'sales' => 'Sales Orders & Invoices',
             'payments' => 'Payments & Refunds',
             'procurement' => 'Procurement & Suppliers',
+            'hrm' => 'Human Resources & Payroll',
         ];
 
         $statuses = $this->featureManager->all();

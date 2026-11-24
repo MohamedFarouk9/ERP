@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Accounting\Database\Seeders\AccountingDatabaseSeeder;
 use Modules\Core\Database\Seeders\CoreDatabaseSeeder;
+use Modules\Hrm\Database\Seeders\HrmDatabaseSeeder;
 use Modules\Inventory\Database\Seeders\InventoryDatabaseSeeder;
 use Modules\Payments\Database\Seeders\PaymentsDatabaseSeeder;
 use Modules\Procurement\Database\Seeders\ProcurementDatabaseSeeder;
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
             SalesDatabaseSeeder::class,
             PaymentsDatabaseSeeder::class,
             ProcurementDatabaseSeeder::class,
+            HrmDatabaseSeeder::class,
         ]);
     }
 }

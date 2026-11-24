@@ -41,6 +41,11 @@
                         <li><a href="{{ route('admin.procurement.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Procurement Analytics</a></li>
                     @endcan
                 @endif
+                @if($featureManager->isEnabled('hrm'))
+                    @can('hrm.employees.view')
+                        <li><a href="{{ route('admin.hrm.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>HRM Analytics</a></li>
+                    @endcan
+                @endif
             </ul>
         </li>
 
@@ -174,8 +179,42 @@
         @endif
 
         <!-- Organization & HR (Flat Section) -->
-        @if(auth()->user()?->can('users.departments.view') || auth()->user()?->can('users.teams.view'))
+        @if(auth()->user()?->can('users.departments.view') || auth()->user()?->can('users.teams.view') || ($featureManager->isEnabled('hrm') && auth()->user()?->can('hrm.employees.view')))
             <li class="menu-label">Organization & HR</li>
+            @if($featureManager->isEnabled('hrm'))
+                @can('hrm.employees.view')
+                    <li>
+                        <a href="{{ route('admin.hrm.employees.index') }}">
+                            <div class="parent-icon"><i class='bx bx-user-voice'></i></div>
+                            <div class="menu-title">Employees</div>
+                        </a>
+                    </li>
+                @endcan
+                @can('hrm.attendance.view')
+                    <li>
+                        <a href="{{ route('admin.hrm.attendance.index') }}">
+                            <div class="parent-icon"><i class='bx bx-time-five'></i></div>
+                            <div class="menu-title">Attendance</div>
+                        </a>
+                    </li>
+                @endcan
+                @can('hrm.leaves.view')
+                    <li>
+                        <a href="{{ route('admin.hrm.leaves.index') }}">
+                            <div class="parent-icon"><i class='bx bx-calendar-check'></i></div>
+                            <div class="menu-title">Leave Requests</div>
+                        </a>
+                    </li>
+                @endcan
+                @can('hrm.payroll.view')
+                    <li>
+                        <a href="{{ route('admin.hrm.payroll.index') }}">
+                            <div class="parent-icon"><i class='bx bx-money'></i></div>
+                            <div class="menu-title">Payroll Runs</div>
+                        </a>
+                    </li>
+                @endcan
+            @endif
             @can('users.departments.view')
                 <li>
                     <a href="{{ route('admin.organization.staff') }}">
