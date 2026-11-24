@@ -41,11 +41,12 @@
                             <tr>
                                 <th>Shift #</th>
                                 <th>Cashier</th>
-                                <th>Warehouse</th>
                                 <th>Opened At</th>
+                                <th>Closed At</th>
                                 <th>Opening Cash</th>
                                 <th>Expected Cash</th>
                                 <th>Counted Cash</th>
+                                <th>Sales</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -69,9 +70,8 @@
                                 <th>Date</th>
                                 <th>Cashier</th>
                                 <th>Payment</th>
-                                <th>Subtotal</th>
-                                <th>Tax</th>
                                 <th>Total</th>
+                                <th>Status</th>
                                 <th>Receipt</th>
                             </tr>
                         </thead>
@@ -153,6 +153,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
+    const fmtMoney = cents => '$' + (Number(cents || 0) / 100).toFixed(2);
+    const receiptBaseUrl = @json(url('/admin/pos/receipts'));
+
     const shiftsTable = $('#posShiftsTable').DataTable({
         processing: true,
         serverSide: true,
@@ -160,13 +163,29 @@ document.addEventListener('DOMContentLoaded', function () {
         columns: [
             { data: 'shift_number', name: 'shift_number' },
             { data: 'cashier_name', name: 'cashier_name', orderable: false },
-            { data: 'warehouse_name', name: 'warehouse_name', orderable: false },
             { data: 'opened_at', name: 'opened_at' },
-            { data: 'opening_cash', name: 'opening_cash' },
-            { data: 'expected_cash', name: 'expected_cash' },
-            { data: 'counted_cash', name: 'counted_cash' },
-            { data: 'status_badge', name: 'status', orderable: false, searchable: false },
-            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+            { data: 'closed_at', name: 'closed_at' },
+            { data: 'opening_cash', name: 'opening_cash', render: d => fmtMoney(d) },
+            { data: 'expected_cash', name: 'expected_cash', render: d => fmtMoney(d) },
+            { data: 'counted_cash', name: 'counted_cash', render: d => d !== null && d !== undefined ? fmtMoney(d) : '-' },
+            { data: 'sales_count', name: 'sales_count', orderable: false },
+            {
+                data: 'status',
+                name: 'status',
+                orderable: false,
+                searchable: false,
+                render: d => d === 'open'
+                    ? '<span class="badge bg-success">Open</span>'
+                    : '<span class="badge bg-secondary">Closed</span>'
+            },
+            {
+                data: null,
+                orderable: false,
+                searchable: false,
+                render: row => row.status === 'open'
+                    ? `<button type="button" class="btn btn-sm btn-warning btn-close-shift" data-id="${row.id}" data-expected="${(Number(row.expected_cash || 0) / 100).toFixed(2)}"><i class="bx bx-lock-alt me-1"></i>Close</button>`
+                    : '<span class="text-muted small">Reconciled</span>'
+            }
         ]
     });
 
@@ -178,11 +197,23 @@ document.addEventListener('DOMContentLoaded', function () {
             { data: 'receipt_number', name: 'receipt_number' },
             { data: 'sale_date', name: 'sale_date' },
             { data: 'cashier_name', name: 'cashier_name', orderable: false },
-            { data: 'payment_type', name: 'payment_type' },
-            { data: 'subtotal', name: 'subtotal' },
-            { data: 'tax_amount', name: 'tax_amount' },
-            { data: 'total_amount', name: 'total_amount' },
-            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+            {
+                data: 'payment_type',
+                name: 'payment_type',
+                render: d => `<span class="badge bg-light-info text-info text-uppercase">${d || '-'}</span>`
+            },
+            { data: 'total_amount', name: 'total_amount', render: d => fmtMoney(d) },
+            {
+                data: 'status',
+                name: 'status',
+                render: d => `<span class="badge bg-success text-uppercase">${d || 'completed'}</span>`
+            },
+            {
+                data: 'id',
+                orderable: false,
+                searchable: false,
+                render: id => `<a href="${receiptBaseUrl}/${id}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bx bx-printer me-1"></i>Receipt</a>`
+            }
         ]
     });
 
