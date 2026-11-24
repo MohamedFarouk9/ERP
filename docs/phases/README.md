@@ -12,3 +12,5 @@ This directory documents every phase of the ERP Static Modular Monolith architec
 7. [Phase 7: Sales Module](07-sales-module.md)
 8. [Phase 8: Payments Module](08-payments-module.md)
 9. [Phase 9: Admin Dashboard Blade Integration](09-dashboard-integration.md)
+10. [Phase 10: Procurement Module & Complete Invoice Service](10-procurement-and-invoice-enhancement.md)
+11. [Phase 11: Rukada Vertical Template Upgrade, Live Analytics & Organization/HR](11-rukada-analytics-and-organization-hr.md)

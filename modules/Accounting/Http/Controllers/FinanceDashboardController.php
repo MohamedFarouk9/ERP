@@ -33,6 +33,39 @@ class FinanceDashboardController extends Controller
             ->groupBy('type')
             ->pluck('total', 'type');
 
+        $months = [];
+        $monthlyInflow = [];
+        $monthlyRefunds = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $start = now()->subMonths($i)->startOfMonth();
+            $end = now()->subMonths($i)->endOfMonth();
+            $months[] = $start->format('M Y');
+
+            $inflow = (int) Payment::whereBetween('payment_date', [$start->toDateString(), $end->toDateString()])
+                ->where('status', Payment::STATUS_COMPLETED)
+                ->sum('amount');
+
+            $refunds = (int) Refund::whereBetween('refund_date', [$start->toDateString(), $end->toDateString()])
+                ->where('status', Refund::STATUS_COMPLETED)
+                ->sum('amount');
+
+            $monthlyInflow[] = round($inflow / 100, 2);
+            $monthlyRefunds[] = round($refunds / 100, 2);
+        }
+
+        $chartData = [
+            'months' => $months,
+            'inflow' => $monthlyInflow,
+            'refunds' => $monthlyRefunds,
+            'account_types' => [
+                'asset' => (int) ($accountsByType['asset'] ?? 0),
+                'liability' => (int) ($accountsByType['liability'] ?? 0),
+                'equity' => (int) ($accountsByType['equity'] ?? 0),
+                'revenue' => (int) ($accountsByType['revenue'] ?? 0),
+                'expense' => (int) ($accountsByType['expense'] ?? 0),
+            ],
+        ];
+
         $recentTransactions = AccountingTransaction::with('lines')
             ->orderByDesc('transaction_date')
             ->take(8)
@@ -43,6 +76,6 @@ class FinanceDashboardController extends Controller
             ->take(8)
             ->get();
 
-        return view('admin.accounting.dashboard', compact('stats', 'accountsByType', 'recentTransactions', 'recentPayments'));
+        return view('admin.accounting.dashboard', compact('stats', 'accountsByType', 'chartData', 'recentTransactions', 'recentPayments'));
     }
 }

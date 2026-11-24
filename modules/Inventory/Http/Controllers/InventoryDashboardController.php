@@ -25,7 +25,7 @@ class InventoryDashboardController extends Controller
             ->with(['product:id,sku,name,unit,reorder_level', 'warehouse:id,code,name'])
             ->whereHas('product', fn ($q) => $q->whereColumn('stock_levels.quantity_on_hand', '<=', 'products.reorder_level'))
             ->orderBy('quantity_on_hand')
-            ->take(10)
+            ->take(8)
             ->get();
 
         $stats = [
@@ -39,11 +39,31 @@ class InventoryDashboardController extends Controller
                 ->count(),
         ];
 
-        $recentMovements = StockMovement::with(['product:id,sku,name', 'warehouse:id,code,name'])
-            ->latest()
-            ->take(10)
+        $warehouseStats = Warehouse::query()
+            ->withSum('stockLevels as total_qty', 'quantity_on_hand')
+            ->orderBy('code')
             ->get();
 
-        return view('admin.inventory.dashboard', compact('stats', 'lowStockItems', 'recentMovements'));
+        $movementCounts = StockMovement::query()
+            ->select('type', DB::raw('SUM(ABS(quantity)) as total_qty'))
+            ->groupBy('type')
+            ->pluck('total_qty', 'type');
+
+        $chartData = [
+            'warehouse_labels' => $warehouseStats->pluck('code')->all(),
+            'warehouse_units' => $warehouseStats->map(fn ($w) => (int) ($w->total_qty ?? 0))->all(),
+            'movements' => [
+                'in' => (int) ($movementCounts['in'] ?? 0),
+                'out' => (int) ($movementCounts['out'] ?? 0),
+                'adjustment' => (int) ($movementCounts['adjustment'] ?? 0),
+            ],
+        ];
+
+        $recentMovements = StockMovement::with(['product:id,sku,name', 'warehouse:id,code,name'])
+            ->latest()
+            ->take(8)
+            ->get();
+
+        return view('admin.inventory.dashboard', compact('stats', 'chartData', 'lowStockItems', 'recentMovements'));
     }
 }

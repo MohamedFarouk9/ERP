@@ -7,7 +7,9 @@ namespace Modules\Inventory\Providers;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Modules\Inventory\Listeners\AddStockOnPurchaseOrderReceived;
 use Modules\Inventory\Listeners\DeductStockOnSalesOrderConfirmed;
+use Modules\Procurement\Events\PurchaseOrderReceived;
 use Modules\Sales\Events\SalesOrderConfirmed;
 
 final class InventoryServiceProvider extends ServiceProvider
@@ -23,6 +25,7 @@ final class InventoryServiceProvider extends ServiceProvider
         $this->registerMigrations();
 
         Event::listen(SalesOrderConfirmed::class, DeductStockOnSalesOrderConfirmed::class);
+        Event::listen(PurchaseOrderReceived::class, AddStockOnPurchaseOrderReceived::class);
     }
 
     protected function registerRoutes(): void

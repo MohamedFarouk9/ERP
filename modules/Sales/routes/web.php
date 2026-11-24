@@ -62,12 +62,21 @@ Route::prefix('admin')
         Route::post('/invoices', [InvoiceController::class, 'store'])
             ->middleware('can:sales.invoices.create')
             ->name('invoices.store');
+        Route::post('/orders/{orderId}/to-invoice', [InvoiceController::class, 'createFromOrder'])
+            ->middleware('can:sales.invoices.create')
+            ->name('invoices.from-order');
         Route::get('/invoices/{id}', [InvoiceController::class, 'show'])
             ->middleware('can:sales.invoices.view')
             ->name('invoices.show');
+        Route::get('/invoices/{id}/print', [InvoiceController::class, 'print'])
+            ->middleware('can:sales.invoices.view')
+            ->name('invoices.print');
         Route::post('/invoices/{id}/issue', [InvoiceController::class, 'issue'])
             ->middleware('can:sales.invoices.issue')
             ->name('invoices.issue');
+        Route::post('/invoices/{id}/cancel', [InvoiceController::class, 'cancel'])
+            ->middleware('can:sales.invoices.issue')
+            ->name('invoices.cancel');
         Route::delete('/invoices/{id}', [InvoiceController::class, 'destroy'])
             ->middleware('can:sales.invoices.create')
             ->name('invoices.destroy');

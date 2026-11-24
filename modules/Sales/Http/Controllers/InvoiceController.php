@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Modules\Core\Services\TenantContext;
+use Modules\Payments\Models\PaymentMethod;
 use Modules\Sales\Actions\CreateInvoiceAction;
 use Modules\Sales\Actions\IssueInvoiceAction;
 use Modules\Sales\Http\Requests\StoreInvoiceRequest;
@@ -21,9 +23,10 @@ class InvoiceController extends Controller
     public function index(): View
     {
         $customers = Customer::where('is_active', true)->orderBy('name')->get(['id', 'code', 'name']);
-        $orders = SalesOrder::orderByDesc('order_date')->take(50)->get(['id', 'order_number']);
+        $orders = SalesOrder::with('customer:id,name')->where('status', SalesOrder::STATUS_CONFIRMED)->orderByDesc('order_date')->take(50)->get();
+        $paymentMethods = PaymentMethod::where('is_active', true)->orderBy('name')->get(['id', 'name']);
 
-        return view('admin.sales.invoices', compact('customers', 'orders'));
+        return view('admin.sales.invoices', compact('customers', 'orders', 'paymentMethods'));
     }
 
     public function data(Request $request): JsonResponse
@@ -32,9 +35,14 @@ class InvoiceController extends Controller
         $start = (int) $request->input('start', 0);
         $length = min((int) $request->input('length', 25), 100);
         $search = trim((string) $request->input('search.value', ''));
+        $statusFilter = trim((string) $request->input('status', ''));
 
         $baseQuery = Invoice::query()->with(['customer:id,name']);
         $recordsTotal = Invoice::count();
+
+        if ($statusFilter !== '') {
+            $baseQuery->where('status', $statusFilter);
+        }
 
         if ($search !== '') {
             $baseQuery->where(function ($q) use ($search) {
@@ -58,12 +66,14 @@ class InvoiceController extends Controller
 
         $data = $rows->map(fn (Invoice $inv) => [
             'id' => $inv->id,
+            'customer_id' => $inv->customer_id,
             'invoice_number' => $inv->invoice_number,
             'customer_name' => $inv->customer?->name ?? '-',
             'invoice_date' => $inv->invoice_date?->format('Y-m-d') ?? '-',
             'due_date' => $inv->due_date?->format('Y-m-d') ?? '-',
             'total_amount' => $inv->total_amount,
             'amount_paid' => $inv->amount_paid,
+            'balance_due' => max(0, $inv->total_amount - $inv->amount_paid),
             'status' => $inv->status,
         ]);
 
@@ -85,6 +95,35 @@ class InvoiceController extends Controller
         ], 201);
     }
 
+    public function createFromOrder(string $orderId, CreateInvoiceAction $action): JsonResponse
+    {
+        $order = SalesOrder::with('items')->findOrFail($orderId);
+
+        $items = $order->items->map(fn ($item) => [
+            'product_id' => $item->product_id,
+            'description' => $item->description ?: 'Order Item',
+            'quantity' => $item->quantity,
+            'unit_price' => $item->unit_price,
+            'tax_amount' => $item->tax_amount,
+        ])->all();
+
+        $invoice = $action->execute([
+            'customer_id' => $order->customer_id,
+            'sales_order_id' => $order->id,
+            'invoice_number' => 'INV-'.$order->order_number.'-'.now()->format('His'),
+            'invoice_date' => now()->toDateString(),
+            'due_date' => now()->addDays(30)->toDateString(),
+            'currency_code' => $order->currency_code,
+            'notes' => "Generated from Sales Order {$order->order_number}",
+            'items' => $items,
+        ]);
+
+        return response()->json([
+            'message' => "Invoice [{$invoice->invoice_number}] generated from Sales Order [{$order->order_number}].",
+            'data' => $invoice,
+        ], 201);
+    }
+
     public function show(string $id): JsonResponse
     {
         $invoice = Invoice::with(['customer', 'salesOrder', 'items', 'issuer'])->findOrFail($id);
@@ -92,6 +131,14 @@ class InvoiceController extends Controller
         return response()->json([
             'data' => $invoice,
         ]);
+    }
+
+    public function print(string $id, TenantContext $tenantContext): View
+    {
+        $invoice = Invoice::with(['customer', 'salesOrder', 'items', 'issuer'])->findOrFail($id);
+        $tenant = $tenantContext->require();
+
+        return view('admin.sales.invoice-print', compact('invoice', 'tenant'));
     }
 
     public function issue(Request $request, string $id, IssueInvoiceAction $action): JsonResponse
@@ -104,8 +151,24 @@ class InvoiceController extends Controller
         $issuedInvoice = $action->execute($invoice, $user);
 
         return response()->json([
-            'message' => "Invoice [{$issuedInvoice->invoice_number}] issued successfully.",
+            'message' => "Invoice [{$issuedInvoice->invoice_number}] issued & ledger entry posted.",
             'data' => $issuedInvoice,
+        ]);
+    }
+
+    public function cancel(string $id): JsonResponse
+    {
+        $invoice = Invoice::findOrFail($id);
+        if ($invoice->status === Invoice::STATUS_PAID || $invoice->amount_paid > 0) {
+            return response()->json([
+                'message' => 'Paid or partially paid invoices cannot be cancelled.',
+            ], 422);
+        }
+
+        $invoice->update(['status' => Invoice::STATUS_CANCELLED]);
+
+        return response()->json([
+            'message' => "Invoice [{$invoice->invoice_number}] has been cancelled.",
         ]);
     }
 

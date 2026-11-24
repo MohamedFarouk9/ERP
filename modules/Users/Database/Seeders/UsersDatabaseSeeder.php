@@ -67,6 +67,15 @@ class UsersDatabaseSeeder extends Seeder
             ['payments', 'transactions', 'complete', 'Complete Payments'],
             ['payments', 'refunds', 'view', 'View Refunds'],
             ['payments', 'refunds', 'create', 'Process Refunds'],
+            // Procurement
+            ['procurement', 'suppliers', 'view', 'View Suppliers'],
+            ['procurement', 'suppliers', 'create', 'Manage Suppliers'],
+            ['procurement', 'orders', 'view', 'View Purchase Orders'],
+            ['procurement', 'orders', 'create', 'Create Purchase Orders'],
+            ['procurement', 'orders', 'receive', 'Receive Purchase Orders'],
+            ['procurement', 'bills', 'view', 'View Vendor Bills'],
+            ['procurement', 'bills', 'create', 'Create Vendor Bills'],
+            ['procurement', 'bills', 'approve', 'Approve Vendor Bills'],
         ];
 
         $allPermissions = [];
