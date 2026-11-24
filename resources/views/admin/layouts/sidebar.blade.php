@@ -13,229 +13,226 @@
 
     <!--navigation-->
     <ul class="metismenu" id="menu">
-        <!-- 1. ANALYTICS DASHBOARDS DROPDOWN -->
-        <li class="{{ request()->is('admin/dashboard') || request()->is('admin/*/dashboard') ? 'mm-active' : '' }}">
+        <!-- Collapsible Dashboards Parent -->
+        <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i></div>
                 <div class="menu-title">Dashboards</div>
             </a>
             <ul>
-                <li class="{{ request()->routeIs('admin.dashboard') ? 'mm-active' : '' }}">
-                    <a href="{{ route('admin.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Executive Overview</a>
-                </li>
+                <li><a href="{{ route('admin.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Executive Overview</a></li>
                 @if($featureManager->isEnabled('accounting'))
                     @can('accounting.accounts.view')
-                        <li class="{{ request()->routeIs('admin.accounting.dashboard') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.accounting.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Finance Analytics</a>
-                        </li>
+                        <li><a href="{{ route('admin.accounting.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Finance Analytics</a></li>
                     @endcan
                 @endif
                 @if($featureManager->isEnabled('inventory'))
                     @can('inventory.products.view')
-                        <li class="{{ request()->routeIs('admin.inventory.dashboard') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.inventory.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Inventory Analytics</a>
-                        </li>
+                        <li><a href="{{ route('admin.inventory.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Inventory Analytics</a></li>
                     @endcan
                 @endif
                 @if($featureManager->isEnabled('sales'))
                     @can('sales.orders.view')
-                        <li class="{{ request()->routeIs('admin.sales.dashboard') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.sales.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Sales Analytics</a>
-                        </li>
+                        <li><a href="{{ route('admin.sales.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Sales Analytics</a></li>
                     @endcan
                 @endif
                 @if($featureManager->isEnabled('procurement'))
                     @can('procurement.orders.view')
-                        <li class="{{ request()->routeIs('admin.procurement.dashboard') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.procurement.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Procurement Analytics</a>
-                        </li>
+                        <li><a href="{{ route('admin.procurement.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Procurement Analytics</a></li>
                     @endcan
                 @endif
             </ul>
         </li>
 
-        <li class="menu-label">Core ERP Modules</li>
-
-        <!-- 2. SALES & COMMERCIAL DROPDOWN -->
+        <!-- Sales & Billing (Flat Section) -->
         @if($featureManager->isEnabled('sales') && (auth()->user()?->can('sales.customers.view') || auth()->user()?->can('sales.orders.view') || auth()->user()?->can('sales.invoices.view')))
-            <li class="{{ request()->is('admin/customers*') || request()->is('admin/orders*') || request()->is('admin/invoices*') ? 'mm-active' : '' }}">
-                <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon"><i class='bx bx-cart'></i></div>
-                    <div class="menu-title">Sales & Billing</div>
-                </a>
-                <ul>
-                    @can('sales.customers.view')
-                        <li class="{{ request()->routeIs('admin.customers.*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.customers.index') }}"><i class="bx bx-right-arrow-alt"></i>Customers</a>
-                        </li>
-                    @endcan
-                    @can('sales.orders.view')
-                        <li class="{{ request()->routeIs('admin.orders.*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.orders.index') }}"><i class="bx bx-right-arrow-alt"></i>Sales Orders</a>
-                        </li>
-                    @endcan
-                    @can('sales.invoices.view')
-                        <li class="{{ request()->routeIs('admin.invoices.*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.invoices.index') }}"><i class="bx bx-right-arrow-alt"></i>Invoices</a>
-                        </li>
-                    @endcan
-                </ul>
-            </li>
+            <li class="menu-label">Sales & Billing</li>
+            @can('sales.customers.view')
+                <li>
+                    <a href="{{ route('admin.customers.index') }}">
+                        <div class="parent-icon"><i class='bx bx-user-pin'></i></div>
+                        <div class="menu-title">Customers</div>
+                    </a>
+                </li>
+            @endcan
+            @can('sales.orders.view')
+                <li>
+                    <a href="{{ route('admin.orders.index') }}">
+                        <div class="parent-icon"><i class='bx bx-cart'></i></div>
+                        <div class="menu-title">Sales Orders</div>
+                    </a>
+                </li>
+            @endcan
+            @can('sales.invoices.view')
+                <li>
+                    <a href="{{ route('admin.invoices.index') }}">
+                        <div class="parent-icon"><i class='bx bx-receipt'></i></div>
+                        <div class="menu-title">Invoices</div>
+                    </a>
+                </li>
+            @endcan
         @endif
 
-        <!-- 3. INVENTORY & WAREHOUSING DROPDOWN -->
+        <!-- Inventory & Stock (Flat Section) -->
         @if($featureManager->isEnabled('inventory') && (auth()->user()?->can('inventory.products.view') || auth()->user()?->can('inventory.categories.view') || auth()->user()?->can('inventory.warehouses.view')))
-            <li class="{{ request()->is('admin/products*') || request()->is('admin/categories*') || request()->is('admin/warehouses*') ? 'mm-active' : '' }}">
-                <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon"><i class='bx bx-package'></i></div>
-                    <div class="menu-title">Inventory & Stock</div>
-                </a>
-                <ul>
-                    @can('inventory.products.view')
-                        <li class="{{ request()->routeIs('admin.products.*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.products.index') }}"><i class="bx bx-right-arrow-alt"></i>Products Catalog</a>
-                        </li>
-                    @endcan
-                    @can('inventory.categories.view')
-                        <li class="{{ request()->routeIs('admin.categories.*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.categories.index') }}"><i class="bx bx-right-arrow-alt"></i>Categories</a>
-                        </li>
-                    @endcan
-                    @can('inventory.warehouses.view')
-                        <li class="{{ request()->routeIs('admin.warehouses.*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.warehouses.index') }}"><i class="bx bx-right-arrow-alt"></i>Warehouses</a>
-                        </li>
-                    @endcan
-                </ul>
-            </li>
+            <li class="menu-label">Inventory & Stock</li>
+            @can('inventory.products.view')
+                <li>
+                    <a href="{{ route('admin.products.index') }}">
+                        <div class="parent-icon"><i class='bx bx-package'></i></div>
+                        <div class="menu-title">Products</div>
+                    </a>
+                </li>
+            @endcan
+            @can('inventory.categories.view')
+                <li>
+                    <a href="{{ route('admin.categories.index') }}">
+                        <div class="parent-icon"><i class='bx bx-list-ul'></i></div>
+                        <div class="menu-title">Categories</div>
+                    </a>
+                </li>
+            @endcan
+            @can('inventory.warehouses.view')
+                <li>
+                    <a href="{{ route('admin.warehouses.index') }}">
+                        <div class="parent-icon"><i class='bx bx-store'></i></div>
+                        <div class="menu-title">Warehouses</div>
+                    </a>
+                </li>
+            @endcan
         @endif
 
-        <!-- 4. PROCUREMENT & PURCHASING DROPDOWN -->
+        <!-- Procurement & AP (Flat Section) -->
         @if($featureManager->isEnabled('procurement') && (auth()->user()?->can('procurement.suppliers.view') || auth()->user()?->can('procurement.orders.view') || auth()->user()?->can('procurement.bills.view')))
-            <li class="{{ request()->is('admin/procurement/suppliers*') || request()->is('admin/procurement/purchase-orders*') || request()->is('admin/procurement/vendor-bills*') ? 'mm-active' : '' }}">
-                <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon"><i class='bx bx-shopping-bag'></i></div>
-                    <div class="menu-title">Procurement & AP</div>
-                </a>
-                <ul>
-                    @can('procurement.suppliers.view')
-                        <li class="{{ request()->routeIs('admin.procurement.suppliers.*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.procurement.suppliers.index') }}"><i class="bx bx-right-arrow-alt"></i>Suppliers</a>
-                        </li>
-                    @endcan
-                    @can('procurement.orders.view')
-                        <li class="{{ request()->routeIs('admin.procurement.orders.*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.procurement.orders.index') }}"><i class="bx bx-right-arrow-alt"></i>Purchase Orders</a>
-                        </li>
-                    @endcan
-                    @can('procurement.bills.view')
-                        <li class="{{ request()->routeIs('admin.procurement.bills.*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.procurement.bills.index') }}"><i class="bx bx-right-arrow-alt"></i>Vendor Bills</a>
-                        </li>
-                    @endcan
-                </ul>
-            </li>
+            <li class="menu-label">Procurement & AP</li>
+            @can('procurement.suppliers.view')
+                <li>
+                    <a href="{{ route('admin.procurement.suppliers.index') }}">
+                        <div class="parent-icon"><i class='bx bx-buildings'></i></div>
+                        <div class="menu-title">Suppliers</div>
+                    </a>
+                </li>
+            @endcan
+            @can('procurement.orders.view')
+                <li>
+                    <a href="{{ route('admin.procurement.orders.index') }}">
+                        <div class="parent-icon"><i class='bx bx-shopping-bag'></i></div>
+                        <div class="menu-title">Purchase Orders</div>
+                    </a>
+                </li>
+            @endcan
+            @can('procurement.bills.view')
+                <li>
+                    <a href="{{ route('admin.procurement.bills.index') }}">
+                        <div class="parent-icon"><i class='bx bx-file'></i></div>
+                        <div class="menu-title">Vendor Bills</div>
+                    </a>
+                </li>
+            @endcan
         @endif
 
-        <!-- 5. FINANCE & GENERAL LEDGER DROPDOWN -->
+        <!-- Finance & Ledger (Flat Section) -->
         @if($featureManager->isEnabled('accounting') && (auth()->user()?->can('accounting.accounts.view') || auth()->user()?->can('accounting.transactions.view')))
-            <li class="{{ request()->is('admin/accounting/accounts*') || request()->is('admin/accounting/transactions*') ? 'mm-active' : '' }}">
-                <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon"><i class='bx bx-calculator'></i></div>
-                    <div class="menu-title">Finance & Ledger</div>
-                </a>
-                <ul>
-                    @can('accounting.accounts.view')
-                        <li class="{{ request()->routeIs('admin.accounting.accounts*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.accounting.accounts') }}"><i class="bx bx-right-arrow-alt"></i>Chart of Accounts</a>
-                        </li>
-                    @endcan
-                    @can('accounting.transactions.view')
-                        <li class="{{ request()->routeIs('admin.accounting.transactions*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.accounting.transactions') }}"><i class="bx bx-right-arrow-alt"></i>Ledger Transactions</a>
-                        </li>
-                    @endcan
-                </ul>
-            </li>
+            <li class="menu-label">Finance & Ledger</li>
+            @can('accounting.accounts.view')
+                <li>
+                    <a href="{{ route('admin.accounting.accounts') }}">
+                        <div class="parent-icon"><i class='bx bx-book-open'></i></div>
+                        <div class="menu-title">Chart of Accounts</div>
+                    </a>
+                </li>
+            @endcan
+            @can('accounting.transactions.view')
+                <li>
+                    <a href="{{ route('admin.accounting.transactions') }}">
+                        <div class="parent-icon"><i class='bx bx-transfer'></i></div>
+                        <div class="menu-title">Ledger Transactions</div>
+                    </a>
+                </li>
+            @endcan
         @endif
 
-        <!-- 6. PAYMENTS & TREASURY DROPDOWN -->
+        <!-- Payments & Treasury (Flat Section) -->
         @if($featureManager->isEnabled('payments') && (auth()->user()?->can('payments.transactions.view') || auth()->user()?->can('payments.refunds.view')))
-            <li class="{{ request()->is('admin/payments*') ? 'mm-active' : '' }}">
-                <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon"><i class='bx bx-wallet'></i></div>
-                    <div class="menu-title">Payments & Treasury</div>
-                </a>
-                <ul>
-                    @can('payments.transactions.view')
-                        <li class="{{ request()->routeIs('admin.payments.index') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.payments.index') }}"><i class="bx bx-right-arrow-alt"></i>Payments & Methods</a>
-                        </li>
-                    @endcan
-                    @can('payments.refunds.view')
-                        <li class="{{ request()->routeIs('admin.payments.refunds*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.payments.refunds') }}"><i class="bx bx-right-arrow-alt"></i>Refunds</a>
-                        </li>
-                    @endcan
-                </ul>
-            </li>
+            <li class="menu-label">Payments & Treasury</li>
+            @can('payments.transactions.view')
+                <li>
+                    <a href="{{ route('admin.payments.index') }}">
+                        <div class="parent-icon"><i class='bx bx-wallet'></i></div>
+                        <div class="menu-title">Payments & Methods</div>
+                    </a>
+                </li>
+            @endcan
+            @can('payments.refunds.view')
+                <li>
+                    <a href="{{ route('admin.payments.refunds') }}">
+                        <div class="parent-icon"><i class='bx bx-revision'></i></div>
+                        <div class="menu-title">Refunds</div>
+                    </a>
+                </li>
+            @endcan
         @endif
 
-        <li class="menu-label">People & Governance</li>
-
-        <!-- 7. ORGANIZATION & HR DROPDOWN -->
+        <!-- Organization & HR (Flat Section) -->
         @if(auth()->user()?->can('users.departments.view') || auth()->user()?->can('users.teams.view'))
-            <li class="{{ request()->is('admin/organization*') ? 'mm-active' : '' }}">
-                <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon"><i class='bx bx-group'></i></div>
-                    <div class="menu-title">Organization & HR</div>
-                </a>
-                <ul>
-                    @can('users.departments.view')
-                        <li class="{{ request()->routeIs('admin.organization.staff*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.organization.staff') }}"><i class="bx bx-right-arrow-alt"></i>Staff Directory</a>
-                        </li>
-                        <li class="{{ request()->routeIs('admin.organization.departments*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.organization.departments') }}"><i class="bx bx-right-arrow-alt"></i>Departments</a>
-                        </li>
-                    @endcan
-                    @can('users.teams.view')
-                        <li class="{{ request()->routeIs('admin.organization.teams*') ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.organization.teams') }}"><i class="bx bx-right-arrow-alt"></i>Teams & Leads</a>
-                        </li>
-                    @endcan
-                </ul>
-            </li>
+            <li class="menu-label">Organization & HR</li>
+            @can('users.departments.view')
+                <li>
+                    <a href="{{ route('admin.organization.staff') }}">
+                        <div class="parent-icon"><i class='bx bx-id-card'></i></div>
+                        <div class="menu-title">Staff Directory</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.organization.departments') }}">
+                        <div class="parent-icon"><i class='bx bx-sitemap'></i></div>
+                        <div class="menu-title">Departments</div>
+                    </a>
+                </li>
+            @endcan
+            @can('users.teams.view')
+                <li>
+                    <a href="{{ route('admin.organization.teams') }}">
+                        <div class="parent-icon"><i class='bx bx-group'></i></div>
+                        <div class="menu-title">Teams & Leads</div>
+                    </a>
+                </li>
+            @endcan
         @endif
 
-        <!-- 8. SYSTEM & SECURITY DROPDOWN -->
-        <li class="{{ request()->is('admin/features*') || request()->is('admin/roles*') || request()->is('admin/permissions*') || request()->is('admin/audit-logs*') ? 'mm-active' : '' }}">
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='bx bx-shield-quarter'></i></div>
-                <div class="menu-title">System & Security</div>
-            </a>
-            <ul>
-                @can('core.features.view')
-                    <li class="{{ request()->routeIs('admin.features.*') ? 'mm-active' : '' }}">
-                        <a href="{{ route('admin.features.index') }}"><i class="bx bx-right-arrow-alt"></i>Module Feature Flags</a>
-                    </li>
-                @endcan
-                @can('users.roles.view')
-                    <li class="{{ request()->routeIs('admin.roles.*') ? 'mm-active' : '' }}">
-                        <a href="{{ route('admin.roles.index') }}"><i class="bx bx-right-arrow-alt"></i>Roles & RBAC</a>
-                    </li>
-                @endcan
-                @can('users.permissions.view')
-                    <li class="{{ request()->routeIs('admin.permissions.*') ? 'mm-active' : '' }}">
-                        <a href="{{ route('admin.permissions.index') }}"><i class="bx bx-right-arrow-alt"></i>Permissions Matrix</a>
-                    </li>
-                @endcan
-                @can('users.audit-logs.view')
-                    <li class="{{ request()->routeIs('admin.audit-logs.*') ? 'mm-active' : '' }}">
-                        <a href="{{ route('admin.audit-logs.index') }}"><i class="bx bx-right-arrow-alt"></i>Compliance Audit Trail</a>
-                    </li>
-                @endcan
-            </ul>
-        </li>
+        <!-- System & Security (Flat Section) -->
+        <li class="menu-label">System & Security</li>
+        @can('core.features.view')
+            <li>
+                <a href="{{ route('admin.features.index') }}">
+                    <div class="parent-icon"><i class='bx bx-toggle-right'></i></div>
+                    <div class="menu-title">Module Feature Flags</div>
+                </a>
+            </li>
+        @endcan
+        @can('users.roles.view')
+            <li>
+                <a href="{{ route('admin.roles.index') }}">
+                    <div class="parent-icon"><i class='bx bx-shield-alt-2'></i></div>
+                    <div class="menu-title">Roles & RBAC</div>
+                </a>
+            </li>
+        @endcan
+        @can('users.permissions.view')
+            <li>
+                <a href="{{ route('admin.permissions.index') }}">
+                    <div class="parent-icon"><i class='bx bx-key'></i></div>
+                    <div class="menu-title">Permissions Matrix</div>
+                </a>
+            </li>
+        @endcan
+        @can('users.audit-logs.view')
+            <li>
+                <a href="{{ route('admin.audit-logs.index') }}">
+                    <div class="parent-icon"><i class='bx bx-history'></i></div>
+                    <div class="menu-title">Compliance Audit Trail</div>
+                </a>
+            </li>
+        @endcan
     </ul>
 </div>

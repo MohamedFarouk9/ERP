@@ -6,6 +6,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('erp_theme_class');
+            if (savedTheme) {
+                document.documentElement.className = savedTheme;
+            }
+        })();
+    </script>
     <!--favicon-->
     <link rel="icon" href="{{ asset('admin/assets/images/favicon-32x32.png') }}" type="image/png" />
     <!-- Google Fonts (Rukada Roboto) -->
@@ -81,11 +89,13 @@
             if ($.fn.knob) {
                 $(".knob").knob();
             }
-            // Persist Rukada Theme Customizer selection across pages
-            const savedTheme = localStorage.getItem('erp_theme_class');
-            if (savedTheme) {
-                $('html').attr('class', savedTheme);
-            }
+            // Sync Theme Customizer radio buttons & persist changes
+            const savedTheme = localStorage.getItem('erp_theme_class') || '';
+            if (savedTheme.includes('dark-theme')) $('#darkmode').prop('checked', true);
+            else if (savedTheme.includes('semi-dark')) $('#semidark').prop('checked', true);
+            else if (savedTheme.includes('minimal-theme')) $('#minimaltheme').prop('checked', true);
+            else $('#lightmode').prop('checked', true);
+
             $('.switcher-body input[type="radio"], .switcher-body .indigator').on('click change', function() {
                 setTimeout(function() {
                     localStorage.setItem('erp_theme_class', $('html').attr('class') || '');
