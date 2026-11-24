@@ -87,7 +87,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <span class="text-muted">Change</span>
-                        <span>${{ number_format(($sale->change_amount ?? 0) / 100, 2) }}</span>
+                        <span>${{ number_format(($sale->change_due ?? 0) / 100, 2) }}</span>
                     </div>
                 </div>
 
