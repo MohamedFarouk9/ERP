@@ -15,3 +15,4 @@ This directory documents every phase of the ERP Static Modular Monolith architec
 10. [Phase 10: Procurement Module & Complete Invoice Service](10-procurement-and-invoice-enhancement.md)
 11. [Phase 11: Rukada Vertical Template Upgrade, Live Analytics & Organization/HR](11-rukada-analytics-and-organization-hr.md)
 12. [Phase 12: Wave 2 — HRM & Payroll Module](12-hrm-module.md)
+13. [Phase 13: Wave 2 — Point of Sale (POS) Module](13-pos-module.md)

@@ -46,6 +46,11 @@
                         <li><a href="{{ route('admin.hrm.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>HRM Analytics</a></li>
                     @endcan
                 @endif
+                @if($featureManager->isEnabled('pos'))
+                    @can('pos.terminal.view')
+                        <li><a href="{{ route('admin.pos.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>POS Analytics</a></li>
+                    @endcan
+                @endif
             </ul>
         </li>
 
@@ -73,6 +78,27 @@
                     <a href="{{ route('admin.invoices.index') }}">
                         <div class="parent-icon"><i class='bx bx-receipt'></i></div>
                         <div class="menu-title">Invoices</div>
+                    </a>
+                </li>
+            @endcan
+        @endif
+
+        @if($featureManager->isEnabled('pos'))
+            <!-- Point of Sale (Flat Section) -->
+            <li class="menu-label">Point of Sale</li>
+            @can('pos.terminal.view')
+                <li>
+                    <a href="{{ route('admin.pos.terminal') }}">
+                        <div class="parent-icon"><i class='bx bx-desktop'></i></div>
+                        <div class="menu-title">POS Terminal</div>
+                    </a>
+                </li>
+            @endcan
+            @can('pos.shifts.view')
+                <li>
+                    <a href="{{ route('admin.pos.shifts.index') }}">
+                        <div class="parent-icon"><i class='bx bx-time-five'></i></div>
+                        <div class="menu-title">Shifts &amp; Sales</div>
                     </a>
                 </li>
             @endcan

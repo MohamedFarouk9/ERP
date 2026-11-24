@@ -87,6 +87,11 @@ class UsersDatabaseSeeder extends Seeder
             ['hrm', 'payroll', 'view', 'View Payroll'],
             ['hrm', 'payroll', 'create', 'Generate Payroll'],
             ['hrm', 'payroll', 'pay', 'Pay Payroll'],
+            // POS
+            ['pos', 'terminal', 'view', 'Access POS Terminal'],
+            ['pos', 'sales', 'create', 'Complete POS Sales'],
+            ['pos', 'shifts', 'view', 'View POS Shifts'],
+            ['pos', 'shifts', 'manage', 'Open/Close POS Shifts'],
         ];
 
         $allPermissions = [];

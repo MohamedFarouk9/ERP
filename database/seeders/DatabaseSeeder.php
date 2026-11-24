@@ -10,6 +10,7 @@ use Modules\Core\Database\Seeders\CoreDatabaseSeeder;
 use Modules\Hrm\Database\Seeders\HrmDatabaseSeeder;
 use Modules\Inventory\Database\Seeders\InventoryDatabaseSeeder;
 use Modules\Payments\Database\Seeders\PaymentsDatabaseSeeder;
+use Modules\Pos\Database\Seeders\PosDatabaseSeeder;
 use Modules\Procurement\Database\Seeders\ProcurementDatabaseSeeder;
 use Modules\Sales\Database\Seeders\SalesDatabaseSeeder;
 use Modules\Users\Database\Seeders\UsersDatabaseSeeder;
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
             PaymentsDatabaseSeeder::class,
             ProcurementDatabaseSeeder::class,
             HrmDatabaseSeeder::class,
+            PosDatabaseSeeder::class,
         ]);
     }
 }

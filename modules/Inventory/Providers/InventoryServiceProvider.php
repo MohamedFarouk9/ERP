@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Modules\Inventory\Listeners\AddStockOnPurchaseOrderReceived;
+use Modules\Inventory\Listeners\DeductStockOnPosSaleCompleted;
 use Modules\Inventory\Listeners\DeductStockOnSalesOrderConfirmed;
+use Modules\Pos\Events\PosSaleCompleted;
 use Modules\Procurement\Events\PurchaseOrderReceived;
 use Modules\Sales\Events\SalesOrderConfirmed;
 
@@ -26,6 +28,7 @@ final class InventoryServiceProvider extends ServiceProvider
 
         Event::listen(SalesOrderConfirmed::class, DeductStockOnSalesOrderConfirmed::class);
         Event::listen(PurchaseOrderReceived::class, AddStockOnPurchaseOrderReceived::class);
+        Event::listen(PosSaleCompleted::class, DeductStockOnPosSaleCompleted::class);
     }
 
     protected function registerRoutes(): void

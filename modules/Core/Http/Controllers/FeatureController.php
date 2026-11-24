@@ -26,6 +26,7 @@ class FeatureController extends Controller
             'payments' => 'Payments & Refunds',
             'procurement' => 'Procurement & Suppliers',
             'hrm' => 'Human Resources & Payroll',
+            'pos' => 'Point of Sale (POS)',
         ];
 
         $statuses = $this->featureManager->all();
