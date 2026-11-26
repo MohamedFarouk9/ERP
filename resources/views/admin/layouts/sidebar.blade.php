@@ -51,6 +51,11 @@
                         <li><a href="{{ route('admin.pos.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>POS Analytics</a></li>
                     @endcan
                 @endif
+                @if($featureManager->isEnabled('crm'))
+                    @can('crm.leads.view')
+                        <li><a href="{{ route('admin.crm.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>CRM Analytics</a></li>
+                    @endcan
+                @endif
             </ul>
         </li>
 
@@ -99,6 +104,35 @@
                     <a href="{{ route('admin.pos.shifts.index') }}">
                         <div class="parent-icon"><i class='bx bx-time-five'></i></div>
                         <div class="menu-title">Shifts &amp; Sales</div>
+                    </a>
+                </li>
+            @endcan
+        @endif
+
+        @if($featureManager->isEnabled('crm'))
+            <!-- CRM (Flat Section) -->
+            <li class="menu-label">CRM</li>
+            @can('crm.leads.view')
+                <li>
+                    <a href="{{ route('admin.crm.leads.index') }}">
+                        <div class="parent-icon"><i class='bx bx-user-voice'></i></div>
+                        <div class="menu-title">Leads</div>
+                    </a>
+                </li>
+            @endcan
+            @can('crm.deals.view')
+                <li>
+                    <a href="{{ route('admin.crm.deals.index') }}">
+                        <div class="parent-icon"><i class='bx bx-briefcase'></i></div>
+                        <div class="menu-title">Deals Pipeline</div>
+                    </a>
+                </li>
+            @endcan
+            @can('crm.activities.view')
+                <li>
+                    <a href="{{ route('admin.crm.activities.index') }}">
+                        <div class="parent-icon"><i class='bx bx-calendar-check'></i></div>
+                        <div class="menu-title">Activities</div>
                     </a>
                 </li>
             @endcan

@@ -27,6 +27,7 @@ class FeatureController extends Controller
             'procurement' => 'Procurement & Suppliers',
             'hrm' => 'Human Resources & Payroll',
             'pos' => 'Point of Sale (POS)',
+            'crm' => 'CRM (Leads & Deals)',
         ];
 
         $statuses = $this->featureManager->all();

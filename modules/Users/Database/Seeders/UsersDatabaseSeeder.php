@@ -92,6 +92,13 @@ class UsersDatabaseSeeder extends Seeder
             ['pos', 'sales', 'create', 'Complete POS Sales'],
             ['pos', 'shifts', 'view', 'View POS Shifts'],
             ['pos', 'shifts', 'manage', 'Open/Close POS Shifts'],
+            // CRM
+            ['crm', 'leads', 'view', 'View CRM Leads'],
+            ['crm', 'leads', 'manage', 'Manage & Convert CRM Leads'],
+            ['crm', 'deals', 'view', 'View CRM Deals Pipeline'],
+            ['crm', 'deals', 'manage', 'Manage CRM Deals & Stages'],
+            ['crm', 'activities', 'view', 'View CRM Activities'],
+            ['crm', 'activities', 'manage', 'Manage CRM Activities'],
         ];
 
         $allPermissions = [];

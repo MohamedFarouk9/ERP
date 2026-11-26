@@ -100,3 +100,4 @@ sequenceDiagram
 | 11 | [Phase 11: Analytics Dashboards & Organization UI](11-rukada-analytics-and-organization-hr.md) | All Modules + `Users` | ApexCharts Hubs, Sidebar Structure, Org UI |
 | 12 | [Phase 12: Wave 2 — HRM & Payroll Module](12-hrm-module.md) | `modules/Hrm/` | Employees, Attendance, Leaves, Payroll Runs |
 | 13 | [Phase 13: Wave 2 — Point of Sale (POS) Module](13-pos-module.md) | `modules/Pos/` | Shifts, Terminal Checkout, Thermal Receipts |
+| 14 | [Phase 14: Wave 3 — CRM Module](14-crm-module.md) | `modules/Crm/` | Leads, Deals Pipeline, Activities, Lead-to-Customer |
