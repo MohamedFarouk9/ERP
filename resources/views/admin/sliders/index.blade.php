@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Sliders')
 
 @section('content')
@@ -20,10 +20,10 @@
                     <table id="example" class="table table-striped table-bordered dataTable" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Image</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>{{ __('ID') }}</th>
+                                <th>{{ __('Image') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -1,13 +1,12 @@
 @extends('admin.layouts.app')
-@section('title', 'Audit Logs')
+@section('title', __('Compliance Audit Trail'))
 
 @section('content')
 <div class="wrapper">
     <div class="page-wrapper">
         <div class="page-content">
             <div class="mb-3">
-                <h4 class="mb-0">Compliance Audit Trail</h4>
-                <small class="text-muted">Immutable security log of all tenant model creations, updates, and deletions</small>
+                <h4 class="mb-0">{{ __('Compliance Audit Trail') }}</h4>
             </div>
             <div class="card radius-10">
                 <div class="card-body">
@@ -15,11 +14,11 @@
                         <table id="auditLogsDataTable" class="table table-striped table-bordered align-middle w-100">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Timestamp</th>
-                                    <th>User</th>
-                                    <th>Event</th>
-                                    <th>Target</th>
-                                    <th>IP Address</th>
+                                    <th>{{ __('Timestamp') }}</th>
+                                    <th>{{ __('User') }}</th>
+                                    <th>{{ __('Event') }}</th>
+                                    <th>{{ __('Target') }}</th>
+                                    <th>{{ __('IP Address') }}</th>
                                 </tr>
                             </thead>
                         </table>

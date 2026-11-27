@@ -17,8 +17,8 @@ $(document).ready(function() {
     $(document).on('submit', '.ajax-delete-form', function(e) {
         e.preventDefault();
         var form = $(this);
-        var title = form.data('title') || 'Are you sure?';
-        var text = form.data('text') || 'This record will be deleted!';
+        var title = form.data('title') || @json(__('Are you sure?'));
+        var text = form.data('text') || @json(__('This record will be deleted!'));
 
         Swal.fire({
             title: title,
@@ -27,7 +27,8 @@ $(document).ready(function() {
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: @json(__('Yes, delete it!')),
+            cancelButtonText: @json(__('Cancel'))
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -39,7 +40,7 @@ $(document).ready(function() {
                     },
                     data: form.serialize(),
                     success: function(response) {
-                        Swal.fire('Deleted!', response.message || 'Record deleted successfully.', 'success').then(function() {
+                        Swal.fire(@json(__('Deleted!')), response.message || @json(__('Record deleted successfully.')), 'success').then(function() {
                             if (window.erpActiveDataTable) {
                                 window.erpActiveDataTable.ajax.reload(null, false);
                             } else {
@@ -48,8 +49,8 @@ $(document).ready(function() {
                         });
                     },
                     error: function(xhr) {
-                        let msg = xhr.responseJSON?.message || 'Unable to delete record.';
-                        Swal.fire('Error', msg, 'error');
+                        let msg = xhr.responseJSON?.message || @json(__('Unable to delete record.'));
+                        Swal.fire(@json(__('Error')), msg, 'error');
                     }
                 });
             }
@@ -60,9 +61,9 @@ $(document).ready(function() {
     $(document).on('submit', '.ajax-action-form', function(e) {
         e.preventDefault();
         var form = $(this);
-        var title = form.data('title') || 'Confirm Action';
-        var text = form.data('text') || 'Do you want to proceed with this action?';
-        var confirmText = form.data('confirm-text') || 'Yes, proceed!';
+        var title = form.data('title') || @json(__('Confirm Action'));
+        var text = form.data('text') || @json(__('Do you want to proceed with this action?'));
+        var confirmText = form.data('confirm-text') || @json(__('Yes, proceed!'));
 
         Swal.fire({
             title: title,
@@ -71,7 +72,8 @@ $(document).ready(function() {
             showCancelButton: true,
             confirmButtonColor: '#0d6efd',
             cancelButtonColor: '#6c757d',
-            confirmButtonText: confirmText
+            confirmButtonText: confirmText,
+            cancelButtonText: @json(__('Cancel'))
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -83,7 +85,7 @@ $(document).ready(function() {
                     },
                     data: form.serialize(),
                     success: function(response) {
-                        Swal.fire('Done!', response.message || 'Action completed successfully.', 'success').then(function() {
+                        Swal.fire(@json(__('Done!')), response.message || @json(__('Action completed successfully.')), 'success').then(function() {
                             if (window.erpActiveDataTable) {
                                 window.erpActiveDataTable.ajax.reload(null, false);
                             } else {
@@ -92,8 +94,8 @@ $(document).ready(function() {
                         });
                     },
                     error: function(xhr) {
-                        let msg = xhr.responseJSON?.message || 'Action failed.';
-                        Swal.fire('Error', msg, 'error');
+                        let msg = xhr.responseJSON?.message || @json(__('Action failed.'));
+                        Swal.fire(@json(__('Error')), msg, 'error');
                     }
                 });
             }

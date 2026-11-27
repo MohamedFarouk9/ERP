@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Sales Orders')
+@section('title', __('Sales Orders'))
 
 @section('content')
 <div class="wrapper">
@@ -7,12 +7,12 @@
         <div class="page-content">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div>
-                    <h4 class="mb-0">Sales Orders</h4>
-                    <small class="text-muted">Create multi-item sales orders and confirm for fulfillment</small>
+                    <h4 class="mb-0">{{ __('Sales Orders') }}</h4>
+                    <small class="text-muted">{{ __('Create multi-item sales orders and confirm for fulfillment') }}</small>
                 </div>
                 @can('sales.orders.create')
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createOrderModal">
-                        <i class="bx bx-plus"></i> New Sales Order
+                        <i class="bx bx-plus"></i> {{ __('New Sales Order') }}
                     </button>
                 @endcan
             </div>
@@ -23,13 +23,13 @@
                         <table id="ordersDataTable" class="table table-striped table-bordered align-middle w-100">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Order #</th>
-                                    <th>Customer</th>
-                                    <th>Order Date</th>
-                                    <th>Items</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Actions</th>
+                                    <th>{{ __('Order #') }}</th>
+                                    <th>{{ __('Customer') }}</th>
+                                    <th>{{ __('Order Date') }}</th>
+                                    <th>{{ __('Items') }}</th>
+                                    <th>{{ __('Total') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th class="text-end">{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -46,17 +46,17 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.orders.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Create Draft Sales Order</h5>
+                <h5 class="modal-title">{{ __('Create Draft Sales Order') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div class="row g-3 mb-3">
                     <div class="col-md-4">
-                        <label class="form-label">Order # *</label>
+                        <label class="form-label">{{ __('Order #') }} *</label>
                         <input type="text" name="order_number" class="form-control" required value="SO-{{ date('YmdHis') }}">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Customer *</label>
+                        <label class="form-label">{{ __('Customer') }} *</label>
                         <select name="customer_id" class="form-select" required>
                             @foreach($customers as $c)
                                 <option value="{{ $c->id }}">{{ $c->code }} - {{ $c->name }}</option>
@@ -64,24 +64,24 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Warehouse</label>
+                        <label class="form-label">{{ __('Warehouse') }}</label>
                         <select name="warehouse_id" class="form-select">
-                            <option value="">-- Optional --</option>
+                            <option value="">--</option>
                             @foreach($warehouses as $w)
                                 <option value="{{ $w->id }}">{{ $w->code }} - {{ $w->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Order Date *</label>
+                        <label class="form-label">{{ __('Order Date') }} *</label>
                         <input type="date" name="order_date" class="form-control" required value="{{ date('Y-m-d') }}">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Discount (Cents)</label>
+                        <label class="form-label">{{ __('Discount') }}</label>
                         <input type="number" name="discount_amount" class="form-control" value="0" min="0">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Notes</label>
+                        <label class="form-label">{{ __('Notes') }}</label>
                         <input type="text" name="notes" class="form-control">
                     </div>
                 </div>
@@ -95,10 +95,10 @@
                     <table class="table table-bordered align-middle" id="orderItemsTable">
                         <thead class="table-light">
                             <tr>
-                                <th style="width: 35%">Product *</th>
-                                <th style="width: 15%">Qty *</th>
-                                <th style="width: 20%">Unit Price (Cents) *</th>
-                                <th style="width: 15%">Tax Rate (bps)</th>
+                                <th style="width: 35%">{{ __('Product *') }}</th>
+                                <th style="width: 15%">{{ __('Qty *') }}</th>
+                                <th style="width: 20%">{{ __('Unit Price (Cents) *') }}</th>
+                                <th style="width: 15%">{{ __('Tax Rate (bps)') }}</th>
                                 <th style="width: 50px"></th>
                             </tr>
                         </thead>
@@ -121,8 +121,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save Draft Order</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Save Draft Order') }}</button>
             </div>
         </form>
     </div>
@@ -137,20 +137,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <p class="mb-2"><strong>Customer:</strong> <span id="vo_customer"></span> | <strong>Status:</strong> <span id="vo_status" class="badge bg-info text-dark text-uppercase"></span></p>
+                <p class="mb-2"><strong>{{ __('Customer') }}:</strong> <span id="vo_customer"></span> | <strong>{{ __('Status') }}:</strong> <span id="vo_status" class="badge bg-info text-dark text-uppercase"></span></p>
                 <table class="table table-bordered align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>Description</th>
-                            <th class="text-end">Qty</th>
-                            <th class="text-end">Unit Price</th>
-                            <th class="text-end">Tax</th>
-                            <th class="text-end">Line Total</th>
+                            <th>{{ __('Description') }}</th>
+                            <th class="text-end">{{ __('Qty') }}</th>
+                            <th class="text-end">{{ __('Unit Price') }}</th>
+                            <th class="text-end">{{ __('Tax') }}</th>
+                            <th class="text-end">{{ __('Line Total') }}</th>
                         </tr>
                     </thead>
                     <tbody id="vo_items"></tbody>
                 </table>
-                <div class="text-end fw-bold fs-5">Total: <span id="vo_total"></span></div>
+                <div class="text-end fw-bold fs-5">{{ __('Total') }}: <span id="vo_total"></span></div>
             </div>
         </div>
     </div>

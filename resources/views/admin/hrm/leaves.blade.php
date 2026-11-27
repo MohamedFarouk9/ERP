@@ -1,17 +1,16 @@
-@extends('admin.layouts.app')
-@section('title', 'Leave Requests')
+﻿@extends('admin.layouts.app')
+@section('title', __('Leave Requests'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <div>
-                <h4 class="mb-0">Leave Requests & Approvals</h4>
-                <small class="text-muted">Manage annual, sick, and emergency employee leave requests</small>
+                <h4 class="mb-0">{{ __('Leave Requests & Approvals') }}</h4>
             </div>
             @can('hrm.leaves.create')
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createLeaveModal">
-                    <i class="bx bx-calendar-plus"></i> Request Leave
+                    <i class="bx bx-calendar-plus"></i> {{ __('Request Leave') }}
                 </button>
             @endcan
         </div>
@@ -22,14 +21,14 @@
                     <table id="leavesDataTable" class="table table-striped table-bordered align-middle w-100">
                         <thead class="table-light">
                             <tr>
-                                <th>Employee</th>
-                                <th>Type</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Days</th>
-                                <th>Reason</th>
-                                <th>Status</th>
-                                <th class="text-end">Actions</th>
+                                <th>{{ __('Employee') }}</th>
+                                <th>{{ __('Type') }}</th>
+                                <th>{{ __('Start Date') }}</th>
+                                <th>{{ __('End Date') }}</th>
+                                <th>{{ __('Days') }}</th>
+                                <th>{{ __('Reason') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th class="text-end">{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -45,33 +44,33 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.hrm.leaves.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Submit Leave Request</h5>
+                <h5 class="modal-title">{{ __('Submit Leave Request') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
                 <div class="col-12">
-                    <label class="form-label">Employee *</label>
+                    <label class="form-label">{{ __('Employee *') }}</label>
                     <select name="employee_id" class="form-select" required>
                         @foreach($employees as $e)<option value="{{ $e->id }}">{{ $e->employee_code }} - {{ $e->fullName() }}</option>@endforeach
                     </select>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Leave Type *</label>
+                    <label class="form-label">{{ __('Leave Type *') }}</label>
                     <select name="leave_type" class="form-select" required>
-                        <option value="annual">Annual Leave</option>
-                        <option value="sick">Sick Leave</option>
-                        <option value="emergency">Emergency Leave</option>
-                        <option value="unpaid">Unpaid Leave</option>
-                        <option value="maternity">Maternity / Paternity</option>
+                        <option value="annual">{{ __('Annual Leave') }}</option>
+                        <option value="sick">{{ __('Sick Leave') }}</option>
+                        <option value="emergency">{{ __('Emergency Leave') }}</option>
+                        <option value="unpaid">{{ __('Unpaid Leave') }}</option>
+                        <option value="maternity">{{ __('Maternity / Paternity') }}</option>
                     </select>
                 </div>
-                <div class="col-md-6"><label class="form-label">Start Date *</label><input type="date" name="start_date" class="form-control" required value="{{ date('Y-m-d') }}"></div>
-                <div class="col-md-6"><label class="form-label">End Date *</label><input type="date" name="end_date" class="form-control" required value="{{ date('Y-m-d', strtotime('+2 days')) }}"></div>
-                <div class="col-12"><label class="form-label">Reason</label><textarea name="reason" class="form-control" rows="2"></textarea></div>
+                <div class="col-md-6"><label class="form-label">{{ __('Start Date *') }}</label><input type="date" name="start_date" class="form-control" required value="{{ date('Y-m-d') }}"></div>
+                <div class="col-md-6"><label class="form-label">{{ __('End Date *') }}</label><input type="date" name="end_date" class="form-control" required value="{{ date('Y-m-d', strtotime('+2 days')) }}"></div>
+                <div class="col-12"><label class="form-label">{{ __('Reason') }}</label><textarea name="reason" class="form-control" rows="2"></textarea></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Submit Request</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Submit Request') }}</button>
             </div>
         </form>
     </div>

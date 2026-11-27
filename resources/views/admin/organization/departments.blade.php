@@ -1,17 +1,16 @@
-@extends('admin.layouts.app')
-@section('title', 'Departments')
+﻿@extends('admin.layouts.app')
+@section('title', __('Departments'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <div>
-                <h4 class="mb-0">Departments</h4>
-                <small class="text-muted">Manage organizational business units and cost centers</small>
+                <h4 class="mb-0">{{ __('Departments') }}</h4>
             </div>
             @can('users.departments.create')
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createDeptModal">
-                    <i class="bx bx-plus"></i> Add Department
+                    <i class="bx bx-plus"></i> {{ __('Add Department') }}
                 </button>
             @endcan
         </div>
@@ -22,11 +21,11 @@
                     <table class="table table-striped table-bordered align-middle erp-datatable w-100">
                         <thead class="table-light">
                             <tr>
-                                <th>Code</th>
-                                <th>Department Name</th>
-                                <th>Description</th>
-                                <th>Teams</th>
-                                <th class="text-end">Actions</th>
+                                <th>{{ __('Code') }}</th>
+                                <th>{{ __('Department Name') }}</th>
+                                <th>{{ __('Notes') }}</th>
+                                <th>{{ __('Teams') }}</th>
+                                <th class="text-end">{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,17 +67,17 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.organization.departments.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Add Department</h5>
+                <h5 class="modal-title">{{ __('Add Department') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
-                <div class="col-md-4"><label class="form-label">Code *</label><input type="text" name="code" class="form-control" required placeholder="HR"></div>
-                <div class="col-md-8"><label class="form-label">Name *</label><input type="text" name="name" class="form-control" required placeholder="Human Resources"></div>
-                <div class="col-12"><label class="form-label">Description</label><textarea name="description" class="form-control" rows="2"></textarea></div>
+                <div class="col-md-4"><label class="form-label">{{ __('Code *') }}</label><input type="text" name="code" class="form-control" required placeholder="HR"></div>
+                <div class="col-md-8"><label class="form-label">{{ __('Name *') }}</label><input type="text" name="name" class="form-control" required placeholder="Human Resources"></div>
+                <div class="col-12"><label class="form-label">{{ __('Description') }}</label><textarea name="description" class="form-control" rows="2"></textarea></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Department</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Create Department') }}</button>
             </div>
         </form>
     </div>
@@ -91,17 +90,17 @@
             @csrf
             @method('PUT')
             <div class="modal-header">
-                <h5 class="modal-title">Edit Department</h5>
+                <h5 class="modal-title">{{ __('Edit Department') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
-                <div class="col-md-4"><label class="form-label">Code *</label><input type="text" name="code" id="ed_code" class="form-control" required></div>
-                <div class="col-md-8"><label class="form-label">Name *</label><input type="text" name="name" id="ed_name" class="form-control" required></div>
-                <div class="col-12"><label class="form-label">Description</label><textarea name="description" id="ed_desc" class="form-control" rows="2"></textarea></div>
+                <div class="col-md-4"><label class="form-label">{{ __('Code *') }}</label><input type="text" name="code" id="ed_code" class="form-control" required></div>
+                <div class="col-md-8"><label class="form-label">{{ __('Name *') }}</label><input type="text" name="name" id="ed_name" class="form-control" required></div>
+                <div class="col-12"><label class="form-label">{{ __('Description') }}</label><textarea name="description" id="ed_desc" class="form-control" rows="2"></textarea></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update Department</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update Department') }}</button>
             </div>
         </form>
     </div>

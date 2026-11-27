@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Edit Category')
 
 @section('content')
@@ -14,30 +14,30 @@
                     @csrf
                     @method('PATCH')
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">{{ __('Name') }}</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $category->name) }}" required>
                         @error('name')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="slug" class="form-label">Slug</label>
+                        <label for="slug" class="form-label">{{ __('Slug') }}</label>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug', $category->slug) }}">
                         @error('slug')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
+                        <label for="description" class="form-label">{{ __('Description') }}</label>
                         <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description', $category->description) }}</textarea>
                         @error('description')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="parent_id" class="form-label">Parent Category</label>
+                        <label for="parent_id" class="form-label">{{ __('Parent Category') }}</label>
                         <select class="form-select @error('parent_id') is-invalid @enderror" id="parent_id" name="parent_id">
-                            <option value="">None</option>
+                            <option value="">{{ __('None') }}</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->id }}" @if(old('parent_id', $category->parent_id) == $cat->id) selected @endif>{{ $cat->name }}</option>
                             @endforeach
@@ -47,7 +47,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
+                        <label for="image" class="form-label">{{ __('Image') }}</label>
                         <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
                         @if($category->image)
                             <img src="{{ asset($category->image) }}" alt="Current Image" id="showImage" class="img-thumbnail mt-2" width="100">
@@ -61,14 +61,14 @@
                         <label class="form-check-label" for="is_active">Active</label>
                     </div>
                     <div class="mb-3">
-                        <label for="order" class="form-label">Order</label>
+                        <label for="order" class="form-label">{{ __('Order') }}</label>
                         <input type="number" class="form-control @error('order') is-invalid @enderror" id="order" name="order" value="{{ old('order', $category->order) }}">
                         @error('order')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Update Category</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Update Category') }}</button>
                     </div>
                 </form>
             </div>

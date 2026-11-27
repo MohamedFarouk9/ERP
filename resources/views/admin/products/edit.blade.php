@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Edit Product')
 
 @section('content')
@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Description</label>
+                                <label class="form-label">{{ __('Description') }}</label>
                                 <textarea name="description" class="form-control @error('description') is-invalid @enderror"
                                           rows="4">{{ old('description', $product->description) }}</textarea>
                                 @error('description')
@@ -75,9 +75,9 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Category</label>
+                                    <label class="form-label">{{ __('Category') }}</label>
                                     <select name="product_category_id" class="form-select @error('product_category_id') is-invalid @enderror">
-                                        <option value="">Select Category</option>
+                                        <option value="">{{ __('Select Category') }}</option>
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}"
                                                     {{ old('product_category_id', $product->product_category_id) == $category->id ? 'selected' : '' }}>
@@ -91,7 +91,7 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Status</label>
+                                    <label class="form-label">{{ __('Status') }}</label>
                                     <select name="status" class="form-select @error('status') is-invalid @enderror">
                                         <option value="published" {{ old('status', $product->status) == 'published' ? 'selected' : '' }}>Published</option>
                                         <option value="draft" {{ old('status', $product->status) == 'draft' ? 'selected' : '' }}>Draft</option>
@@ -159,11 +159,11 @@
                                 <table class="table table-bordered align-middle mb-0" id="variants-table">
                                     <thead class="table-light">
                                         <tr>
-                                            <th style="width: 28%">Attribute</th>
-                                            <th style="width: 28%">Value</th>
-                                            <th style="width: 18%">Additional Price</th>
-                                            <th style="width: 18%">Quantity</th>
-                                            <th style="width: 8%">Action</th>
+                                            <th style="width: 28%">{{ __('Attribute') }}</th>
+                                            <th style="width: 28%">{{ __('Value') }}</th>
+                                            <th style="width: 18%">{{ __('Additional Price') }}</th>
+                                            <th style="width: 18%">{{ __('Quantity') }}</th>
+                                            <th style="width: 8%">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -306,7 +306,7 @@
             tr.innerHTML = `
                 <td>
                     <select name="variants[${variantIndex}][product_attribute_id]" class="form-select">
-                        <option value="">Select attribute</option>
+                        <option value="">{{ __('Select attribute') }}</option>
                         ${renderAttributeOptions().replace(`value="${selectedAttribute}"`, `value="${selectedAttribute}" selected`)}
                     </select>
                 </td>
@@ -398,7 +398,7 @@
                 <div class="image-manager">
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <h6>Drag to reorder • Click star to set cover</h6>
+                            <h6>Drag to reorder â€¢ Click star to set cover</h6>
                         </div>
                         <div class="col-md-6 text-end">
                             <button type="button" class="btn btn-primary" id="uploadNewImages" data-bs-toggle="modal" data-bs-target="#uploadImagesModal">
@@ -470,7 +470,7 @@
                                     <input type="file" id="uploadFiles" multiple accept="image/*" style="display: none;">
                                     <i class="bx bx-upload" style="font-size: 48px; color: #007bff;"></i>
                                     <h5 class="mt-3">Drag & drop images here or click to browse</h5>
-                                    <p class="text-muted">Max 10 images • 5MB each • JPEG, PNG, WebP</p>
+                                    <p class="text-muted">Max 10 images â€¢ 5MB each â€¢ JPEG, PNG, WebP</p>
                                 </div>
                                 <div id="selectedFilesList" class="mt-3" style="display: none;"></div>
                                 <div id="uploadProgress" class="mt-3" style="display: none;">
@@ -484,7 +484,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
                                 <button type="button" class="btn btn-primary" id="confirmUpload" disabled>
                                     <i class="bx bx-upload me-1"></i>Upload <span id="fileCount">0</span> Image(s)
                                 </button>

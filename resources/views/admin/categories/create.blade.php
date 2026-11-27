@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Add Category')
 
 @section('content')
@@ -13,30 +13,30 @@
                 <form class="ajax-form" method="POST" action="{{ route('admin.categories.store') }}" enctype="multipart/form-data" data-redirect="{{ route('admin.categories.index') }}">
                     @csrf
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">{{ __('Name') }}</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required>
                         @error('name')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="slug" class="form-label">Slug</label>
+                        <label for="slug" class="form-label">{{ __('Slug') }}</label>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug">
                         @error('slug')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
+                        <label for="description" class="form-label">{{ __('Description') }}</label>
                         <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"></textarea>
                         @error('description')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="parent_id" class="form-label">Parent Category</label>
+                        <label for="parent_id" class="form-label">{{ __('Parent Category') }}</label>
                         <select class="form-select @error('parent_id') is-invalid @enderror" id="parent_id" name="parent_id">
-                            <option value="" disabled>None</option>
+                            <option value="" disabled>{{ __('None') }}</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                             @endforeach
@@ -46,7 +46,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
+                        <label for="image" class="form-label">{{ __('Image') }}</label>
                         <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
 
                         @error('image')
@@ -58,14 +58,14 @@
                         <label class="form-check-label" for="is_active">Active</label>
                     </div>
                     <div class="mb-3">
-                        <label for="order" class="form-label">Order</label>
+                        <label for="order" class="form-label">{{ __('Order') }}</label>
                         <input type="number" class="form-control @error('order') is-invalid @enderror" id="order" name="order" value="0">
                         @error('order')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Add Category</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Add Category') }}</button>
                     </div>
                 </form>
             </div>

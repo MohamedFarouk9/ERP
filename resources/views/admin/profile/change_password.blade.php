@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Change Password')
 
 @section('content')
@@ -27,25 +27,25 @@
 								<form class="ajax-form" method="POST" action="{{ route('admin.password.update') }}">
 									@csrf
 									<div class="mb-3">
-										<label for="current_password" class="form-label">Current Password</label>
+										<label for="current_password" class="form-label">{{ __('Current Password') }}</label>
 										<input type="password" class="form-control @error('current_password') is-invalid @enderror" id="current_password" name="current_password" required>
 										@error('current_password')
 											<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
 										@enderror
 									</div>
 									<div class="mb-3">
-										<label for="password" class="form-label">New Password</label>
+										<label for="password" class="form-label">{{ __('New Password') }}</label>
 										<input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
 										@error('password')
 											<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
 										@enderror
 									</div>
 									<div class="mb-3">
-										<label for="password_confirmation" class="form-label">Confirm New Password</label>
+										<label for="password_confirmation" class="form-label">{{ __('Confirm New Password') }}</label>
 										<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
 									</div>
 									<div class="d-grid">
-										<button type="submit" class="btn btn-primary">Update Password</button>
+										<button type="submit" class="btn btn-primary">{{ __('Update Password') }}</button>
 									</div>
 								</form>
 							</div>

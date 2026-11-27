@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Edit Order - ' . $order->order_number)
 
 @section('content')
@@ -24,9 +24,9 @@
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label class="form-label">Order Status</label>
+                                    <label class="form-label">{{ __('Order Status') }}</label>
                                     <select name="status" class="form-select @error('status') is-invalid @enderror" required>
-                                        <option value="">Select Status</option>
+                                        <option value="">{{ __('Select Status') }}</option>
                                         <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pending</option>
                                         <option value="processing" {{ $order->status === 'processing' ? 'selected' : '' }}>Processing</option>
                                         <option value="shipped" {{ $order->status === 'shipped' ? 'selected' : '' }}>Shipped</option>
@@ -39,9 +39,9 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="form-label">Payment Status</label>
+                                    <label class="form-label">{{ __('Payment Status') }}</label>
                                     <select name="payment_status" class="form-select @error('payment_status') is-invalid @enderror" required>
-                                        <option value="">Select Payment Status</option>
+                                        <option value="">{{ __('Select Payment Status') }}</option>
                                         <option value="pending" {{ $order->payment_status === 'pending' ? 'selected' : '' }}>Pending</option>
                                         <option value="paid" {{ $order->payment_status === 'paid' ? 'selected' : '' }}>Paid</option>
                                         <option value="failed" {{ $order->payment_status === 'failed' ? 'selected' : '' }}>Failed</option>
@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Shipping Address</label>
+                                <label class="form-label">{{ __('Shipping Address') }}</label>
                                 <textarea name="shipping_address" class="form-control @error('shipping_address') is-invalid @enderror" rows="3">{{ $order->shipping_address }}</textarea>
                                 @error('shipping_address')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -62,7 +62,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Billing Address</label>
+                                <label class="form-label">{{ __('Billing Address') }}</label>
                                 <textarea name="billing_address" class="form-control @error('billing_address') is-invalid @enderror" rows="3">{{ $order->billing_address }}</textarea>
                                 @error('billing_address')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -70,7 +70,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Notes</label>
+                                <label class="form-label">{{ __('Notes') }}</label>
                                 <textarea name="notes" class="form-control @error('notes') is-invalid @enderror" rows="3">{{ $order->notes }}</textarea>
                                 @error('notes')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -78,7 +78,7 @@
                             </div>
 
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">Update Order</button>
+                                <button type="submit" class="btn btn-primary">{{ __('Update Order') }}</button>
                                 <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>

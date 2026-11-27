@@ -1,11 +1,11 @@
 @extends('admin.layouts.app')
-@section('title', 'Permissions')
+@section('title', __('Permissions Matrix'))
 
 @section('content')
 <div class="wrapper">
     <div class="page-wrapper">
         <div class="page-content">
-            <h4 class="mb-3">System Permissions</h4>
+            <h4 class="mb-3">{{ __('System Permissions') }}</h4>
             <div class="row">
                 @foreach($permissions as $module => $items)
                     <div class="col-md-6 mb-3">

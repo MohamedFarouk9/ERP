@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Order Details - ' . $order->order_number)
 
 @section('content')
@@ -78,10 +78,10 @@
                             <table class="table table-sm table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Product</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Total</th>
+                                        <th>{{ __('Product') }}</th>
+                                        <th>{{ __('Quantity') }}</th>
+                                        <th>{{ __('Price') }}</th>
+                                        <th>{{ __('Total') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

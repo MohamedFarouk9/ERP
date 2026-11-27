@@ -1,17 +1,16 @@
-@extends('admin.layouts.app')
-@section('title', 'Procurement Analytics Dashboard')
+﻿@extends('admin.layouts.app')
+@section('title', __('Procurement Analytics'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
-                <h4 class="mb-0">Procurement & Payables Analytics</h4>
-                <p class="mb-0 font-13 text-secondary">Vendor directory, purchase order spend, goods receipt, and AP liabilities</p>
+                <h4 class="mb-0">{{ __('Procurement & Payables Analytics') }}</h4>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.procurement.suppliers.index') }}" class="btn btn-sm btn-outline-primary">Suppliers</a>
-                <a href="{{ route('admin.procurement.orders.index') }}" class="btn btn-sm btn-primary">Purchase Orders</a>
+                <a href="{{ route('admin.procurement.suppliers.index') }}" class="btn btn-sm btn-outline-primary">{{ __('Suppliers') }}</a>
+                <a href="{{ route('admin.procurement.orders.index') }}" class="btn btn-sm btn-primary">{{ __('Purchase Orders') }}</a>
             </div>
         </div>
 
@@ -21,9 +20,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Active Suppliers</p>
+                                <p class="mb-0 text-secondary">{{ __('Active Suppliers') }}</p>
                                 <h4 class="my-1">{{ number_format($stats['suppliers_count']) }}</h4>
-                                <p class="mb-0 font-13 text-primary">Approved vendor base</p>
                             </div>
                             <div class="widgets-icons bg-light-primary text-primary ms-auto"><i class='bx bxs-buildings'></i></div>
                         </div>
@@ -35,9 +33,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Open Purchase Orders</p>
+                                <p class="mb-0 text-secondary">{{ __('Open Purchase Orders') }}</p>
                                 <h4 class="my-1 text-warning">{{ number_format($stats['open_pos_count']) }}</h4>
-                                <p class="mb-0 font-13 text-secondary">{{ number_format($stats['received_pos_count']) }} Received</p>
                             </div>
                             <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bxs-shopping-bag'></i></div>
                         </div>
@@ -49,9 +46,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Received Spend</p>
+                                <p class="mb-0 text-secondary">{{ __('Received Spend') }}</p>
                                 <h4 class="my-1 text-success">${{ number_format($stats['total_spend_cents'] / 100, 2) }}</h4>
-                                <p class="mb-0 font-13 text-success">Stocked into warehouses</p>
                             </div>
                             <div class="widgets-icons bg-light-success text-success ms-auto"><i class='bx bxs-truck'></i></div>
                         </div>
@@ -63,9 +59,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Unpaid Vendor Bills</p>
+                                <p class="mb-0 text-secondary">{{ __('Unpaid Vendor Bills') }}</p>
                                 <h4 class="my-1 text-danger">${{ number_format($stats['unpaid_bills_cents'] / 100, 2) }}</h4>
-                                <p class="mb-0 font-13 text-secondary">{{ number_format($stats['bills_count']) }} Total Bills</p>
+                                <p class="mb-0 font-13 text-secondary">{{ number_format($stats['bills_count']) }} {{ __('Vendor Bills') }}</p>
                             </div>
                             <div class="widgets-icons bg-light-danger text-danger ms-auto"><i class='bx bxs-file-doc'></i></div>
                         </div>
@@ -104,7 +100,7 @@
                         <div class="table-responsive">
                             <table class="table align-middle mb-0 table-hover">
                                 <thead class="table-light">
-                                    <tr><th>PO #</th><th>Supplier</th><th>Total</th><th>Status</th></tr>
+                                    <tr><th>{{ __('PO #') }}</th><th>{{ __('Supplier') }}</th><th>{{ __('Total') }}</th><th>{{ __('Status') }}</th></tr>
                                 </thead>
                                 <tbody>
                                     @forelse($recentOrders as $po)
@@ -131,7 +127,7 @@
                         <div class="table-responsive">
                             <table class="table align-middle mb-0 table-hover">
                                 <thead class="table-light">
-                                    <tr><th>Bill #</th><th>Supplier</th><th>Due</th><th>Total</th><th>Status</th></tr>
+                                    <tr><th>{{ __('Bill #') }}</th><th>{{ __('Supplier') }}</th><th>{{ __('Due') }}</th><th>{{ __('Total') }}</th><th>{{ __('Status') }}</th></tr>
                                 </thead>
                                 <tbody>
                                     @forelse($recentBills as $bill)

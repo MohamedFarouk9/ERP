@@ -1,29 +1,29 @@
 @extends('admin.layouts.app')
 
-@section('title', 'POS Shifts & Sales')
+@section('title', __('Shifts & Sales'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Point of Sale</div>
+            <div class="breadcrumb-title pe-3">{{ __('Point of Sale') }}</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.pos.dashboard') }}">POS Analytics</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Shifts &amp; Sales</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.pos.dashboard') }}">{{ __('POS Analytics') }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('Shifts & Sales') }}</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto d-flex gap-2">
                 @can('pos.shifts.manage')
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#openShiftModal">
-                    <i class="bx bx-play-circle me-1"></i> Open Shift
+                    <i class="bx bx-play-circle me-1"></i> {{ __('Open Shift') }}
                 </button>
                 @endcan
                 @can('pos.terminal.view')
                 <a href="{{ route('admin.pos.terminal') }}" class="btn btn-outline-success btn-sm">
-                    <i class="bx bx-desktop me-1"></i> POS Terminal
+                    <i class="bx bx-desktop me-1"></i> {{ __('POS Terminal') }}
                 </a>
                 @endcan
             </div>
@@ -32,23 +32,23 @@
         <!-- Register Shifts Table -->
         <div class="card radius-10 mb-4">
             <div class="card-header">
-                <h6 class="mb-0">Register Shifts</h6>
+                <h6 class="mb-0">{{ __('Register Shifts') }}</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="posShiftsTable" class="table table-striped table-bordered w-100">
                         <thead>
                             <tr>
-                                <th>Shift #</th>
-                                <th>Cashier</th>
-                                <th>Opened At</th>
-                                <th>Closed At</th>
-                                <th>Opening Cash</th>
-                                <th>Expected Cash</th>
-                                <th>Counted Cash</th>
-                                <th>Sales</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>{{ __('Shift #') }}</th>
+                                <th>{{ __('Cashier') }}</th>
+                                <th>{{ __('Opened At') }}</th>
+                                <th>{{ __('Closed At') }}</th>
+                                <th>{{ __('Opening Cash') }}</th>
+                                <th>{{ __('Expected Cash') }}</th>
+                                <th>{{ __('Counted Cash') }}</th>
+                                <th>{{ __('Sales') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -59,20 +59,20 @@
         <!-- POS Sales Table -->
         <div class="card radius-10">
             <div class="card-header">
-                <h6 class="mb-0">POS Sales History</h6>
+                <h6 class="mb-0">{{ __('POS Sales History') }}</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="posSalesTable" class="table table-striped table-bordered w-100">
                         <thead>
                             <tr>
-                                <th>Receipt #</th>
-                                <th>Date</th>
-                                <th>Cashier</th>
-                                <th>Payment</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                                <th>Receipt</th>
+                                <th>{{ __('Receipt #') }}</th>
+                                <th>{{ __('Date') }}</th>
+                                <th>{{ __('Cashier') }}</th>
+                                <th>{{ __('Payment') }}</th>
+                                <th>{{ __('Total') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Print Receipt') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -88,16 +88,16 @@
         <div class="modal-content">
             <form id="shiftsPageOpenForm">
                 <div class="modal-header">
-                    <h5 class="modal-title">Open POS Shift</h5>
+                    <h5 class="modal-title">{{ __('Open POS Shift') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Shift Number</label>
+                        <label class="form-label">{{ __('Shift Number') }}</label>
                         <input type="text" name="shift_number" class="form-control" value="SH-{{ now()->format('Ymd-His') }}" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Warehouse</label>
+                        <label class="form-label">{{ __('Warehouse') }}</label>
                         <select name="warehouse_id" class="form-select" required>
                             @foreach($warehouses as $warehouse)
                                 <option value="{{ $warehouse->id }}">{{ $warehouse->code }} — {{ $warehouse->name }}</option>
@@ -105,13 +105,13 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Opening Cash Float ($)</label>
+                        <label class="form-label">{{ __('Opening Cash Float ($)') }}</label>
                         <input type="number" step="0.01" min="0" name="opening_cash_dollars" class="form-control" value="200.00" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Open Shift</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Open Shift') }}</button>
                 </div>
             </form>
         </div>
@@ -125,22 +125,22 @@
             <form id="closeShiftForm">
                 <input type="hidden" id="closeShiftId">
                 <div class="modal-header">
-                    <h5 class="modal-title">Close POS Shift</h5>
+                    <h5 class="modal-title">{{ __('Close Shift') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Counted Cash in Drawer ($)</label>
+                        <label class="form-label">{{ __('Counted Cash in Drawer ($)') }}</label>
                         <input type="number" step="0.01" min="0" id="closeCountedCashDollars" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Closing Notes (Optional)</label>
+                        <label class="form-label">{{ __('Closing Notes (Optional)') }}</label>
                         <textarea id="closeShiftNotes" class="form-control" rows="2"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-warning">Close Shift</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                    <button type="submit" class="btn btn-warning">{{ __('Close Shift') }}</button>
                 </div>
             </form>
         </div>
@@ -175,16 +175,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 orderable: false,
                 searchable: false,
                 render: d => d === 'open'
-                    ? '<span class="badge bg-success">Open</span>'
-                    : '<span class="badge bg-secondary">Closed</span>'
+                    ? `<span class="badge bg-success">${@json(__('Open'))}</span>`
+                    : `<span class="badge bg-secondary">${@json(__('Closed'))}</span>`
             },
             {
                 data: null,
                 orderable: false,
                 searchable: false,
                 render: row => row.status === 'open'
-                    ? `<button type="button" class="btn btn-sm btn-warning btn-close-shift" data-id="${row.id}" data-expected="${(Number(row.expected_cash || 0) / 100).toFixed(2)}"><i class="bx bx-lock-alt me-1"></i>Close</button>`
-                    : '<span class="text-muted small">Reconciled</span>'
+                    ? `<button type="button" class="btn btn-sm btn-warning btn-close-shift" data-id="${row.id}" data-expected="${(Number(row.expected_cash || 0) / 100).toFixed(2)}"><i class="bx bx-lock-alt me-1"></i>${@json(__('Close'))}</button>`
+                    : `<span class="text-muted small">${@json(__('Closed'))}</span>`
             }
         ]
     });
@@ -206,13 +206,13 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 data: 'status',
                 name: 'status',
-                render: d => `<span class="badge bg-success text-uppercase">${d || 'completed'}</span>`
+                render: d => `<span class="badge bg-success text-uppercase">${@json(__('Completed'))}</span>`
             },
             {
                 data: 'id',
                 orderable: false,
                 searchable: false,
-                render: id => `<a href="${receiptBaseUrl}/${id}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bx bx-printer me-1"></i>Receipt</a>`
+                render: id => `<a href="${receiptBaseUrl}/${id}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bx bx-printer me-1"></i>${@json(__('Print Receipt'))}</a>`
             }
         ]
     });
@@ -246,10 +246,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await res.json();
             if (!res.ok) throw new Error(data.message || 'Failed to close shift.');
             bootstrap.Modal.getInstance(document.getElementById('closeShiftModal')).hide();
-            Swal.fire('Shift Closed', data.message || 'Shift closed successfully.', 'success');
+            Swal.fire(@json(__('Shift Closed')), data.message || @json(__('Operation successful!')), 'success');
             shiftsTable.ajax.reload(null, false);
         } catch (err) {
-            Swal.fire('Error', err.message, 'error');
+            Swal.fire(@json(__('Error')), err.message, 'error');
         }
     });
 
@@ -272,12 +272,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             });
             const data = await res.json();
-            if (!res.ok) throw new Error(data.message || 'Failed to open shift.');
+            if (!res.ok) throw new Error(data.message || @json(__('Action failed.')));
             bootstrap.Modal.getInstance(document.getElementById('openShiftModal')).hide();
-            Swal.fire('Shift Opened', data.message || 'Shift opened successfully.', 'success');
+            Swal.fire(@json(__('Shift Opened')), data.message || @json(__('Operation successful!')), 'success');
             shiftsTable.ajax.reload(null, false);
         } catch (err) {
-            Swal.fire('Error', err.message, 'error');
+            Swal.fire(@json(__('Error')), err.message, 'error');
         }
     });
 });

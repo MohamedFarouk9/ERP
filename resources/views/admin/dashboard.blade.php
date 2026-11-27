@@ -1,5 +1,5 @@
-@extends('admin.layouts.app')
-@section('title', 'Executive ERP Overview')
+﻿@extends('admin.layouts.app')
+@section('title', __('Executive ERP Overview'))
 
 @section('content')
 <div class="page-wrapper">
@@ -7,22 +7,22 @@
         <!-- Header Bar with Module Status Pills -->
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
             <div>
-                <h4 class="mb-0">Executive ERP Overview</h4>
+                <h4 class="mb-0">{{ __('Executive ERP Overview') }}</h4>
                 <p class="mb-0 font-13 text-secondary">
-                    <i class="bx bx-buildings me-1"></i>{{ $tenant->name }} · {{ number_format($stats['staff_count']) }} Staff Members
+                    <i class="bx bx-buildings me-1"></i>{{ $tenant->name }} Â· {{ number_format($stats['staff_count']) }} {{ __('Staff Members') }}
                 </p>
             </div>
             <div class="d-flex flex-wrap gap-2">
                 @foreach(['sales', 'inventory', 'procurement', 'accounting', 'payments'] as $mod)
                     @php $active = (bool) ($features[$mod] ?? false); @endphp
                     <span class="badge rounded-pill {{ $active ? 'bg-light-success text-success' : 'bg-light-secondary text-secondary' }} px-3 py-2">
-                        <i class="bx bxs-circle me-1" style="font-size: 8px;"></i>{{ ucfirst($mod) }}
+                        <i class="bx bxs-circle me-1" style="font-size: 8px;"></i>{{ __(ucfirst($mod)) }}
                     </span>
                 @endforeach
             </div>
         </div>
 
-        <!-- Row 1: Rukada Gradient KPI Cards (from vertical/index.html) -->
+        <!-- Row 1: Rukada Gradient KPI Cards -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
             <div class="col">
                 <div class="card radius-10 bg-gradient-deepblue">
@@ -35,7 +35,7 @@
                             <div class="progress-bar bg-white" role="progressbar" style="width: {{ $stats['fulfillment_rate'] }}%"></div>
                         </div>
                         <div class="d-flex align-items-center text-white">
-                            <p class="mb-0">Total Sales Orders</p>
+                            <p class="mb-0">{{ __('Total Sales Orders') }}</p>
                             <p class="mb-0 ms-auto">{{ $stats['fulfillment_rate'] }}%<span><i class='bx bx-check-double ms-1'></i></span></p>
                         </div>
                     </div>
@@ -53,8 +53,8 @@
                             <div class="progress-bar bg-white" role="progressbar" style="width: {{ $stats['collection_rate'] }}%"></div>
                         </div>
                         <div class="d-flex align-items-center text-white">
-                            <p class="mb-0">Invoiced Revenue</p>
-                            <p class="mb-0 ms-auto">{{ $stats['collection_rate'] }}% Paid</p>
+                            <p class="mb-0">{{ __('Invoiced Revenue') }}</p>
+                            <p class="mb-0 ms-auto">{{ $stats['collection_rate'] }}% {{ __('Paid') }}</p>
                         </div>
                     </div>
                 </div>
@@ -71,8 +71,8 @@
                             <div class="progress-bar bg-white" role="progressbar" style="width: 75%"></div>
                         </div>
                         <div class="d-flex align-items-center text-white">
-                            <p class="mb-0">Cash Collected</p>
-                            <p class="mb-0 ms-auto">{{ number_format($stats['customers_count']) }} Clients</p>
+                            <p class="mb-0">{{ __('Cash Collected') }}</p>
+                            <p class="mb-0 ms-auto">{{ number_format($stats['customers_count']) }} {{ __('Clients') }}</p>
                         </div>
                     </div>
                 </div>
@@ -89,8 +89,8 @@
                             <div class="progress-bar bg-white" role="progressbar" style="width: {{ $stats['healthy_stock_rate'] }}%"></div>
                         </div>
                         <div class="d-flex align-items-center text-white">
-                            <p class="mb-0">Catalog SKUs</p>
-                            <p class="mb-0 ms-auto">{{ $stats['low_stock_count'] }} Alerts</p>
+                            <p class="mb-0">{{ __('Catalog SKUs') }}</p>
+                            <p class="mb-0 ms-auto">{{ $stats['low_stock_count'] }} {{ __('Alerts') }}</p>
                         </div>
                     </div>
                 </div>
@@ -104,8 +104,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
                             <div>
-                                <h6 class="mb-0">6-Month Financial Performance</h6>
-                                <small class="text-secondary">Invoiced Revenue vs. Cash Collected vs. Procurement Spend</small>
+                                <h6 class="mb-0">{{ __('6-Month Financial Performance') }}</h6>
+                                <small class="text-secondary">{{ __('Invoiced Revenue vs. Cash Collected vs. Procurement Spend') }}</small>
                             </div>
                         </div>
                         <div id="execFinancialChart" style="min-height: 320px;"></div>
@@ -114,19 +114,19 @@
                         <div class="col">
                             <div class="p-3">
                                 <h5 class="mb-0">${{ number_format(array_sum($chartData['revenue']), 2) }}</h5>
-                                <small class="mb-0 text-secondary">6M Billed Revenue</small>
+                                <small class="mb-0 text-secondary">{{ __('6M Billed Revenue') }}</small>
                             </div>
                         </div>
                         <div class="col">
                             <div class="p-3">
                                 <h5 class="mb-0 text-success">${{ number_format(array_sum($chartData['collected']), 2) }}</h5>
-                                <small class="mb-0 text-secondary">6M Cash Inflow</small>
+                                <small class="mb-0 text-secondary">{{ __('6M Cash Inflow') }}</small>
                             </div>
                         </div>
                         <div class="col">
                             <div class="p-3">
                                 <h5 class="mb-0 text-danger">${{ number_format(array_sum($chartData['spend']), 2) }}</h5>
-                                <small class="mb-0 text-secondary">6M Purchasing Spend</small>
+                                <small class="mb-0 text-secondary">{{ __('6M Purchasing Spend') }}</small>
                             </div>
                         </div>
                     </div>
@@ -136,27 +136,27 @@
             <div class="col-12 col-lg-4 d-flex">
                 <div class="card radius-10 overflow-hidden w-100">
                     <div class="card-body">
-                        <h6 class="mb-1">Order Pipeline Breakdown</h6>
-                        <small class="text-secondary">Distribution across lifecycle stages</small>
+                        <h6 class="mb-1">{{ __('Order Pipeline Breakdown') }}</h6>
+                        <small class="text-secondary">{{ __('Distribution across lifecycle stages') }}</small>
                         <div id="execOrderDonut" class="my-3" style="min-height: 230px;"></div>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-items-center mb-0">
                             <tbody>
                                 <tr>
-                                    <td><i class="bx bxs-circle me-2" style="color: #14abef"></i>Confirmed</td>
+                                    <td><i class="bx bxs-circle me-2" style="color: #14abef"></i>{{ __('Confirmed') }}</td>
                                     <td class="fw-bold text-end">{{ number_format($chartData['order_statuses']['confirmed']) }}</td>
                                 </tr>
                                 <tr>
-                                    <td><i class="bx bxs-circle me-2" style="color: #02ba5a"></i>Fulfilled</td>
+                                    <td><i class="bx bxs-circle me-2" style="color: #02ba5a"></i>{{ __('Fulfilled') }}</td>
                                     <td class="fw-bold text-end">{{ number_format($chartData['order_statuses']['fulfilled']) }}</td>
                                 </tr>
                                 <tr>
-                                    <td><i class="bx bxs-circle me-2" style="color: #fba540"></i>Draft</td>
+                                    <td><i class="bx bxs-circle me-2" style="color: #fba540"></i>{{ __('Draft') }}</td>
                                     <td class="fw-bold text-end">{{ number_format($chartData['order_statuses']['draft']) }}</td>
                                 </tr>
                                 <tr>
-                                    <td><i class="bx bxs-circle me-2" style="color: #f5365c"></i>Cancelled</td>
+                                    <td><i class="bx bxs-circle me-2" style="color: #f5365c"></i>{{ __('Cancelled') }}</td>
                                     <td class="fw-bold text-end">{{ number_format($chartData['order_statuses']['cancelled']) }}</td>
                                 </tr>
                             </tbody>
@@ -171,10 +171,10 @@
             <div class="col-12 col-xl-5 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-body">
-                        <h6 class="mb-3">Operational Health Indicators</h6>
+                        <h6 class="mb-3">{{ __('Operational Health Indicators') }}</h6>
                         <div class="mb-4">
                             <div class="d-flex justify-content-between mb-1">
-                                <span>Invoice Collection Efficiency</span>
+                                <span>{{ __('Invoice Collection Efficiency') }}</span>
                                 <span class="fw-bold text-success">{{ $stats['collection_rate'] }}%</span>
                             </div>
                             <div class="progress" style="height: 7px;">
@@ -183,7 +183,7 @@
                         </div>
                         <div class="mb-4">
                             <div class="d-flex justify-content-between mb-1">
-                                <span>Order Confirmation & Fulfillment Rate</span>
+                                <span>{{ __('Order Confirmation & Fulfillment Rate') }}</span>
                                 <span class="fw-bold text-primary">{{ $stats['fulfillment_rate'] }}%</span>
                             </div>
                             <div class="progress" style="height: 7px;">
@@ -192,7 +192,7 @@
                         </div>
                         <div class="mb-4">
                             <div class="d-flex justify-content-between mb-1">
-                                <span>Healthy Inventory Stock Ratio</span>
+                                <span>{{ __('Healthy Inventory Stock Ratio') }}</span>
                                 <span class="fw-bold text-info">{{ $stats['healthy_stock_rate'] }}%</span>
                             </div>
                             <div class="progress" style="height: 7px;">
@@ -201,8 +201,8 @@
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between text-secondary font-13">
-                            <span>General Ledger Accounts: <strong>{{ $stats['accounts_count'] }}</strong></span>
-                            <span>Posted Entries: <strong>{{ number_format($stats['transactions_count']) }}</strong></span>
+                            <span>{{ __('General Ledger Accounts') }}: <strong>{{ $stats['accounts_count'] }}</strong></span>
+                            <span>{{ __('Posted Entries') }}: <strong>{{ number_format($stats['transactions_count']) }}</strong></span>
                         </div>
                     </div>
                 </div>
@@ -213,21 +213,21 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
                             <div>
-                                <h6 class="mb-0">Top Selling Catalog Products</h6>
-                                <small class="text-secondary">Ranked by cumulative sales order revenue</small>
+                                <h6 class="mb-0">{{ __('Top Selling Catalog Products') }}</h6>
+                                <small class="text-secondary">{{ __('Ranked by cumulative sales order revenue') }}</small>
                             </div>
                             @can('inventory.products.view')
-                                <a href="{{ route('admin.products.index') }}" class="btn btn-sm btn-light ms-auto">Catalog <i class="bx bx-right-arrow-alt"></i></a>
+                                <a href="{{ route('admin.products.index') }}" class="btn btn-sm btn-light ms-auto">{{ __('Catalog') }} <i class="bx {{ app()->getLocale() === 'ar' ? 'bx-left-arrow-alt' : 'bx-right-arrow-alt' }}"></i></a>
                             @endcan
                         </div>
                         <div class="table-responsive">
                             <table class="table align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>SKU</th>
-                                        <th>Product</th>
-                                        <th class="text-end">Units Sold</th>
-                                        <th class="text-end">Revenue</th>
+                                        <th>{{ __('SKU') }}</th>
+                                        <th>{{ __('Product') }}</th>
+                                        <th class="text-end">{{ __('Units Sold') }}</th>
+                                        <th class="text-end">{{ __('Revenue') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -266,11 +266,11 @@
                     <table class="table align-middle mb-0 table-hover">
                         <thead class="table-light">
                             <tr>
-                                <th>Order #</th>
-                                <th>Customer</th>
-                                <th>Order Date</th>
-                                <th>Amount</th>
-                                <th>Status</th>
+                                <th>{{ __('Order #') }}</th>
+                                <th>{{ __('Customer') }}</th>
+                                <th>{{ __('Order Date') }}</th>
+                                <th>{{ __('Amount') }}</th>
+                                <th>{{ __('Status') }}</th>
                             </tr>
                         </thead>
                         <tbody>

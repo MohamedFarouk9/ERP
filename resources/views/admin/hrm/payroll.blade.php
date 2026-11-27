@@ -1,17 +1,16 @@
-@extends('admin.layouts.app')
-@section('title', 'Payroll Runs')
+﻿@extends('admin.layouts.app')
+@section('title', __('Payroll Runs'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <div>
-                <h4 class="mb-0">Payroll Runs & Payslips</h4>
-                <small class="text-muted">Generate monthly payroll for all active employees and process salary disbursements</small>
+                <h4 class="mb-0">{{ __('Payroll Runs & Payslips') }}</h4>
             </div>
             @can('hrm.payroll.create')
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#generatePayrollModal">
-                    <i class="bx bx-calculator"></i> Generate Payroll Run
+                    <i class="bx bx-calculator"></i> {{ __('Generate Payroll Run') }}
                 </button>
             @endcan
         </div>
@@ -22,15 +21,15 @@
                     <table class="table table-striped table-bordered align-middle erp-datatable w-100">
                         <thead class="table-light">
                             <tr>
-                                <th>Payroll #</th>
-                                <th>Period</th>
-                                <th>Pay Date</th>
-                                <th>Staff</th>
-                                <th>Total Gross</th>
-                                <th>Deductions</th>
-                                <th>Total Net</th>
-                                <th>Status</th>
-                                <th class="text-end">Actions</th>
+                                <th>{{ __('Payroll #') }}</th>
+                                <th>{{ __('Period') }}</th>
+                                <th>{{ __('Pay Date') }}</th>
+                                <th>{{ __('Staff') }}</th>
+                                <th>{{ __('Total Gross') }}</th>
+                                <th>{{ __('Deductions') }}</th>
+                                <th>{{ __('Total Net') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th class="text-end">{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,19 +70,19 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.hrm.payroll.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Generate Monthly Payroll Run</h5>
+                <h5 class="modal-title">{{ __('Generate Monthly Payroll Run') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
-                <div class="col-md-6"><label class="form-label">Payroll # *</label><input type="text" name="payroll_number" class="form-control" required value="PAYROLL-{{ date('Ym') }}"></div>
-                <div class="col-md-6"><label class="form-label">Period (YYYY-MM) *</label><input type="text" name="period_month" class="form-control" required value="{{ date('Y-m') }}"></div>
-                <div class="col-md-4"><label class="form-label">Pay Date *</label><input type="date" name="pay_date" class="form-control" required value="{{ date('Y-m-t') }}"></div>
-                <div class="col-md-4"><label class="form-label">Allowances (bps)</label><input type="number" name="default_allowance_bps" class="form-control" value="1000" min="0"></div>
-                <div class="col-md-4"><label class="form-label">Tax/Ded (bps)</label><input type="number" name="default_deduction_bps" class="form-control" value="1200" min="0"></div>
+                <div class="col-md-6"><label class="form-label">{{ __('Payroll # *') }}</label><input type="text" name="payroll_number" class="form-control" required value="PAYROLL-{{ date('Ym') }}"></div>
+                <div class="col-md-6"><label class="form-label">{{ __('Period (YYYY-MM) *') }}</label><input type="text" name="period_month" class="form-control" required value="{{ date('Y-m') }}"></div>
+                <div class="col-md-4"><label class="form-label">{{ __('Pay Date *') }}</label><input type="date" name="pay_date" class="form-control" required value="{{ date('Y-m-t') }}"></div>
+                <div class="col-md-4"><label class="form-label">{{ __('Allowances (bps)') }}</label><input type="number" name="default_allowance_bps" class="form-control" value="1000" min="0"></div>
+                <div class="col-md-4"><label class="form-label">{{ __('Tax/Ded (bps)') }}</label><input type="number" name="default_deduction_bps" class="form-control" value="1200" min="0"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Generate Payroll</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Generate Payroll') }}</button>
             </div>
         </form>
     </div>
@@ -100,7 +99,7 @@
             <div class="modal-body">
                 <table class="table table-bordered align-middle">
                     <thead class="table-light">
-                        <tr><th>Employee</th><th class="text-end">Base</th><th class="text-end">Allowances</th><th class="text-end">Deductions</th><th class="text-end">Net Pay</th></tr>
+                        <tr><th>{{ __('Employee') }}</th><th class="text-end">{{ __('Base') }}</th><th class="text-end">{{ __('Allowances') }}</th><th class="text-end">{{ __('Deductions') }}</th><th class="text-end">{{ __('Net Pay') }}</th></tr>
                     </thead>
                     <tbody id="vp_items"></tbody>
                 </table>

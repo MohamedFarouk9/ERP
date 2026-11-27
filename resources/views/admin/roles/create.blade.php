@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 
 @section('title', 'Create Role')
 
@@ -16,13 +16,13 @@
                 <form method="POST" action="{{ route('admin.roles.store') }}">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label">Name</label>
+                        <label class="form-label">{{ __('Name') }}</label>
                         <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
                         @error('name')<div class="text-danger small">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Permissions</label>
+                        <label class="form-label">{{ __('Permissions') }}</label>
                         <div class="row">
                             @foreach($permissionGroups as $group => $groupPermissions)
                                 <div class="col-md-3 mb-2">

@@ -1,5 +1,5 @@
-@extends('admin.layouts.app')
-@section('title', 'Chart of Accounts')
+﻿@extends('admin.layouts.app')
+@section('title', __('Chart of Accounts'))
 
 @section('content')
 <div class="wrapper">
@@ -7,12 +7,11 @@
         <div class="page-content">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div>
-                    <h4 class="mb-0">Chart of Accounts</h4>
-                    <small class="text-muted">Manage general ledger accounts and hierarchy</small>
+                    <h4 class="mb-0">{{ __('Chart of Accounts') }}</h4>
                 </div>
                 @can('accounting.accounts.create')
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAccountModal">
-                        <i class="bx bx-plus"></i> Add Account
+                        <i class="bx bx-plus"></i> {{ __('Add Account') }}
                     </button>
                 @endcan
             </div>
@@ -23,13 +22,13 @@
                         <table class="table table-striped table-bordered align-middle erp-datatable w-100">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Code</th>
-                                    <th>Account Name</th>
-                                    <th>Type</th>
-                                    <th>Normal Balance</th>
-                                    <th>Currency</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Actions</th>
+                                    <th>{{ __('Code') }}</th>
+                                    <th>{{ __('Account Name') }}</th>
+                                    <th>{{ __('Type') }}</th>
+                                    <th>{{ __('Normal Balance') }}</th>
+                                    <th>{{ __('Currency') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th class="text-end">{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,37 +82,37 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.accounting.accounts.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Add Ledger Account</h5>
+                <h5 class="modal-title">{{ __('Add Ledger Account') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
                 <div class="col-md-4">
-                    <label class="form-label">Account Code *</label>
+                    <label class="form-label">{{ __('Account Code *') }}</label>
                     <input type="text" name="code" class="form-control" required placeholder="e.g. 1020">
                 </div>
                 <div class="col-md-8">
-                    <label class="form-label">Account Name *</label>
+                    <label class="form-label">{{ __('Account Name *') }}</label>
                     <input type="text" name="name" class="form-control" required placeholder="e.g. Petty Cash">
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Type *</label>
+                    <label class="form-label">{{ __('Type *') }}</label>
                     <select name="type" class="form-select" required>
-                        <option value="asset">Asset</option>
-                        <option value="liability">Liability</option>
-                        <option value="equity">Equity</option>
-                        <option value="revenue">Revenue</option>
-                        <option value="expense">Expense</option>
+                        <option value="asset">{{ __('Asset') }}</option>
+                        <option value="liability">{{ __('Liability') }}</option>
+                        <option value="equity">{{ __('Equity') }}</option>
+                        <option value="revenue">{{ __('Revenue') }}</option>
+                        <option value="expense">{{ __('Expense') }}</option>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Normal Balance</label>
+                    <label class="form-label">{{ __('Normal Balance') }}</label>
                     <select name="normal_balance" class="form-select">
-                        <option value="debit">Debit</option>
-                        <option value="credit">Credit</option>
+                        <option value="debit">{{ __('Debit') }}</option>
+                        <option value="credit">{{ __('Credit') }}</option>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Currency</label>
+                    <label class="form-label">{{ __('Currency') }}</label>
                     <select name="currency_code" class="form-select">
                         @foreach($currencies as $cur)
                             <option value="{{ $cur->code }}">{{ $cur->code }} ({{ $cur->symbol }})</option>
@@ -121,22 +120,22 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Parent Account</label>
+                    <label class="form-label">{{ __('Parent Account') }}</label>
                     <select name="parent_id" class="form-select">
-                        <option value="">-- Root Account --</option>
+                        <option value="">{{ __('-- Root Account --') }}</option>
                         @foreach($accounts as $acc)
                             <option value="{{ $acc->id }}">{{ $acc->code }} - {{ $acc->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Description</label>
+                    <label class="form-label">{{ __('Description') }}</label>
                     <textarea name="description" class="form-control" rows="2"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Account</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Create Account') }}</button>
             </div>
         </form>
     </div>
@@ -149,37 +148,37 @@
             @csrf
             @method('PUT')
             <div class="modal-header">
-                <h5 class="modal-title">Edit Ledger Account</h5>
+                <h5 class="modal-title">{{ __('Edit Ledger Account') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
                 <div class="col-md-4">
-                    <label class="form-label">Account Code *</label>
+                    <label class="form-label">{{ __('Account Code *') }}</label>
                     <input type="text" name="code" id="ea_code" class="form-control" required>
                 </div>
                 <div class="col-md-8">
-                    <label class="form-label">Account Name *</label>
+                    <label class="form-label">{{ __('Account Name *') }}</label>
                     <input type="text" name="name" id="ea_name" class="form-control" required>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Type *</label>
+                    <label class="form-label">{{ __('Type *') }}</label>
                     <select name="type" id="ea_type" class="form-select" required>
-                        <option value="asset">Asset</option>
-                        <option value="liability">Liability</option>
-                        <option value="equity">Equity</option>
-                        <option value="revenue">Revenue</option>
-                        <option value="expense">Expense</option>
+                        <option value="asset">{{ __('Asset') }}</option>
+                        <option value="liability">{{ __('Liability') }}</option>
+                        <option value="equity">{{ __('Equity') }}</option>
+                        <option value="revenue">{{ __('Revenue') }}</option>
+                        <option value="expense">{{ __('Expense') }}</option>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Normal Balance *</label>
+                    <label class="form-label">{{ __('Normal Balance *') }}</label>
                     <select name="normal_balance" id="ea_balance" class="form-select" required>
-                        <option value="debit">Debit</option>
-                        <option value="credit">Credit</option>
+                        <option value="debit">{{ __('Debit') }}</option>
+                        <option value="credit">{{ __('Credit') }}</option>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Currency</label>
+                    <label class="form-label">{{ __('Currency') }}</label>
                     <select name="currency_code" id="ea_currency" class="form-select">
                         @foreach($currencies as $cur)
                             <option value="{{ $cur->code }}">{{ $cur->code }} ({{ $cur->symbol }})</option>
@@ -187,29 +186,29 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Parent Account</label>
+                    <label class="form-label">{{ __('Parent Account') }}</label>
                     <select name="parent_id" id="ea_parent" class="form-select">
-                        <option value="">-- Root Account --</option>
+                        <option value="">{{ __('-- Root Account --') }}</option>
                         @foreach($accounts as $acc)
                             <option value="{{ $acc->id }}">{{ $acc->code }} - {{ $acc->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Status</label>
+                    <label class="form-label">{{ __('Status') }}</label>
                     <select name="is_active" id="ea_active" class="form-select">
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="1">{{ __('Active') }}</option>
+                        <option value="0">{{ __('Inactive') }}</option>
                     </select>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Description</label>
+                    <label class="form-label">{{ __('Description') }}</label>
                     <textarea name="description" id="ea_description" class="form-control" rows="2"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update Account</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update Account') }}</button>
             </div>
         </form>
     </div>

@@ -5,6 +5,11 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Modules\Core\Http\Controllers\DashboardController;
 use Modules\Core\Http\Controllers\FeatureController;
+use Modules\Core\Http\Controllers\LocaleController;
+
+Route::get('/locale/{locale}', [LocaleController::class, 'switch'])
+    ->whereIn('locale', ['en', 'ar'])
+    ->name('locale.switch');
 
 Route::get('/core', function () {
     return response()->json([

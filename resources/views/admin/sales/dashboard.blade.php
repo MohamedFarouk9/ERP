@@ -1,17 +1,16 @@
-@extends('admin.layouts.app')
-@section('title', 'Sales Analytics Dashboard')
+﻿@extends('admin.layouts.app')
+@section('title', __('Sales Analytics'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
-                <h4 class="mb-0">Sales & Billing Analytics</h4>
-                <p class="mb-0 font-13 text-secondary">Commercial pipeline, billed revenue, receivables aging, and top customer accounts</p>
+                <h4 class="mb-0">{{ __('Sales & Billing Analytics') }}</h4>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.orders.index') }}" class="btn btn-sm btn-outline-primary">Sales Orders</a>
-                <a href="{{ route('admin.invoices.index') }}" class="btn btn-sm btn-primary">Invoices</a>
+                <a href="{{ route('admin.orders.index') }}" class="btn btn-sm btn-outline-primary">{{ __('Sales Orders') }}</a>
+                <a href="{{ route('admin.invoices.index') }}" class="btn btn-sm btn-primary">{{ __('Invoices') }}</a>
             </div>
         </div>
 
@@ -21,9 +20,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Sales Orders</p>
+                                <p class="mb-0 text-secondary">{{ __('Sales Orders') }}</p>
                                 <h4 class="my-1">{{ number_format($stats['orders_count']) }}</h4>
-                                <p class="mb-0 font-13 text-primary">{{ number_format($stats['confirmed_orders']) }} Confirmed</p>
+                                <p class="mb-0 font-13 text-primary">{{ number_format($stats['confirmed_orders']) }} {{ __('Confirmed') }}</p>
                             </div>
                             <div class="widgets-icons bg-light-primary text-primary ms-auto"><i class='bx bxs-cart'></i></div>
                         </div>
@@ -35,9 +34,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Invoiced Revenue</p>
+                                <p class="mb-0 text-secondary">{{ __('Invoiced Revenue') }}</p>
                                 <h4 class="my-1 text-success">${{ number_format($stats['invoiced_revenue'] / 100, 2) }}</h4>
-                                <p class="mb-0 font-13 text-secondary">{{ number_format($stats['customers_count']) }} Active Clients</p>
+                                <p class="mb-0 font-13 text-secondary">{{ number_format($stats['customers_count']) }} {{ __('Clients') }}</p>
                             </div>
                             <div class="widgets-icons bg-light-success text-success ms-auto"><i class='bx bxs-receipt'></i></div>
                         </div>
@@ -49,9 +48,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Unpaid Receivables</p>
+                                <p class="mb-0 text-secondary">{{ __('Unpaid Receivables') }}</p>
                                 <h4 class="my-1 text-warning">${{ number_format($stats['outstanding_receivables'] / 100, 2) }}</h4>
-                                <p class="mb-0 font-13 text-warning">Open AR balance</p>
                             </div>
                             <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bx-time-five'></i></div>
                         </div>
@@ -63,9 +61,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Overdue Invoices</p>
+                                <p class="mb-0 text-secondary">{{ __('Overdue Invoices') }}</p>
                                 <h4 class="my-1 text-danger">{{ number_format($stats['overdue_invoices']) }}</h4>
-                                <p class="mb-0 font-13 text-danger">Collection priority</p>
                             </div>
                             <div class="widgets-icons bg-light-danger text-danger ms-auto"><i class='bx bxs-bell-ring'></i></div>
                         </div>
@@ -79,8 +76,7 @@
             <div class="col-xl-8 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-body">
-                        <h6 class="mb-1">6-Month Order Volume vs. Invoiced Revenue</h6>
-                        <small class="text-secondary">Monthly commercial booking & billing conversion</small>
+                        <h6 class="mb-1">{{ __('Sales Orders') }} &amp; {{ __('Invoiced Revenue') }}</h6>
                         <div id="salesTrendChart" style="min-height: 300px;"></div>
                     </div>
                 </div>
@@ -88,8 +84,7 @@
             <div class="col-xl-4 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-body">
-                        <h6 class="mb-1">Invoice Status Breakdown</h6>
-                        <small class="text-secondary">Paid, Issued, Overdue & Draft</small>
+                        <h6 class="mb-1">{{ __('Invoice Status Breakdown') }}</h6>
                         <div id="salesInvDonut" class="mt-3" style="min-height: 280px;"></div>
                     </div>
                 </div>
@@ -100,11 +95,11 @@
             <div class="col-xl-5 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-body">
-                        <h6 class="mb-3">Top Customers by Billed Revenue</h6>
+                        <h6 class="mb-3">{{ __('Top Customers by Billed Revenue') }}</h6>
                         <div class="table-responsive">
                             <table class="table align-middle mb-0 table-hover">
                                 <thead class="table-light">
-                                    <tr><th>Customer</th><th>Invoices</th><th class="text-end">Total Billed</th></tr>
+                                    <tr><th>{{ __('Customer') }}</th><th>{{ __('Invoices') }}</th><th class="text-end">{{ __('Total') }}</th></tr>
                                 </thead>
                                 <tbody>
                                     @forelse($topCustomers as $row)
@@ -130,7 +125,7 @@
                         <div class="table-responsive">
                             <table class="table align-middle mb-0 table-hover">
                                 <thead class="table-light">
-                                    <tr><th>Order #</th><th>Customer</th><th>Date</th><th>Total</th><th>Status</th></tr>
+                                    <tr><th>{{ __('Order #') }}</th><th>{{ __('Customer') }}</th><th>{{ __('Date') }}</th><th>{{ __('Total') }}</th><th>{{ __('Status') }}</th></tr>
                                 </thead>
                                 <tbody>
                                     @forelse($recentOrders as $order)

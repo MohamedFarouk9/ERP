@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Edit Slider')
 
 @section('content')
@@ -14,7 +14,7 @@
                     @csrf
                     @method('PATCH')
                     <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
+                        <label for="image" class="form-label">{{ __('Image') }}</label>
                         <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
                         @if($slider->image)
                             <img src="{{ asset($slider->image) }}" alt="Current Image" id="showImage" class="img-thumbnail mt-2" width="100">
@@ -28,7 +28,7 @@
                         <label class="form-check-label" for="is_active">Active</label>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Update Slider</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Update Slider') }}</button>
                     </div>
                 </form>
             </div>

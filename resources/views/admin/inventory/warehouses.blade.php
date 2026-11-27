@@ -1,5 +1,5 @@
-@extends('admin.layouts.app')
-@section('title', 'Warehouses')
+﻿@extends('admin.layouts.app')
+@section('title', __('Warehouses'))
 
 @section('content')
 <div class="wrapper">
@@ -7,12 +7,11 @@
         <div class="page-content">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div>
-                    <h4 class="mb-0">Warehouses</h4>
-                    <small class="text-muted">Manage stock storage locations</small>
+                    <h4 class="mb-0">{{ __('Warehouses') }}</h4>
                 </div>
                 @can('inventory.warehouses.create')
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createWarehouseModal">
-                        <i class="bx bx-plus"></i> Add Warehouse
+                        <i class="bx bx-plus"></i> {{ __('Add Warehouse') }}
                     </button>
                 @endcan
             </div>
@@ -23,13 +22,13 @@
                         <table class="table table-striped table-bordered align-middle erp-datatable w-100">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Code</th>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>Tracked Items</th>
-                                    <th>Default</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Actions</th>
+                                    <th>{{ __('Code') }}</th>
+                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Address') }}</th>
+                                    <th>{{ __('Tracked Items') }}</th>
+                                    <th>{{ __('Default') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th class="text-end">{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,20 +79,20 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.warehouses.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Add Warehouse</h5>
+                <h5 class="modal-title">{{ __('Add Warehouse') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
                 <div class="col-md-4">
-                    <label class="form-label">Code *</label>
+                    <label class="form-label">{{ __('Code *') }}</label>
                     <input type="text" name="code" class="form-control" required placeholder="WH-01">
                 </div>
                 <div class="col-md-8">
-                    <label class="form-label">Name *</label>
+                    <label class="form-label">{{ __('Name *') }}</label>
                     <input type="text" name="name" class="form-control" required>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Address</label>
+                    <label class="form-label">{{ __('Address') }}</label>
                     <input type="text" name="address" class="form-control">
                 </div>
                 <div class="col-12">
@@ -104,8 +103,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Warehouse</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Create Warehouse') }}</button>
             </div>
         </form>
     </div>
@@ -118,40 +117,40 @@
             @csrf
             @method('PUT')
             <div class="modal-header">
-                <h5 class="modal-title">Edit Warehouse</h5>
+                <h5 class="modal-title">{{ __('Edit Warehouse') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
                 <div class="col-md-4">
-                    <label class="form-label">Code *</label>
+                    <label class="form-label">{{ __('Code *') }}</label>
                     <input type="text" name="code" id="ew_code" class="form-control" required>
                 </div>
                 <div class="col-md-8">
-                    <label class="form-label">Name *</label>
+                    <label class="form-label">{{ __('Name *') }}</label>
                     <input type="text" name="name" id="ew_name" class="form-control" required>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Address</label>
+                    <label class="form-label">{{ __('Address') }}</label>
                     <input type="text" name="address" id="ew_address" class="form-control">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Default</label>
+                    <label class="form-label">{{ __('Default') }}</label>
                     <select name="is_default" id="ew_default" class="form-select">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
+                        <option value="0">{{ __('No') }}</option>
+                        <option value="1">{{ __('Yes') }}</option>
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Status</label>
+                    <label class="form-label">{{ __('Status') }}</label>
                     <select name="is_active" id="ew_active" class="form-select">
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="1">{{ __('Active') }}</option>
+                        <option value="0">{{ __('Inactive') }}</option>
                     </select>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update Warehouse</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update Warehouse') }}</button>
             </div>
         </form>
     </div>

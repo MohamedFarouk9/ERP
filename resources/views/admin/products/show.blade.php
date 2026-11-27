@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Product Details')
 
 @section('content')
@@ -80,11 +80,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold text-muted">Product Name</label>
+                                    <label class="form-label fw-semibold text-muted">{{ __('Product Name') }}</label>
                                     <p class="mb-0 fs-6">{{ $product->name }}</p>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold text-muted">Category</label>
+                                    <label class="form-label fw-semibold text-muted">{{ __('Category') }}</label>
                                     <p class="mb-0">
                                         @if($product->category)
                                             <span class="badge bg-light text-dark border">{{ $product->category->name }}</span>
@@ -96,17 +96,17 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold text-muted">Created</label>
+                                    <label class="form-label fw-semibold text-muted">{{ __('Created') }}</label>
                                     <p class="mb-0">{{ $product->created_at->diffForHumans()}}</p>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold text-muted">Last Updated</label>
+                                    <label class="form-label fw-semibold text-muted">{{ __('Last Updated') }}</label>
                                     <p class="mb-0">{{ $product->updated_at->diffForHumans() }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-0">
-                            <label class="form-label fw-semibold text-muted">Description</label>
+                            <label class="form-label fw-semibold text-muted">{{ __('Description') }}</label>
                             <div class="border rounded p-3 bg-light">
                                 <p class="mb-0">{{ $product->description ?: 'No description available' }}</p>
                             </div>

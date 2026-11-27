@@ -1,29 +1,29 @@
 @extends('admin.layouts.app')
 
-@section('title', 'POS Analytics')
+@section('title', __('POS Analytics'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Point of Sale</div>
+            <div class="breadcrumb-title pe-3">{{ __('Point of Sale') }}</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="bx bx-home-alt"></i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">POS Analytics</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('POS Analytics') }}</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto d-flex gap-2">
                 @can('pos.terminal.view')
                 <a href="{{ route('admin.pos.terminal') }}" class="btn btn-primary btn-sm px-3">
-                    <i class="bx bx-desktop me-1"></i> Open POS Terminal
+                    <i class="bx bx-desktop me-1"></i> {{ __('Open POS Terminal') }}
                 </a>
                 @endcan
                 @can('pos.shifts.view')
                 <a href="{{ route('admin.pos.shifts.index') }}" class="btn btn-outline-secondary btn-sm px-3">
-                    <i class="bx bx-time-five me-1"></i> Shifts &amp; Sales
+                    <i class="bx bx-time-five me-1"></i> {{ __('Shifts & Sales') }}
                 </a>
                 @endcan
             </div>
@@ -36,9 +36,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Today's Revenue</p>
+                                <p class="mb-0 text-secondary">{{ __("Today's Revenue") }}</p>
                                 <h4 class="my-1 text-info">${{ number_format(($stats['today_revenue'] ?? 0) / 100, 2) }}</h4>
-                                <p class="mb-0 font-13">{{ $stats['today_tickets'] ?? 0 }} tickets today</p>
+                                <p class="mb-0 font-13">{{ $stats['today_tickets'] ?? 0 }} {{ __('Sales') }}</p>
                             </div>
                             <div class="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">
                                 <i class="bx bx-dollar-circle"></i>
@@ -52,9 +52,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Total POS Revenue</p>
+                                <p class="mb-0 text-secondary">{{ __('Total POS Revenue') }}</p>
                                 <h4 class="my-1 text-success">${{ number_format(($stats['total_revenue'] ?? 0) / 100, 2) }}</h4>
-                                <p class="mb-0 font-13">{{ $stats['total_tickets'] ?? 0 }} total tickets</p>
+                                <p class="mb-0 font-13">{{ $stats['total_tickets'] ?? 0 }} {{ __('Completed') }}</p>
                             </div>
                             <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
                                 <i class="bx bx-cart"></i>
@@ -68,9 +68,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Average Ticket</p>
+                                <p class="mb-0 text-secondary">{{ __('Average Ticket') }}</p>
                                 <h4 class="my-1 text-warning">${{ number_format(($stats['avg_ticket'] ?? 0) / 100, 2) }}</h4>
-                                <p class="mb-0 font-13">Per completed sale</p>
+                                <p class="mb-0 font-13">{{ __('Per completed sale') }}</p>
                             </div>
                             <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto">
                                 <i class="bx bx-receipt"></i>
@@ -84,9 +84,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Open Shifts</p>
+                                <p class="mb-0 text-secondary">{{ __('Open Shifts') }}</p>
                                 <h4 class="my-1 text-primary">{{ $stats['open_shifts'] ?? 0 }}</h4>
-                                <p class="mb-0 font-13">Active registers</p>
+                                <p class="mb-0 font-13">{{ __('Active registers') }}</p>
                             </div>
                             <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
                                 <i class="bx bx-store"></i>
@@ -104,7 +104,7 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <div>
-                                <h6 class="mb-0">Daily POS Sales (Last 14 Days)</h6>
+                                <h6 class="mb-0">{{ __('Daily POS Sales (Last 14 Days)') }}</h6>
                             </div>
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <div>
-                                <h6 class="mb-0">Payment Mix</h6>
+                                <h6 class="mb-0">{{ __('Payment Mix') }}</h6>
                             </div>
                         </div>
                     </div>
@@ -134,16 +134,16 @@
             <div class="col-12 col-lg-5 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-header">
-                        <h6 class="mb-0">Top Selling Items</h6>
+                        <h6 class="mb-0">{{ __('Top Selling Items') }}</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>Product</th>
-                                        <th class="text-end">Qty</th>
-                                        <th class="text-end">Revenue</th>
+                                        <th>{{ __('Product') }}</th>
+                                        <th class="text-end">{{ __('Qty') }}</th>
+                                        <th class="text-end">{{ __('Revenue') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -170,9 +170,9 @@
             <div class="col-12 col-lg-7 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0">Recent Receipts</h6>
+                        <h6 class="mb-0">{{ __('Recent Receipts') }}</h6>
                         @can('pos.shifts.view')
-                        <a href="{{ route('admin.pos.shifts.index') }}" class="btn btn-sm btn-outline-primary">View All</a>
+                        <a href="{{ route('admin.pos.shifts.index') }}" class="btn btn-sm btn-outline-primary">{{ __('View All') }}</a>
                         @endcan
                     </div>
                     <div class="card-body">
@@ -180,11 +180,11 @@
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>Receipt #</th>
-                                        <th>Date</th>
-                                        <th>Cashier</th>
-                                        <th>Payment</th>
-                                        <th class="text-end">Total</th>
+                                        <th>{{ __('Receipt #') }}</th>
+                                        <th>{{ __('Date') }}</th>
+                                        <th>{{ __('Cashier') }}</th>
+                                        <th>{{ __('Payment') }}</th>
+                                        <th class="text-end">{{ __('Total') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

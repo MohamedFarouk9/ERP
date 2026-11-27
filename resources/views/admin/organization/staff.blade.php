@@ -1,17 +1,16 @@
-@extends('admin.layouts.app')
-@section('title', 'Staff Directory')
+﻿@extends('admin.layouts.app')
+@section('title', __('Staff Directory'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <div>
-                <h4 class="mb-0">Staff Directory</h4>
-                <small class="text-muted">Manage organization employees, active accounts, and assigned RBAC roles</small>
+                <h4 class="mb-0">{{ __('Staff Directory') }}</h4>
             </div>
             @can('users.roles.assign')
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createStaffModal">
-                    <i class="bx bx-user-plus"></i> Add Staff Member
+                    <i class="bx bx-user-plus"></i> {{ __('Add Staff Member') }}
                 </button>
             @endcan
         </div>
@@ -22,12 +21,12 @@
                     <table id="staffDataTable" class="table table-striped table-bordered align-middle w-100">
                         <thead class="table-light">
                             <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Assigned Role</th>
-                                <th>Status</th>
-                                <th class="text-end">Actions</th>
+                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Phone') }}</th>
+                                <th>{{ __('Assigned Role') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th class="text-end">{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -43,25 +42,25 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.organization.staff.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Add Staff Member</h5>
+                <h5 class="modal-title">{{ __('Add Staff Member') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
-                <div class="col-12"><label class="form-label">Full Name *</label><input type="text" name="name" class="form-control" required></div>
-                <div class="col-md-6"><label class="form-label">Email *</label><input type="email" name="email" class="form-control" required></div>
-                <div class="col-md-6"><label class="form-label">Phone</label><input type="text" name="phone" class="form-control"></div>
-                <div class="col-md-6"><label class="form-label">Initial Password *</label><input type="password" name="password" class="form-control" required minlength="8"></div>
+                <div class="col-12"><label class="form-label">{{ __('Full Name *') }}</label><input type="text" name="name" class="form-control" required></div>
+                <div class="col-md-6"><label class="form-label">{{ __('Email *') }}</label><input type="email" name="email" class="form-control" required></div>
+                <div class="col-md-6"><label class="form-label">{{ __('Phone') }}</label><input type="text" name="phone" class="form-control"></div>
+                <div class="col-md-6"><label class="form-label">{{ __('Initial Password *') }}</label><input type="password" name="password" class="form-control" required minlength="8"></div>
                 <div class="col-md-6">
-                    <label class="form-label">Primary Role</label>
+                    <label class="form-label">{{ __('Primary Role') }}</label>
                     <select name="role_id" class="form-select">
-                        <option value="">-- Optional --</option>
+                        <option value="">{{ __('-- Optional --') }}</option>
                         @foreach($roles as $r)<option value="{{ $r->id }}">{{ $r->name }}</option>@endforeach
                     </select>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Staff</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Create Staff') }}</button>
             </div>
         </form>
     </div>
@@ -74,28 +73,28 @@
             @csrf
             @method('PUT')
             <div class="modal-header">
-                <h5 class="modal-title">Edit Staff Member</h5>
+                <h5 class="modal-title">{{ __('Edit Staff Member') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
-                <div class="col-12"><label class="form-label">Full Name *</label><input type="text" name="name" id="est_name" class="form-control" required></div>
-                <div class="col-md-6"><label class="form-label">Email *</label><input type="email" name="email" id="est_email" class="form-control" required></div>
-                <div class="col-md-6"><label class="form-label">Phone</label><input type="text" name="phone" id="est_phone" class="form-control"></div>
+                <div class="col-12"><label class="form-label">{{ __('Full Name *') }}</label><input type="text" name="name" id="est_name" class="form-control" required></div>
+                <div class="col-md-6"><label class="form-label">{{ __('Email *') }}</label><input type="email" name="email" id="est_email" class="form-control" required></div>
+                <div class="col-md-6"><label class="form-label">{{ __('Phone') }}</label><input type="text" name="phone" id="est_phone" class="form-control"></div>
                 <div class="col-md-6">
-                    <label class="form-label">Primary Role</label>
+                    <label class="form-label">{{ __('Primary Role') }}</label>
                     <select name="role_id" id="est_role" class="form-select">
-                        <option value="">-- Optional --</option>
+                        <option value="">{{ __('-- Optional --') }}</option>
                         @foreach($roles as $r)<option value="{{ $r->id }}">{{ $r->name }}</option>@endforeach
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Status</label>
-                    <select name="is_active" id="est_active" class="form-select"><option value="1">Active</option><option value="0">Inactive</option></select>
+                    <label class="form-label">{{ __('Status') }}</label>
+                    <select name="is_active" id="est_active" class="form-select"><option value="1">{{ __('Active') }}</option><option value="0">{{ __('Inactive') }}</option></select>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update Staff</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update Staff') }}</button>
             </div>
         </form>
     </div>

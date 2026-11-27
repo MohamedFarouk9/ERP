@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 
 @section('title', 'Edit Role')
 
@@ -17,13 +17,13 @@
                     @csrf
                     @method('PATCH')
                     <div class="mb-3">
-                        <label class="form-label">Name</label>
+                        <label class="form-label">{{ __('Name') }}</label>
                         <input type="text" class="form-control" name="name" value="{{ old('name', $role->name) }}" required>
                         @error('name')<div class="text-danger small">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Permissions</label>
+                        <label class="form-label">{{ __('Permissions') }}</label>
                         <div class="row">
                             @php $rolePerms = $role->permissions->pluck('id')->toArray(); @endphp
                             @foreach($permissionGroups as $group => $groupPermissions)

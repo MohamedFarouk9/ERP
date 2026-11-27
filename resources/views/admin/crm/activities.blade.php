@@ -1,24 +1,24 @@
 @extends('admin.layouts.app')
 
-@section('title', 'CRM Activities')
+@section('title', __('Activities'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">CRM</div>
+            <div class="breadcrumb-title pe-3">{{ __('CRM') }}</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.crm.dashboard') }}">CRM Analytics</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Activities</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.crm.dashboard') }}">{{ __('CRM Analytics') }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('Activities') }}</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto">
                 @can('crm.activities.manage')
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createActivityModal">
-                    <i class="bx bx-plus me-1"></i> Schedule Activity
+                    <i class="bx bx-plus me-1"></i> {{ __('Schedule Activity') }}
                 </button>
                 @endcan
             </div>
@@ -26,20 +26,20 @@
 
         <div class="card radius-10">
             <div class="card-header">
-                <h6 class="mb-0">Calls, Meetings &amp; Follow-up Tasks</h6>
+                <h6 class="mb-0">{{ __('Calls, Meetings & Follow-up Tasks') }}</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="crmActivitiesTable" class="table table-striped table-bordered w-100">
                         <thead>
                             <tr>
-                                <th>Type</th>
-                                <th>Subject</th>
-                                <th>Related Lead / Deal</th>
-                                <th>Assigned To</th>
-                                <th>Due At</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>{{ __('Type') }}</th>
+                                <th>{{ __('Subject') }}</th>
+                                <th>{{ __('Related Lead / Deal') }}</th>
+                                <th>{{ __('Assigned To') }}</th>
+                                <th>{{ __('Due At') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -55,44 +55,44 @@
         <div class="modal-content">
             <form id="createActivityForm">
                 <div class="modal-header">
-                    <h5 class="modal-title">Schedule CRM Activity</h5>
+                    <h5 class="modal-title">{{ __('Schedule CRM Activity') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Activity Type *</label>
+                        <label class="form-label">{{ __('Activity Type *') }}</label>
                         <select name="type" class="form-select" required>
-                            <option value="call">Phone Call</option>
-                            <option value="email">Email</option>
-                            <option value="meeting">Meeting</option>
-                            <option value="task">Task</option>
+                            <option value="call">{{ __('Phone Call') }}</option>
+                            <option value="email">{{ __('Email') }}</option>
+                            <option value="meeting">{{ __('Meeting') }}</option>
+                            <option value="task">{{ __('Task') }}</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Subject *</label>
+                        <label class="form-label">{{ __('Subject *') }}</label>
                         <input type="text" name="subject" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Related Lead</label>
+                        <label class="form-label">{{ __('Related Lead') }}</label>
                         <select name="lead_id" class="form-select">
-                            <option value="">None</option>
+                            <option value="">--</option>
                             @foreach($leads as $lead)
-                                <option value="{{ $lead->id }}">{{ $lead->lead_code }} — {{ $lead->name }}</option>
+                                <option value="{{ $lead->id }}">{{ $lead->lead_code }} â€” {{ $lead->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Related Deal</label>
+                        <label class="form-label">{{ __('Related Deal') }}</label>
                         <select name="deal_id" class="form-select">
-                            <option value="">None</option>
+                            <option value="">--</option>
                             @foreach($deals as $deal)
-                                <option value="{{ $deal->id }}">{{ $deal->deal_code }} — {{ $deal->title }}</option>
+                                <option value="{{ $deal->id }}">{{ $deal->deal_code }} â€” {{ $deal->title }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="row g-2 mb-3">
                         <div class="col-6">
-                            <label class="form-label">Assigned To</label>
+                            <label class="form-label">{{ __('Assigned To') }}</label>
                             <select name="assigned_to" class="form-select">
                                 @foreach($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -100,18 +100,18 @@
                             </select>
                         </div>
                         <div class="col-6">
-                            <label class="form-label">Due Date &amp; Time</label>
+                            <label class="form-label">{{ __('Due Date & Time') }}</label>
                             <input type="datetime-local" name="due_at" class="form-control" value="{{ now()->addDay()->format('Y-m-d\TH:i') }}">
                         </div>
                     </div>
                     <div class="mb-0">
-                        <label class="form-label">Notes</label>
+                        <label class="form-label">{{ __('Notes') }}</label>
                         <textarea name="notes" class="form-control" rows="2"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Schedule</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Schedule') }}</button>
                 </div>
             </form>
         </div>
@@ -174,10 +174,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!res.ok) throw new Error(data.message || 'Failed to schedule activity.');
             bootstrap.Modal.getInstance(document.getElementById('createActivityModal')).hide();
             this.reset();
-            Swal.fire('Scheduled', data.message, 'success');
+            Swal.fire(@json(__('Scheduled')), data.message, 'success');
             table.ajax.reload(null, false);
         } catch (err) {
-            Swal.fire('Error', err.message, 'error');
+            Swal.fire(@json(__('Error')), err.message, 'error');
         }
     });
 
@@ -190,11 +190,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': csrfToken }
             });
             const data = await res.json();
-            if (!res.ok) throw new Error(data.message || 'Failed to complete activity.');
-            Swal.fire('Completed', data.message, 'success');
+            if (!res.ok) throw new Error(data.message || @json(__('Action failed.')));
+            Swal.fire(@json(__('Completed')), data.message, 'success');
             table.ajax.reload(null, false);
         } catch (err) {
-            Swal.fire('Error', err.message, 'error');
+            Swal.fire(@json(__('Error')), err.message, 'error');
         }
     });
 });

@@ -1,5 +1,5 @@
-@extends('admin.layouts.app')
-@section('title', 'Product Categories')
+﻿@extends('admin.layouts.app')
+@section('title', __('Product Categories'))
 
 @section('content')
 <div class="wrapper">
@@ -7,12 +7,11 @@
         <div class="page-content">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div>
-                    <h4 class="mb-0">Product Categories</h4>
-                    <small class="text-muted">Hierarchical product catalog categories</small>
+                    <h4 class="mb-0">{{ __('Product Categories') }}</h4>
                 </div>
                 @can('inventory.categories.create')
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategoryModal">
-                        <i class="bx bx-plus"></i> Add Category
+                        <i class="bx bx-plus"></i> {{ __('Add Category') }}
                     </button>
                 @endcan
             </div>
@@ -23,12 +22,12 @@
                         <table class="table table-striped table-bordered align-middle erp-datatable w-100">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Slug</th>
-                                    <th>Parent</th>
-                                    <th>Products</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Actions</th>
+                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Slug') }}</th>
+                                    <th>{{ __('Parent') }}</th>
+                                    <th>{{ __('Products') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th class="text-end">{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,35 +77,35 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.categories.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Add Category</h5>
+                <h5 class="modal-title">{{ __('Add Category') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
                 <div class="col-12">
-                    <label class="form-label">Name *</label>
+                    <label class="form-label">{{ __('Name *') }}</label>
                     <input type="text" name="name" class="form-control" required>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Slug (optional)</label>
+                    <label class="form-label">{{ __('Slug (optional)') }}</label>
                     <input type="text" name="slug" class="form-control" placeholder="auto-generated-from-name">
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Parent Category</label>
+                    <label class="form-label">{{ __('Parent Category') }}</label>
                     <select name="parent_id" class="form-select">
-                        <option value="">-- Root Category --</option>
+                        <option value="">{{ __('-- Root Category --') }}</option>
                         @foreach($categories as $cat)
                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Description</label>
+                    <label class="form-label">{{ __('Description') }}</label>
                     <textarea name="description" class="form-control" rows="2"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Category</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Create Category') }}</button>
             </div>
         </form>
     </div>
@@ -119,42 +118,42 @@
             @csrf
             @method('PUT')
             <div class="modal-header">
-                <h5 class="modal-title">Edit Category</h5>
+                <h5 class="modal-title">{{ __('Edit Category') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
                 <div class="col-12">
-                    <label class="form-label">Name *</label>
+                    <label class="form-label">{{ __('Name *') }}</label>
                     <input type="text" name="name" id="ec_name" class="form-control" required>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Slug</label>
+                    <label class="form-label">{{ __('Slug') }}</label>
                     <input type="text" name="slug" id="ec_slug" class="form-control">
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Parent Category</label>
+                    <label class="form-label">{{ __('Parent Category') }}</label>
                     <select name="parent_id" id="ec_parent" class="form-select">
-                        <option value="">-- Root Category --</option>
+                        <option value="">{{ __('-- Root Category --') }}</option>
                         @foreach($categories as $cat)
                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Status</label>
+                    <label class="form-label">{{ __('Status') }}</label>
                     <select name="is_active" id="ec_active" class="form-select">
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="1">{{ __('Active') }}</option>
+                        <option value="0">{{ __('Inactive') }}</option>
                     </select>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Description</label>
+                    <label class="form-label">{{ __('Description') }}</label>
                     <textarea name="description" id="ec_description" class="form-control" rows="2"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update Category</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update Category') }}</button>
             </div>
         </form>
     </div>

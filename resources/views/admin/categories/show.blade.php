@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Category Details')
 
 @section('content')
@@ -11,27 +11,27 @@
         <div class="card">
             <div class="card-body">
                 <div class="mb-3">
-                    <label class="form-label">Name</label><br>
+                    <label class="form-label">{{ __('Name') }}</label><br>
                     <strong>{{ $category->name }}</strong>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Image</label><br>
+                    <label class="form-label">{{ __('Image') }}</label><br>
                     <img src="{{ $category->image }}" alt="Category Image" class="img-thumbnail" width="120">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Parent</label><br>
+                    <label class="form-label">{{ __('Parent') }}</label><br>
                     {{ $category->parent ? $category->parent->name : '-' }}
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Description</label><br>
+                    <label class="form-label">{{ __('Description') }}</label><br>
                     {{ $category->description ?? '-' }}
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Order</label><br>
+                    <label class="form-label">{{ __('Order') }}</label><br>
                     {{ $category->order ?? '-' }}
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Status</label><br>
+                    <label class="form-label">{{ __('Status') }}</label><br>
                     @if($category->is_active)
                         <span class="badge bg-success">Active</span>
                     @else

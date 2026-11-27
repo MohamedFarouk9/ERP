@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'POS Terminal')
+@section('title', __('POS Terminal'))
 
 @section('content')
 <div class="page-wrapper">
@@ -9,18 +9,18 @@
         <div class="card radius-10 mb-3">
             <div class="card-body py-2 px-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
                 <div class="d-flex align-items-center gap-3">
-                    <h5 class="mb-0"><i class="bx bx-desktop text-primary me-1"></i> POS Terminal</h5>
+                    <h5 class="mb-0"><i class="bx bx-desktop text-primary me-1"></i> {{ __('POS Terminal') }}</h5>
                     @if($activeShift)
                         <span class="badge bg-success px-3 py-2">
                             <i class="bx bx-check-circle me-1"></i>
-                            Shift #{{ $activeShift->shift_number }} &bull; Open
+                            {{ __('Shift') }} #{{ $activeShift->shift_number }} &bull; {{ __('Open') }}
                         </span>
                         <small class="text-muted">
-                            Opened {{ optional($activeShift->opened_at)->format('M d, H:i') }}
+                            {{ __('Opened At') }}: {{ optional($activeShift->opened_at)->format('M d, H:i') }}
                         </small>
                     @else
                         <span class="badge bg-danger px-3 py-2">
-                            <i class="bx bx-lock-alt me-1"></i> No Active Shift
+                            <i class="bx bx-lock-alt me-1"></i> {{ __('No Active Shift') }}
                         </span>
                     @endif
                 </div>
@@ -28,17 +28,17 @@
                     @if(!$activeShift)
                         @can('pos.shifts.manage')
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#openShiftModal">
-                            <i class="bx bx-play-circle me-1"></i> Open Shift
+                            <i class="bx bx-play-circle me-1"></i> {{ __('Open Shift') }}
                         </button>
                         @endcan
                     @endif
                     @can('pos.shifts.view')
                     <a href="{{ route('admin.pos.shifts.index') }}" class="btn btn-outline-secondary btn-sm">
-                        <i class="bx bx-time-five me-1"></i> Shifts &amp; Sales
+                        <i class="bx bx-time-five me-1"></i> {{ __('Shifts & Sales') }}
                     </a>
                     @endcan
                     <a href="{{ route('admin.pos.dashboard') }}" class="btn btn-outline-info btn-sm">
-                        <i class="bx bx-bar-chart-alt-2 me-1"></i> Analytics
+                        <i class="bx bx-bar-chart-alt-2 me-1"></i> {{ __('POS Analytics') }}
                     </a>
                 </div>
             </div>
@@ -53,12 +53,12 @@
                             <div class="col-md-6">
                                 <div class="input-group input-group-sm">
                                     <span class="input-group-text"><i class="bx bx-search"></i></span>
-                                    <input type="text" id="posProductSearch" class="form-control" placeholder="Search SKU or product name...">
+                                    <input type="text" id="posProductSearch" class="form-control" placeholder="{{ __('Search SKU or product name...') }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <select id="posCategoryFilter" class="form-select form-select-sm">
-                                    <option value="">All Categories</option>
+                                    <option value="">{{ __('All Categories') }}</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
@@ -95,7 +95,7 @@
                             </div>
                             @empty
                             <div class="col-12 text-center text-muted py-5">
-                                No active sellable products found.
+                                {{ __('Products') }} - 0
                             </div>
                             @endforelse
                         </div>
@@ -107,17 +107,17 @@
             <div class="col-12 col-lg-5">
                 <div class="card radius-10 h-100">
                     <div class="card-header bg-transparent d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0"><i class="bx bx-cart me-1"></i> Current Ticket</h6>
+                        <h6 class="mb-0"><i class="bx bx-cart me-1"></i> {{ __('Current Ticket') }}</h6>
                         <button type="button" class="btn btn-sm btn-outline-danger" id="posClearCartBtn">
-                            <i class="bx bx-trash"></i> Clear
+                            <i class="bx bx-trash"></i> {{ __('Clear') }}
                         </button>
                     </div>
                     <div class="card-body d-flex flex-column justify-content-between">
                         <div>
                             <div class="mb-3">
-                                <label class="form-label small mb-1">Customer (Optional / Walk-in)</label>
+                                <label class="form-label small mb-1">{{ __('Customer (Optional / Walk-in)') }}</label>
                                 <select id="posCustomerId" class="form-select form-select-sm">
-                                    <option value="">Walk-in Customer</option>
+                                    <option value="">{{ __('Walk-in Customer') }}</option>
                                     @foreach($customers as $customer)
                                         <option value="{{ $customer->id }}">{{ $customer->code }} — {{ $customer->name }}</option>
                                     @endforeach
@@ -128,16 +128,16 @@
                                 <table class="table table-sm align-middle mb-0" id="posCartTable">
                                     <thead class="table-light">
                                         <tr>
-                                            <th>Item</th>
-                                            <th style="width: 110px;">Qty</th>
-                                            <th class="text-end">Total</th>
+                                            <th>{{ __('Item') }}</th>
+                                            <th style="width: 110px;">{{ __('Qty') }}</th>
+                                            <th class="text-end">{{ __('Total') }}</th>
                                             <th style="width: 36px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="posCartBody">
                                         <tr id="posEmptyCartRow">
                                             <td colspan="4" class="text-center text-muted py-4">
-                                                Click a product on the left to add it to the ticket.
+                                                {{ __('Click a product on the left to add it to the ticket.') }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -148,49 +148,49 @@
                         <div class="border-top pt-3 mt-3">
                             <div class="row g-2 mb-2">
                                 <div class="col-6">
-                                    <label class="form-label small mb-1">Discount ($)</label>
+                                    <label class="form-label small mb-1">{{ __('Discount ($)') }}</label>
                                     <input type="number" step="0.01" min="0" value="0.00" id="posDiscountInput" class="form-control form-control-sm">
                                 </div>
                                 <div class="col-6">
-                                    <label class="form-label small mb-1">Tax Rate (%)</label>
+                                    <label class="form-label small mb-1">{{ __('Tax Rate (%)') }}</label>
                                     <input type="number" step="0.5" min="0" max="50" value="10" id="posTaxRateInput" class="form-control form-control-sm">
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-between small mb-1">
-                                <span class="text-muted">Subtotal</span>
+                                <span class="text-muted">{{ __('Subtotal') }}</span>
                                 <span id="posSubtotalDisplay">$0.00</span>
                             </div>
                             <div class="d-flex justify-content-between small mb-1">
-                                <span class="text-muted">Discount</span>
+                                <span class="text-muted">{{ __('Discount') }}</span>
                                 <span id="posDiscountDisplay" class="text-danger">-$0.00</span>
                             </div>
                             <div class="d-flex justify-content-between small mb-2">
-                                <span class="text-muted">Tax</span>
+                                <span class="text-muted">{{ __('Tax') }}</span>
                                 <span id="posTaxDisplay">$0.00</span>
                             </div>
                             <div class="d-flex justify-content-between fs-5 fw-bold border-top pt-2 mb-3">
-                                <span>Total</span>
+                                <span>{{ __('Total') }}</span>
                                 <span class="text-primary" id="posTotalDisplay">$0.00</span>
                             </div>
 
                             <div class="row g-2 mb-3">
                                 <div class="col-6">
-                                    <label class="form-label small mb-1">Payment Type</label>
+                                    <label class="form-label small mb-1">{{ __('Payment Type') }}</label>
                                     <select id="posPaymentType" class="form-select form-select-sm">
-                                        <option value="cash">Cash</option>
-                                        <option value="card">Card</option>
-                                        <option value="split">Split</option>
+                                        <option value="cash">{{ __('Cash') }}</option>
+                                        <option value="card">{{ __('Card') }}</option>
+                                        <option value="split">{{ __('Split') }}</option>
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <label class="form-label small mb-1">Amount Tendered ($)</label>
+                                    <label class="form-label small mb-1">{{ __('Amount Tendered ($)') }}</label>
                                     <input type="number" step="0.01" min="0" value="0.00" id="posTenderedInput" class="form-control form-control-sm">
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-between small mb-3">
-                                <span class="text-muted">Change Due</span>
+                                <span class="text-muted">{{ __('Change Due') }}</span>
                                 <span class="fw-semibold text-success" id="posChangeDisplay">$0.00</span>
                             </div>
 
@@ -198,11 +198,11 @@
                                     id="posCheckoutBtn"
                                     class="btn btn-success w-100 py-2 fw-semibold"
                                     @if(!$activeShift) disabled @endif>
-                                <i class="bx bx-check-double me-1"></i> Complete Sale &amp; Print Receipt
+                                <i class="bx bx-check-double me-1"></i> {{ __('Complete Sale & Print Receipt') }}
                             </button>
                             @if(!$activeShift)
                                 <small class="text-danger d-block text-center mt-1">
-                                    Open a shift first to process sales.
+                                    {{ __('Open a shift first to process sales.') }}
                                 </small>
                             @endif
                         </div>
@@ -219,16 +219,16 @@
         <div class="modal-content">
             <form id="openShiftForm">
                 <div class="modal-header">
-                    <h5 class="modal-title">Open POS Shift</h5>
+                    <h5 class="modal-title">{{ __('Open POS Shift') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Shift Number</label>
+                        <label class="form-label">{{ __('Shift Number') }}</label>
                         <input type="text" name="shift_number" class="form-control" value="SH-{{ now()->format('Ymd-His') }}" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Warehouse</label>
+                        <label class="form-label">{{ __('Warehouse') }}</label>
                         <select name="warehouse_id" class="form-select" required>
                             @foreach($warehouses as $warehouse)
                                 <option value="{{ $warehouse->id }}">{{ $warehouse->code }} — {{ $warehouse->name }}</option>
@@ -236,13 +236,13 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Opening Cash Float ($)</label>
+                        <label class="form-label">{{ __('Opening Cash Float ($)') }}</label>
                         <input type="number" step="0.01" min="0" name="opening_cash_dollars" class="form-control" value="200.00" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Open Shift</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Open Shift') }}</button>
                 </div>
             </form>
         </div>
@@ -392,16 +392,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('posCheckoutBtn').addEventListener('click', async function () {
         if (!activeShiftId) {
-            Swal.fire('Shift Required', 'Please open a POS shift first.', 'warning');
+            Swal.fire(@json(__('Shift Required')), @json(__('Please open a POS shift first.')), 'warning');
             return;
         }
         if (cart.length === 0) {
-            Swal.fire('Empty Cart', 'Add at least one item before checking out.', 'warning');
+            Swal.fire(@json(__('Empty Cart')), @json(__('Add at least one item before checking out.')), 'warning');
             return;
         }
         const totals = recalcTotals();
         if (totals.tenderedCents < totals.totalCents) {
-            Swal.fire('Insufficient Payment', 'Amount tendered must be at least ' + fmt(totals.totalCents) + '.', 'warning');
+            Swal.fire(@json(__('Insufficient Payment')), @json(__('Amount tendered is less than the total due.')) + ' (' + fmt(totals.totalCents) + ')', 'warning');
             return;
         }
 
@@ -436,18 +436,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
             Swal.fire({
                 icon: 'success',
-                title: 'Sale Completed',
-                text: data.message || 'Receipt generated.',
+                title: @json(__('Sale Completed')),
+                text: data.message || @json(__('Operation successful!')),
                 showCancelButton: true,
-                confirmButtonText: 'View Receipt',
-                cancelButtonText: 'New Sale'
+                confirmButtonText: @json(__('View Receipt')),
+                cancelButtonText: @json(__('New Sale'))
             }).then(result => {
                 if (result.isConfirmed && data.receipt_url) {
                     window.open(data.receipt_url, '_blank');
                 }
             });
         } catch (err) {
-            Swal.fire('Error', err.message, 'error');
+            Swal.fire(@json(__('Error')), err.message, 'error');
         } finally {
             btn.disabled = false;
         }
@@ -475,13 +475,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
                 const data = await response.json();
                 if (!response.ok) {
-                    throw new Error(data.message || 'Failed to open shift.');
+                    throw new Error(data.message || @json(__('Action failed.')));
                 }
-                Swal.fire('Shift Opened', data.message || 'Ready for sales.', 'success').then(() => {
+                Swal.fire(@json(__('Shift Opened')), data.message || @json(__('Operation successful!')), 'success').then(() => {
                     window.location.reload();
                 });
             } catch (err) {
-                Swal.fire('Error', err.message, 'error');
+                Swal.fire(@json(__('Error')), err.message, 'error');
             }
         });
     }

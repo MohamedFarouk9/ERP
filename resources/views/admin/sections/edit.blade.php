@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Edit Section')
 
 @section('content')
@@ -199,10 +199,10 @@
                             <table class="table table-hover mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th class="ps-3">Product</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
-                                        <th class="text-end pe-3">Category</th>
+                                        <th class="ps-3">{{ __('Product') }}</th>
+                                        <th>{{ __('Price') }}</th>
+                                        <th>{{ __('Status') }}</th>
+                                        <th class="text-end pe-3">{{ __('Category') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -305,7 +305,7 @@
     }
 
     .breadcrumb-item + .breadcrumb-item::before {
-        content: "›";
+        content: "â€º";
     }
 
     .page-header {

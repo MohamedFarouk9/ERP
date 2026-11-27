@@ -1,24 +1,24 @@
 @extends('admin.layouts.app')
 
-@section('title', 'CRM Leads')
+@section('title', __('Leads'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">CRM</div>
+            <div class="breadcrumb-title pe-3">{{ __('CRM') }}</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.crm.dashboard') }}">CRM Analytics</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Leads</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.crm.dashboard') }}">{{ __('CRM Analytics') }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('Leads') }}</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto">
                 @can('crm.leads.manage')
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createLeadModal">
-                    <i class="bx bx-plus me-1"></i> New Lead
+                    <i class="bx bx-plus me-1"></i> {{ __('New Lead') }}
                 </button>
                 @endcan
             </div>
@@ -26,14 +26,14 @@
 
         <div class="card radius-10">
             <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
-                <h6 class="mb-0">Lead Directory</h6>
+                <h6 class="mb-0">{{ __('Lead Directory') }}</h6>
                 <select id="leadStatusFilter" class="form-select form-select-sm" style="width: 180px;">
-                    <option value="">All Statuses</option>
-                    <option value="new">New</option>
-                    <option value="contacted">Contacted</option>
-                    <option value="qualified">Qualified</option>
-                    <option value="converted">Converted</option>
-                    <option value="lost">Lost</option>
+                    <option value="">{{ __('All Statuses') }}</option>
+                    <option value="new">{{ __('New') }}</option>
+                    <option value="contacted">{{ __('Contacted') }}</option>
+                    <option value="qualified">{{ __('Qualified') }}</option>
+                    <option value="converted">{{ __('Converted') }}</option>
+                    <option value="lost">{{ __('Lost') }}</option>
                 </select>
             </div>
             <div class="card-body">
@@ -41,15 +41,15 @@
                     <table id="crmLeadsTable" class="table table-striped table-bordered w-100">
                         <thead>
                             <tr>
-                                <th>Code</th>
-                                <th>Name</th>
-                                <th>Company</th>
-                                <th>Email</th>
-                                <th>Source</th>
-                                <th>Est. Value</th>
-                                <th>Owner</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>{{ __('Code') }}</th>
+                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Company') }}</th>
+                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Source') }}</th>
+                                <th>{{ __('Est. Value') }}</th>
+                                <th>{{ __('Owner') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -65,43 +65,43 @@
         <div class="modal-content">
             <form id="createLeadForm">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add New Lead</h5>
+                    <h5 class="modal-title">{{ __('Add New Lead') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label">Contact Name *</label>
+                            <label class="form-label">{{ __('Contact Name *') }}</label>
                             <input type="text" name="name" class="form-control" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Company</label>
+                            <label class="form-label">{{ __('Company') }}</label>
                             <input type="text" name="company" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Email</label>
+                            <label class="form-label">{{ __('Email') }}</label>
                             <input type="email" name="email" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Phone</label>
+                            <label class="form-label">{{ __('Phone') }}</label>
                             <input type="text" name="phone" class="form-control">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Source *</label>
+                            <label class="form-label">{{ __('Source') }} *</label>
                             <select name="source" class="form-select" required>
-                                <option value="website">Website</option>
-                                <option value="referral">Referral</option>
-                                <option value="cold_call">Cold Call</option>
-                                <option value="social">Social Media</option>
-                                <option value="event">Event</option>
+                                <option value="website">{{ __('Website') }}</option>
+                                <option value="referral">{{ __('Referral') }}</option>
+                                <option value="cold_call">{{ __('Cold Call') }}</option>
+                                <option value="social">{{ __('Social Media') }}</option>
+                                <option value="event">{{ __('Event') }}</option>
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Estimated Value ($)</label>
+                            <label class="form-label">{{ __('Estimated Value ($)') }}</label>
                             <input type="number" step="0.01" min="0" name="estimated_value_dollars" class="form-control" value="5000.00">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Owner</label>
+                            <label class="form-label">{{ __('Owner') }}</label>
                             <select name="owner_id" class="form-select">
                                 @foreach($owners as $owner)
                                     <option value="{{ $owner->id }}">{{ $owner->name }}</option>
@@ -109,14 +109,14 @@
                             </select>
                         </div>
                         <div class="col-12">
-                            <label class="form-label">Notes</label>
+                            <label class="form-label">{{ __('Notes') }}</label>
                             <textarea name="notes" class="form-control" rows="2"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Lead</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Save Lead') }}</button>
                 </div>
             </form>
         </div>
@@ -188,10 +188,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!res.ok) throw new Error(data.message || 'Failed to save lead.');
             bootstrap.Modal.getInstance(document.getElementById('createLeadModal')).hide();
             this.reset();
-            Swal.fire('Lead Created', data.message, 'success');
+            Swal.fire(@json(__('Lead Created')), data.message, 'success');
             table.ajax.reload(null, false);
         } catch (err) {
-            Swal.fire('Error', err.message, 'error');
+            Swal.fire(@json(__('Error')), err.message, 'error');
         }
     });
 
@@ -199,11 +199,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const btn = e.target.closest('.btn-convert-lead');
         if (!btn) return;
         Swal.fire({
-            title: 'Convert Lead to Customer?',
-            text: `This will create a B2B Customer and an open Deal for ${btn.dataset.name}.`,
+            title: @json(__('Convert Lead to Customer?')),
+            text: btn.dataset.name,
             icon: 'question',
             showCancelButton: true,
-            confirmButtonText: 'Yes, Convert'
+            confirmButtonText: @json(__('Yes, Convert')),
+            cancelButtonText: @json(__('Cancel'))
         }).then(async result => {
             if (!result.isConfirmed) return;
             try {
@@ -213,11 +214,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     body: JSON.stringify({ create_deal: true })
                 });
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Conversion failed.');
-                Swal.fire('Converted!', data.message, 'success');
+                if (!res.ok) throw new Error(data.message || @json(__('Action failed.')));
+                Swal.fire(@json(__('Converted!')), data.message, 'success');
                 table.ajax.reload(null, false);
             } catch (err) {
-                Swal.fire('Error', err.message, 'error');
+                Swal.fire(@json(__('Error')), err.message, 'error');
             }
         });
     });

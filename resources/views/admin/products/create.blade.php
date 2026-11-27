@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Add Product')
 
 @section('content')
@@ -28,7 +28,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Description</label>
+                                    <label class="form-label">{{ __('Description') }}</label>
                                     <textarea name="description" class="form-control" rows="4"></textarea>
                                 </div>
 
@@ -49,20 +49,20 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Category</label>
+                                        <label class="form-label">{{ __('Category') }}</label>
                                         <select name="product_category_id" class="form-select">
-                                            <option value="">Select Category</option>
+                                            <option value="">{{ __('Select Category') }}</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Status</label>
+                                        <label class="form-label">{{ __('Status') }}</label>
                                         <select name="status" class="form-select">
-                                            <option value="published">Published</option>
-                                            <option value="draft" selected>Draft</option>
-                                            <option value="archived">Archived</option>
+                                            <option value="published">{{ __('Published') }}</option>
+                                            <option value="draft" selected>{{ __('Draft') }}</option>
+                                            <option value="archived">{{ __('Archived') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -115,11 +115,11 @@
                                     <table class="table table-bordered align-middle mb-0" id="variants-table">
                                         <thead class="table-light">
                                             <tr>
-                                                <th style="width: 28%">Attribute</th>
-                                                <th style="width: 28%">Value</th>
-                                                <th style="width: 18%">Additional Price</th>
-                                                <th style="width: 18%">Quantity</th>
-                                                <th style="width: 8%">Action</th>
+                                                <th style="width: 28%">{{ __('Attribute') }}</th>
+                                                <th style="width: 28%">{{ __('Value') }}</th>
+                                                <th style="width: 18%">{{ __('Additional Price') }}</th>
+                                                <th style="width: 18%">{{ __('Quantity') }}</th>
+                                                <th style="width: 8%">{{ __('Action') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -200,7 +200,7 @@
                 tr.innerHTML = `
                 <td>
                     <select name="variants[${variantIndex}][product_attribute_id]" class="form-select">
-                        <option value="">Select attribute</option>
+                        <option value="">{{ __('Select attribute') }}</option>
                         ${renderAttributeOptions()}
                     </select>
                 </td>

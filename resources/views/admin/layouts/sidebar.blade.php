@@ -1,4 +1,7 @@
 @inject('featureManager', 'Modules\Core\Services\FeatureManager')
+@php
+    $subArrow = app()->getLocale() === 'ar' ? 'bx-left-arrow-alt' : 'bx-right-arrow-alt';
+@endphp
 
 <div class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
@@ -6,7 +9,7 @@
             <img src="{{ asset('admin/assets/images/logo-icon.png') }}" class="logo-icon" alt="logo icon">
         </div>
         <div>
-            <h4 class="logo-text">Rukada ERP</h4>
+            <h4 class="logo-text">{{ __('Rukada ERP') }}</h4>
         </div>
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i></div>
     </div>
@@ -17,43 +20,43 @@
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i></div>
-                <div class="menu-title">Dashboards</div>
+                <div class="menu-title">{{ __('Dashboards') }}</div>
             </a>
             <ul>
-                <li><a href="{{ route('admin.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Executive Overview</a></li>
+                <li><a href="{{ route('admin.dashboard') }}"><i class="bx {{ $subArrow }}"></i>{{ __('Executive Overview') }}</a></li>
                 @if($featureManager->isEnabled('accounting'))
                     @can('accounting.accounts.view')
-                        <li><a href="{{ route('admin.accounting.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Finance Analytics</a></li>
+                        <li><a href="{{ route('admin.accounting.dashboard') }}"><i class="bx {{ $subArrow }}"></i>{{ __('Finance Analytics') }}</a></li>
                     @endcan
                 @endif
                 @if($featureManager->isEnabled('inventory'))
                     @can('inventory.products.view')
-                        <li><a href="{{ route('admin.inventory.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Inventory Analytics</a></li>
+                        <li><a href="{{ route('admin.inventory.dashboard') }}"><i class="bx {{ $subArrow }}"></i>{{ __('Inventory Analytics') }}</a></li>
                     @endcan
                 @endif
                 @if($featureManager->isEnabled('sales'))
                     @can('sales.orders.view')
-                        <li><a href="{{ route('admin.sales.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Sales Analytics</a></li>
+                        <li><a href="{{ route('admin.sales.dashboard') }}"><i class="bx {{ $subArrow }}"></i>{{ __('Sales Analytics') }}</a></li>
                     @endcan
                 @endif
                 @if($featureManager->isEnabled('procurement'))
                     @can('procurement.orders.view')
-                        <li><a href="{{ route('admin.procurement.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>Procurement Analytics</a></li>
+                        <li><a href="{{ route('admin.procurement.dashboard') }}"><i class="bx {{ $subArrow }}"></i>{{ __('Procurement Analytics') }}</a></li>
                     @endcan
                 @endif
                 @if($featureManager->isEnabled('hrm'))
                     @can('hrm.employees.view')
-                        <li><a href="{{ route('admin.hrm.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>HRM Analytics</a></li>
+                        <li><a href="{{ route('admin.hrm.dashboard') }}"><i class="bx {{ $subArrow }}"></i>{{ __('HRM Analytics') }}</a></li>
                     @endcan
                 @endif
                 @if($featureManager->isEnabled('pos'))
                     @can('pos.terminal.view')
-                        <li><a href="{{ route('admin.pos.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>POS Analytics</a></li>
+                        <li><a href="{{ route('admin.pos.dashboard') }}"><i class="bx {{ $subArrow }}"></i>{{ __('POS Analytics') }}</a></li>
                     @endcan
                 @endif
                 @if($featureManager->isEnabled('crm'))
                     @can('crm.leads.view')
-                        <li><a href="{{ route('admin.crm.dashboard') }}"><i class="bx bx-right-arrow-alt"></i>CRM Analytics</a></li>
+                        <li><a href="{{ route('admin.crm.dashboard') }}"><i class="bx {{ $subArrow }}"></i>{{ __('CRM Analytics') }}</a></li>
                     @endcan
                 @endif
             </ul>
@@ -61,12 +64,12 @@
 
         <!-- Sales & Billing (Flat Section) -->
         @if($featureManager->isEnabled('sales') && (auth()->user()?->can('sales.customers.view') || auth()->user()?->can('sales.orders.view') || auth()->user()?->can('sales.invoices.view')))
-            <li class="menu-label">Sales & Billing</li>
+            <li class="menu-label">{{ __('Sales & Billing') }}</li>
             @can('sales.customers.view')
                 <li>
                     <a href="{{ route('admin.customers.index') }}">
                         <div class="parent-icon"><i class='bx bx-user-pin'></i></div>
-                        <div class="menu-title">Customers</div>
+                        <div class="menu-title">{{ __('Customers') }}</div>
                     </a>
                 </li>
             @endcan
@@ -74,7 +77,7 @@
                 <li>
                     <a href="{{ route('admin.orders.index') }}">
                         <div class="parent-icon"><i class='bx bx-cart'></i></div>
-                        <div class="menu-title">Sales Orders</div>
+                        <div class="menu-title">{{ __('Sales Orders') }}</div>
                     </a>
                 </li>
             @endcan
@@ -82,7 +85,7 @@
                 <li>
                     <a href="{{ route('admin.invoices.index') }}">
                         <div class="parent-icon"><i class='bx bx-receipt'></i></div>
-                        <div class="menu-title">Invoices</div>
+                        <div class="menu-title">{{ __('Invoices') }}</div>
                     </a>
                 </li>
             @endcan
@@ -90,12 +93,12 @@
 
         @if($featureManager->isEnabled('pos'))
             <!-- Point of Sale (Flat Section) -->
-            <li class="menu-label">Point of Sale</li>
+            <li class="menu-label">{{ __('Point of Sale') }}</li>
             @can('pos.terminal.view')
                 <li>
                     <a href="{{ route('admin.pos.terminal') }}">
                         <div class="parent-icon"><i class='bx bx-desktop'></i></div>
-                        <div class="menu-title">POS Terminal</div>
+                        <div class="menu-title">{{ __('POS Terminal') }}</div>
                     </a>
                 </li>
             @endcan
@@ -103,7 +106,7 @@
                 <li>
                     <a href="{{ route('admin.pos.shifts.index') }}">
                         <div class="parent-icon"><i class='bx bx-time-five'></i></div>
-                        <div class="menu-title">Shifts &amp; Sales</div>
+                        <div class="menu-title">{{ __('Shifts & Sales') }}</div>
                     </a>
                 </li>
             @endcan
@@ -111,12 +114,12 @@
 
         @if($featureManager->isEnabled('crm'))
             <!-- CRM (Flat Section) -->
-            <li class="menu-label">CRM</li>
+            <li class="menu-label">{{ __('CRM') }}</li>
             @can('crm.leads.view')
                 <li>
                     <a href="{{ route('admin.crm.leads.index') }}">
                         <div class="parent-icon"><i class='bx bx-user-voice'></i></div>
-                        <div class="menu-title">Leads</div>
+                        <div class="menu-title">{{ __('Leads') }}</div>
                     </a>
                 </li>
             @endcan
@@ -124,7 +127,7 @@
                 <li>
                     <a href="{{ route('admin.crm.deals.index') }}">
                         <div class="parent-icon"><i class='bx bx-briefcase'></i></div>
-                        <div class="menu-title">Deals Pipeline</div>
+                        <div class="menu-title">{{ __('Deals Pipeline') }}</div>
                     </a>
                 </li>
             @endcan
@@ -132,7 +135,7 @@
                 <li>
                     <a href="{{ route('admin.crm.activities.index') }}">
                         <div class="parent-icon"><i class='bx bx-calendar-check'></i></div>
-                        <div class="menu-title">Activities</div>
+                        <div class="menu-title">{{ __('Activities') }}</div>
                     </a>
                 </li>
             @endcan
@@ -140,12 +143,12 @@
 
         <!-- Inventory & Stock (Flat Section) -->
         @if($featureManager->isEnabled('inventory') && (auth()->user()?->can('inventory.products.view') || auth()->user()?->can('inventory.categories.view') || auth()->user()?->can('inventory.warehouses.view')))
-            <li class="menu-label">Inventory & Stock</li>
+            <li class="menu-label">{{ __('Inventory & Stock') }}</li>
             @can('inventory.products.view')
                 <li>
                     <a href="{{ route('admin.products.index') }}">
                         <div class="parent-icon"><i class='bx bx-package'></i></div>
-                        <div class="menu-title">Products</div>
+                        <div class="menu-title">{{ __('Products') }}</div>
                     </a>
                 </li>
             @endcan
@@ -153,7 +156,7 @@
                 <li>
                     <a href="{{ route('admin.categories.index') }}">
                         <div class="parent-icon"><i class='bx bx-list-ul'></i></div>
-                        <div class="menu-title">Categories</div>
+                        <div class="menu-title">{{ __('Categories') }}</div>
                     </a>
                 </li>
             @endcan
@@ -161,7 +164,7 @@
                 <li>
                     <a href="{{ route('admin.warehouses.index') }}">
                         <div class="parent-icon"><i class='bx bx-store'></i></div>
-                        <div class="menu-title">Warehouses</div>
+                        <div class="menu-title">{{ __('Warehouses') }}</div>
                     </a>
                 </li>
             @endcan
@@ -169,12 +172,12 @@
 
         <!-- Procurement & AP (Flat Section) -->
         @if($featureManager->isEnabled('procurement') && (auth()->user()?->can('procurement.suppliers.view') || auth()->user()?->can('procurement.orders.view') || auth()->user()?->can('procurement.bills.view')))
-            <li class="menu-label">Procurement & AP</li>
+            <li class="menu-label">{{ __('Procurement & AP') }}</li>
             @can('procurement.suppliers.view')
                 <li>
                     <a href="{{ route('admin.procurement.suppliers.index') }}">
                         <div class="parent-icon"><i class='bx bx-buildings'></i></div>
-                        <div class="menu-title">Suppliers</div>
+                        <div class="menu-title">{{ __('Suppliers') }}</div>
                     </a>
                 </li>
             @endcan
@@ -182,7 +185,7 @@
                 <li>
                     <a href="{{ route('admin.procurement.orders.index') }}">
                         <div class="parent-icon"><i class='bx bx-shopping-bag'></i></div>
-                        <div class="menu-title">Purchase Orders</div>
+                        <div class="menu-title">{{ __('Purchase Orders') }}</div>
                     </a>
                 </li>
             @endcan
@@ -190,7 +193,7 @@
                 <li>
                     <a href="{{ route('admin.procurement.bills.index') }}">
                         <div class="parent-icon"><i class='bx bx-file'></i></div>
-                        <div class="menu-title">Vendor Bills</div>
+                        <div class="menu-title">{{ __('Vendor Bills') }}</div>
                     </a>
                 </li>
             @endcan
@@ -198,12 +201,12 @@
 
         <!-- Finance & Ledger (Flat Section) -->
         @if($featureManager->isEnabled('accounting') && (auth()->user()?->can('accounting.accounts.view') || auth()->user()?->can('accounting.transactions.view')))
-            <li class="menu-label">Finance & Ledger</li>
+            <li class="menu-label">{{ __('Finance & Ledger') }}</li>
             @can('accounting.accounts.view')
                 <li>
                     <a href="{{ route('admin.accounting.accounts') }}">
                         <div class="parent-icon"><i class='bx bx-book-open'></i></div>
-                        <div class="menu-title">Chart of Accounts</div>
+                        <div class="menu-title">{{ __('Chart of Accounts') }}</div>
                     </a>
                 </li>
             @endcan
@@ -211,7 +214,7 @@
                 <li>
                     <a href="{{ route('admin.accounting.transactions') }}">
                         <div class="parent-icon"><i class='bx bx-transfer'></i></div>
-                        <div class="menu-title">Ledger Transactions</div>
+                        <div class="menu-title">{{ __('Ledger Transactions') }}</div>
                     </a>
                 </li>
             @endcan
@@ -219,12 +222,12 @@
 
         <!-- Payments & Treasury (Flat Section) -->
         @if($featureManager->isEnabled('payments') && (auth()->user()?->can('payments.transactions.view') || auth()->user()?->can('payments.refunds.view')))
-            <li class="menu-label">Payments & Treasury</li>
+            <li class="menu-label">{{ __('Payments & Treasury') }}</li>
             @can('payments.transactions.view')
                 <li>
                     <a href="{{ route('admin.payments.index') }}">
                         <div class="parent-icon"><i class='bx bx-wallet'></i></div>
-                        <div class="menu-title">Payments & Methods</div>
+                        <div class="menu-title">{{ __('Payments & Methods') }}</div>
                     </a>
                 </li>
             @endcan
@@ -232,7 +235,7 @@
                 <li>
                     <a href="{{ route('admin.payments.refunds') }}">
                         <div class="parent-icon"><i class='bx bx-revision'></i></div>
-                        <div class="menu-title">Refunds</div>
+                        <div class="menu-title">{{ __('Refunds') }}</div>
                     </a>
                 </li>
             @endcan
@@ -240,13 +243,13 @@
 
         <!-- Organization & HR (Flat Section) -->
         @if(auth()->user()?->can('users.departments.view') || auth()->user()?->can('users.teams.view') || ($featureManager->isEnabled('hrm') && auth()->user()?->can('hrm.employees.view')))
-            <li class="menu-label">Organization & HR</li>
+            <li class="menu-label">{{ __('Organization & HR') }}</li>
             @if($featureManager->isEnabled('hrm'))
                 @can('hrm.employees.view')
                     <li>
                         <a href="{{ route('admin.hrm.employees.index') }}">
                             <div class="parent-icon"><i class='bx bx-user-voice'></i></div>
-                            <div class="menu-title">Employees</div>
+                            <div class="menu-title">{{ __('Employees') }}</div>
                         </a>
                     </li>
                 @endcan
@@ -254,7 +257,7 @@
                     <li>
                         <a href="{{ route('admin.hrm.attendance.index') }}">
                             <div class="parent-icon"><i class='bx bx-time-five'></i></div>
-                            <div class="menu-title">Attendance</div>
+                            <div class="menu-title">{{ __('Attendance') }}</div>
                         </a>
                     </li>
                 @endcan
@@ -262,7 +265,7 @@
                     <li>
                         <a href="{{ route('admin.hrm.leaves.index') }}">
                             <div class="parent-icon"><i class='bx bx-calendar-check'></i></div>
-                            <div class="menu-title">Leave Requests</div>
+                            <div class="menu-title">{{ __('Leave Requests') }}</div>
                         </a>
                     </li>
                 @endcan
@@ -270,7 +273,7 @@
                     <li>
                         <a href="{{ route('admin.hrm.payroll.index') }}">
                             <div class="parent-icon"><i class='bx bx-money'></i></div>
-                            <div class="menu-title">Payroll Runs</div>
+                            <div class="menu-title">{{ __('Payroll Runs') }}</div>
                         </a>
                     </li>
                 @endcan
@@ -279,13 +282,13 @@
                 <li>
                     <a href="{{ route('admin.organization.staff') }}">
                         <div class="parent-icon"><i class='bx bx-id-card'></i></div>
-                        <div class="menu-title">Staff Directory</div>
+                        <div class="menu-title">{{ __('Staff Directory') }}</div>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('admin.organization.departments') }}">
                         <div class="parent-icon"><i class='bx bx-sitemap'></i></div>
-                        <div class="menu-title">Departments</div>
+                        <div class="menu-title">{{ __('Departments') }}</div>
                     </a>
                 </li>
             @endcan
@@ -293,19 +296,19 @@
                 <li>
                     <a href="{{ route('admin.organization.teams') }}">
                         <div class="parent-icon"><i class='bx bx-group'></i></div>
-                        <div class="menu-title">Teams & Leads</div>
+                        <div class="menu-title">{{ __('Teams & Leads') }}</div>
                     </a>
                 </li>
             @endcan
         @endif
 
         <!-- System & Security (Flat Section) -->
-        <li class="menu-label">System & Security</li>
+        <li class="menu-label">{{ __('System & Security') }}</li>
         @can('core.features.view')
             <li>
                 <a href="{{ route('admin.features.index') }}">
                     <div class="parent-icon"><i class='bx bx-toggle-right'></i></div>
-                    <div class="menu-title">Module Feature Flags</div>
+                    <div class="menu-title">{{ __('Module Feature Flags') }}</div>
                 </a>
             </li>
         @endcan
@@ -313,7 +316,7 @@
             <li>
                 <a href="{{ route('admin.roles.index') }}">
                     <div class="parent-icon"><i class='bx bx-shield-alt-2'></i></div>
-                    <div class="menu-title">Roles & RBAC</div>
+                    <div class="menu-title">{{ __('Roles & RBAC') }}</div>
                 </a>
             </li>
         @endcan
@@ -321,7 +324,7 @@
             <li>
                 <a href="{{ route('admin.permissions.index') }}">
                     <div class="parent-icon"><i class='bx bx-key'></i></div>
-                    <div class="menu-title">Permissions Matrix</div>
+                    <div class="menu-title">{{ __('Permissions Matrix') }}</div>
                 </a>
             </li>
         @endcan
@@ -329,7 +332,7 @@
             <li>
                 <a href="{{ route('admin.audit-logs.index') }}">
                     <div class="parent-icon"><i class='bx bx-history'></i></div>
-                    <div class="menu-title">Compliance Audit Trail</div>
+                    <div class="menu-title">{{ __('Compliance Audit Trail') }}</div>
                 </a>
             </li>
         @endcan

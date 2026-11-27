@@ -11,6 +11,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Modules\Core\Http\Middleware\EnsureFeatureEnabled;
 use Modules\Core\Http\Middleware\EnsureTenantIsActive;
 use Modules\Core\Http\Middleware\ResolveTenantMiddleware;
+use Modules\Core\Http\Middleware\SetLocaleMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,10 +20,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->web(append: [
+            SetLocaleMiddleware::class,
+        ]);
+
         $middleware->api(append: [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
+            SetLocaleMiddleware::class,
         ]);
 
         $middleware->redirectGuestsTo(fn () => route('admin.login'));

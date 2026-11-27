@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -46,11 +46,11 @@
     <table class="table table-bordered align-middle mb-4">
         <thead class="table-light">
             <tr>
-                <th>Description</th>
-                <th class="text-end">Qty</th>
-                <th class="text-end">Unit Price</th>
-                <th class="text-end">Tax</th>
-                <th class="text-end">Line Total</th>
+                <th>{{ __('Description') }}</th>
+                <th class="text-end">{{ __('Qty') }}</th>
+                <th class="text-end">{{ __('Unit Price') }}</th>
+                <th class="text-end">{{ __('Tax') }}</th>
+                <th class="text-end">{{ __('Line Total') }}</th>
             </tr>
         </thead>
         <tbody>

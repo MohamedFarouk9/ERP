@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Create Section')
 
 @section('content')
@@ -16,7 +16,7 @@
                 <form class="ajax-form" method="POST" action="{{ route('admin.sections.store') }}" data-redirect="{{ route('admin.sections.index') }}">
                     @csrf
                     <div class="mb-3">
-                        <label for="name" class="form-label">Section Name</label>
+                        <label for="name" class="form-label">{{ __('Section Name') }}</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
                         @error('name')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="label" class="form-label">Display Label</label>
+                        <label for="label" class="form-label">{{ __('Display Label') }}</label>
                         <input type="text" class="form-control @error('label') is-invalid @enderror" id="label" name="label" value="{{ old('label') }}" required>
                         @error('label')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

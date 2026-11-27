@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Create Order')
 
 @section('content')
@@ -25,7 +25,7 @@
                                 <div class="col-md-6">
                                     <label class="form-label">Customer <span class="text-danger">*</span></label>
                                     <select name="user_id" class="form-select @error('user_id') is-invalid @enderror" required>
-                                        <option value="">Select Customer</option>
+                                        <option value="">{{ __('Select Customer') }}</option>
                                         @foreach(\App\Models\User::where('role', 'user')->get() as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
                                         @endforeach
@@ -48,12 +48,12 @@
                                 <div class="col-md-6">
                                     <label class="form-label">Order Status <span class="text-danger">*</span></label>
                                     <select name="status" class="form-select @error('status') is-invalid @enderror" required>
-                                        <option value="">Select Status</option>
-                                        <option value="pending" {{ old('status') === 'pending' ? 'selected' : '' }}>Pending</option>
-                                        <option value="processing" {{ old('status') === 'processing' ? 'selected' : '' }}>Processing</option>
-                                        <option value="shipped" {{ old('status') === 'shipped' ? 'selected' : '' }}>Shipped</option>
-                                        <option value="delivered" {{ old('status') === 'delivered' ? 'selected' : '' }}>Delivered</option>
-                                        <option value="cancelled" {{ old('status') === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                        <option value="">{{ __('Select Status') }}</option>
+                                        <option value="pending" {{ old('status') === 'pending' ? 'selected' : '' }}>{{ __('Pending') }}</option>
+                                        <option value="processing" {{ old('status') === 'processing' ? 'selected' : '' }}>{{ __('Processing') }}</option>
+                                        <option value="shipped" {{ old('status') === 'shipped' ? 'selected' : '' }}>{{ __('Shipped') }}</option>
+                                        <option value="delivered" {{ old('status') === 'delivered' ? 'selected' : '' }}>{{ __('Delivered') }}</option>
+                                        <option value="cancelled" {{ old('status') === 'cancelled' ? 'selected' : '' }}>{{ __('Cancelled') }}</option>
                                     </select>
                                     @error('status')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -73,11 +73,11 @@
                                 <div class="col-md-6">
                                     <label class="form-label">Payment Method <span class="text-danger">*</span></label>
                                     <select name="payment_method" class="form-select @error('payment_method') is-invalid @enderror" required>
-                                        <option value="">Select Payment Method</option>
-                                        <option value="credit_card" {{ old('payment_method') === 'credit_card' ? 'selected' : '' }}>Credit Card</option>
-                                        <option value="paypal" {{ old('payment_method') === 'paypal' ? 'selected' : '' }}>PayPal</option>
-                                        <option value="bank_transfer" {{ old('payment_method') === 'bank_transfer' ? 'selected' : '' }}>Bank Transfer</option>
-                                        <option value="cash" {{ old('payment_method') === 'cash' ? 'selected' : '' }}>Cash</option>
+                                        <option value="">{{ __('Select Payment Method') }}</option>
+                                        <option value="credit_card" {{ old('payment_method') === 'credit_card' ? 'selected' : '' }}>{{ __('Credit Card') }}</option>
+                                        <option value="paypal" {{ old('payment_method') === 'paypal' ? 'selected' : '' }}>{{ __('PayPal') }}</option>
+                                        <option value="bank_transfer" {{ old('payment_method') === 'bank_transfer' ? 'selected' : '' }}>{{ __('Bank Transfer') }}</option>
+                                        <option value="cash" {{ old('payment_method') === 'cash' ? 'selected' : '' }}>{{ __('Cash') }}</option>
                                     </select>
                                     @error('payment_method')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -87,11 +87,11 @@
                                 <div class="col-md-6">
                                     <label class="form-label">Payment Status <span class="text-danger">*</span></label>
                                     <select name="payment_status" class="form-select @error('payment_status') is-invalid @enderror" required>
-                                        <option value="">Select Payment Status</option>
-                                        <option value="pending" {{ old('payment_status') === 'pending' ? 'selected' : '' }}>Pending</option>
-                                        <option value="paid" {{ old('payment_status') === 'paid' ? 'selected' : '' }}>Paid</option>
-                                        <option value="failed" {{ old('payment_status') === 'failed' ? 'selected' : '' }}>Failed</option>
-                                        <option value="refunded" {{ old('payment_status') === 'refunded' ? 'selected' : '' }}>Refunded</option>
+                                        <option value="">{{ __('Select Payment Status') }}</option>
+                                        <option value="pending" {{ old('payment_status') === 'pending' ? 'selected' : '' }}>{{ __('Pending') }}</option>
+                                        <option value="paid" {{ old('payment_status') === 'paid' ? 'selected' : '' }}>{{ __('Paid') }}</option>
+                                        <option value="failed" {{ old('payment_status') === 'failed' ? 'selected' : '' }}>{{ __('Failed') }}</option>
+                                        <option value="refunded" {{ old('payment_status') === 'refunded' ? 'selected' : '' }}>{{ __('Refunded') }}</option>
                                     </select>
                                     @error('payment_status')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -116,7 +116,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Notes</label>
+                                <label class="form-label">{{ __('Notes') }}</label>
                                 <textarea name="notes" class="form-control @error('notes') is-invalid @enderror" rows="3" placeholder="Add any notes for this order">{{ old('notes') }}</textarea>
                                 @error('notes')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -124,7 +124,7 @@
                             </div>
 
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">Create Order</button>
+                                <button type="submit" class="btn btn-primary">{{ __('Create Order') }}</button>
                                 <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>

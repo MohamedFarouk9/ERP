@@ -1,5 +1,5 @@
-@extends('admin.layouts.app')
-@section('title', 'Inventory Products')
+﻿@extends('admin.layouts.app')
+@section('title', __('Inventory Products'))
 
 @section('content')
 <div class="wrapper">
@@ -7,13 +7,12 @@
         <div class="page-content">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div>
-                    <h4 class="mb-0">Inventory Products</h4>
-                    <small class="text-muted">Manage catalog items, pricing (cents), and real-time warehouse stock</small>
+                    <h4 class="mb-0">{{ __('Inventory Products') }}</h4>
                 </div>
                 <div class="d-flex gap-2">
                     @can('inventory.products.create')
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal">
-                            <i class="bx bx-plus"></i> Add Product
+                            <i class="bx bx-plus"></i> {{ __('Add Product') }}
                         </button>
                     @endcan
                 </div>
@@ -25,14 +24,14 @@
                         <table id="productsDataTable" class="table table-striped table-bordered align-middle w-100">
                             <thead class="table-light">
                                 <tr>
-                                    <th>SKU</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Cost</th>
-                                    <th>Selling Price</th>
-                                    <th>On Hand</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Actions</th>
+                                    <th>{{ __('SKU') }}</th>
+                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Category') }}</th>
+                                    <th>{{ __('Cost') }}</th>
+                                    <th>{{ __('Selling Price') }}</th>
+                                    <th>{{ __('On Hand') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th class="text-end">{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -49,51 +48,51 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.products.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Add New Product</h5>
+                <h5 class="modal-title">{{ __('Add New Product') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
                 <div class="col-md-4">
-                    <label class="form-label">SKU *</label>
+                    <label class="form-label">{{ __('SKU *') }}</label>
                     <input type="text" name="sku" class="form-control" required placeholder="SKU-001">
                 </div>
                 <div class="col-md-8">
-                    <label class="form-label">Product Name *</label>
+                    <label class="form-label">{{ __('Product Name *') }}</label>
                     <input type="text" name="name" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Category</label>
+                    <label class="form-label">{{ __('Category') }}</label>
                     <select name="category_id" class="form-select">
-                        <option value="">-- None --</option>
+                        <option value="">{{ __('-- None --') }}</option>
                         @foreach($categories as $cat)
                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label">Unit</label>
+                    <label class="form-label">{{ __('Unit') }}</label>
                     <input type="text" name="unit" class="form-control" value="pcs">
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label">Reorder Level</label>
+                    <label class="form-label">{{ __('Reorder Level') }}</label>
                     <input type="number" name="reorder_level" class="form-control" value="10" min="0">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Cost Price (Minor Units / Cents) *</label>
+                    <label class="form-label">{{ __('Cost Price (Minor Units / Cents) *') }}</label>
                     <input type="number" name="cost_price" class="form-control" value="0" min="0" required>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Selling Price (Minor Units / Cents) *</label>
+                    <label class="form-label">{{ __('Selling Price (Minor Units / Cents) *') }}</label>
                     <input type="number" name="selling_price" class="form-control" value="0" min="0" required>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Description</label>
+                    <label class="form-label">{{ __('Description') }}</label>
                     <textarea name="description" class="form-control" rows="2"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Product</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Create Product') }}</button>
             </div>
         </form>
     </div>
@@ -106,58 +105,58 @@
             @csrf
             @method('PUT')
             <div class="modal-header">
-                <h5 class="modal-title">Edit Product</h5>
+                <h5 class="modal-title">{{ __('Edit Product') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
                 <div class="col-md-4">
-                    <label class="form-label">SKU *</label>
+                    <label class="form-label">{{ __('SKU *') }}</label>
                     <input type="text" name="sku" id="edit_sku" class="form-control" required>
                 </div>
                 <div class="col-md-8">
-                    <label class="form-label">Product Name *</label>
+                    <label class="form-label">{{ __('Product Name *') }}</label>
                     <input type="text" name="name" id="edit_name" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Category</label>
+                    <label class="form-label">{{ __('Category') }}</label>
                     <select name="category_id" id="edit_category_id" class="form-select">
-                        <option value="">-- None --</option>
+                        <option value="">{{ __('-- None --') }}</option>
                         @foreach($categories as $cat)
                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label">Unit</label>
+                    <label class="form-label">{{ __('Unit') }}</label>
                     <input type="text" name="unit" id="edit_unit" class="form-control">
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label">Reorder Level</label>
+                    <label class="form-label">{{ __('Reorder Level') }}</label>
                     <input type="number" name="reorder_level" id="edit_reorder_level" class="form-control" min="0">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Cost Price (Cents) *</label>
+                    <label class="form-label">{{ __('Cost Price (Cents) *') }}</label>
                     <input type="number" name="cost_price" id="edit_cost_price" class="form-control" min="0" required>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Selling Price (Cents) *</label>
+                    <label class="form-label">{{ __('Selling Price (Cents) *') }}</label>
                     <input type="number" name="selling_price" id="edit_selling_price" class="form-control" min="0" required>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Status</label>
+                    <label class="form-label">{{ __('Status') }}</label>
                     <select name="is_active" id="edit_is_active" class="form-select">
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="1">{{ __('Active') }}</option>
+                        <option value="0">{{ __('Inactive') }}</option>
                     </select>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Description</label>
+                    <label class="form-label">{{ __('Description') }}</label>
                     <textarea name="description" id="edit_description" class="form-control" rows="2"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update Product</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update Product') }}</button>
             </div>
         </form>
     </div>
@@ -175,7 +174,7 @@
             </div>
             <div class="modal-body row g-3">
                 <div class="col-12">
-                    <label class="form-label">Warehouse *</label>
+                    <label class="form-label">{{ __('Warehouse *') }}</label>
                     <select name="warehouse_id" class="form-select" required>
                         @foreach($warehouses as $wh)
                             <option value="{{ $wh->id }}">{{ $wh->code }} - {{ $wh->name }}</option>
@@ -183,25 +182,25 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Movement Type *</label>
+                    <label class="form-label">{{ __('Movement Type *') }}</label>
                     <select name="type" class="form-select" required>
-                        <option value="in">Stock IN (+)</option>
-                        <option value="out">Stock OUT (-)</option>
-                        <option value="adjustment">Adjustment (+/-)</option>
+                        <option value="in">{{ __('Stock IN (+)') }}</option>
+                        <option value="out">{{ __('Stock OUT (-)') }}</option>
+                        <option value="adjustment">{{ __('Adjustment (+/-)') }}</option>
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Quantity *</label>
+                    <label class="form-label">{{ __('Quantity *') }}</label>
                     <input type="number" name="quantity" class="form-control" required value="1">
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Notes</label>
+                    <label class="form-label">{{ __('Notes') }}</label>
                     <input type="text" name="notes" class="form-control" placeholder="e.g. Supplier delivery / Audit adjustment">
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-success">Record Movement</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-success">{{ __('Record Movement') }}</button>
             </div>
         </form>
     </div>

@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Invoices')
+@section('title', __('Invoices'))
 
 @section('content')
 <div class="wrapper">
@@ -7,16 +7,15 @@
         <div class="page-content">
             <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
                 <div>
-                    <h4 class="mb-0">Invoices</h4>
-                    <small class="text-muted">Full invoicing lifecycle: draft, issue, print/PDF, quick payment collection & cancellation</small>
+                    <h4 class="mb-0">{{ __('Invoices') }}</h4>
                 </div>
                 <div class="d-flex gap-2">
                     @can('sales.invoices.create')
                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#fromOrderModal">
-                            <i class="bx bx-transfer"></i> Generate from Order
+                            <i class="bx bx-transfer"></i> {{ __('Generate from Order') }}
                         </button>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createInvoiceModal">
-                            <i class="bx bx-plus"></i> New Invoice
+                            <i class="bx bx-plus"></i> {{ __('New Invoice') }}
                         </button>
                     @endcan
                 </div>
@@ -24,12 +23,12 @@
 
             <!-- Status Filter Tabs -->
             <ul class="nav nav-pills mb-3" id="invoiceStatusTabs">
-                <li class="nav-item"><a class="nav-link active" href="#" data-status="">All</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" data-status="draft">Draft</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" data-status="issued">Issued</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" data-status="paid">Paid</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" data-status="overdue">Overdue</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" data-status="cancelled">Cancelled</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#" data-status="">{{ __('All') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-status="draft">{{ __('Draft') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-status="issued">{{ __('Issued') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-status="paid">{{ __('Paid') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-status="overdue">{{ __('Overdue') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-status="cancelled">{{ __('Cancelled') }}</a></li>
             </ul>
 
             <div class="card radius-10">
@@ -38,15 +37,15 @@
                         <table id="invoicesDataTable" class="table table-striped table-bordered align-middle w-100">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Invoice #</th>
-                                    <th>Customer</th>
-                                    <th>Invoice Date</th>
-                                    <th>Due Date</th>
-                                    <th>Total</th>
-                                    <th>Paid</th>
-                                    <th>Balance</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Actions</th>
+                                    <th>{{ __('Invoice #') }}</th>
+                                    <th>{{ __('Customer') }}</th>
+                                    <th>{{ __('Invoice Date') }}</th>
+                                    <th>{{ __('Due Date') }}</th>
+                                    <th>{{ __('Total') }}</th>
+                                    <th>{{ __('Paid') }}</th>
+                                    <th>{{ __('Balance') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th class="text-end">{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -63,21 +62,21 @@
         <form id="fromOrderForm" class="modal-content ajax-form" method="POST" action="">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Generate Invoice from Confirmed Order</h5>
+                <h5 class="modal-title">{{ __('Generate Invoice from Confirmed Order') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <label class="form-label">Select Confirmed Sales Order *</label>
+                <label class="form-label">{{ __('Select Confirmed Sales Order *') }}</label>
                 <select id="fromOrderSelect" class="form-select" required>
-                    <option value="">-- Choose Order --</option>
+                    <option value="">{{ __('-- Choose Order --') }}</option>
                     @foreach($orders as $ord)
-                        <option value="{{ $ord->id }}">{{ $ord->order_number }} — {{ $ord->customer?->name }} (${{ number_format($ord->total_amount / 100, 2) }})</option>
+                        <option value="{{ $ord->id }}">{{ $ord->order_number }} â€” {{ $ord->customer?->name }} (${{ number_format($ord->total_amount / 100, 2) }})</option>
                     @endforeach
                 </select>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Generate Draft Invoice</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Generate Draft Invoice') }}</button>
             </div>
         </form>
     </div>
@@ -89,17 +88,17 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.invoices.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Create Draft Invoice</h5>
+                <h5 class="modal-title">{{ __('Create Draft Invoice') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div class="row g-3 mb-3">
                     <div class="col-md-3">
-                        <label class="form-label">Invoice # *</label>
+                        <label class="form-label">{{ __('Invoice # *') }}</label>
                         <input type="text" name="invoice_number" class="form-control" required value="INV-{{ date('YmdHis') }}">
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Customer *</label>
+                        <label class="form-label">{{ __('Customer *') }}</label>
                         <select name="customer_id" class="form-select" required>
                             @foreach($customers as $c)
                                 <option value="{{ $c->id }}">{{ $c->code }} - {{ $c->name }}</option>
@@ -107,11 +106,11 @@
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Invoice Date *</label>
+                        <label class="form-label">{{ __('Invoice Date *') }}</label>
                         <input type="date" name="invoice_date" class="form-control" required value="{{ date('Y-m-d') }}">
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Due Date *</label>
+                        <label class="form-label">{{ __('Due Date *') }}</label>
                         <input type="date" name="due_date" class="form-control" required value="{{ date('Y-m-d', strtotime('+30 days')) }}">
                     </div>
                 </div>
@@ -124,10 +123,10 @@
                 <table class="table table-bordered align-middle" id="invLinesTable">
                     <thead class="table-light">
                         <tr>
-                            <th>Description *</th>
-                            <th style="width: 15%">Qty *</th>
-                            <th style="width: 20%">Unit Price (Cents) *</th>
-                            <th style="width: 20%">Tax (Cents)</th>
+                            <th>{{ __('Description *') }}</th>
+                            <th style="width: 15%">{{ __('Qty *') }}</th>
+                            <th style="width: 20%">{{ __('Unit Price (Cents) *') }}</th>
+                            <th style="width: 20%">{{ __('Tax (Cents)') }}</th>
                             <th style="width: 50px"></th>
                         </tr>
                     </thead>
@@ -143,8 +142,8 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save Draft Invoice</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Save Draft Invoice') }}</button>
             </div>
         </form>
     </div>
@@ -163,15 +162,15 @@
             </div>
             <div class="modal-body row g-3">
                 <div class="col-md-6">
-                    <label class="form-label">Payment # *</label>
+                    <label class="form-label">{{ __('Payment # *') }}</label>
                     <input type="text" name="payment_number" id="qp_pay_num" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Date *</label>
+                    <label class="form-label">{{ __('Date *') }}</label>
                     <input type="date" name="payment_date" class="form-control" required value="{{ date('Y-m-d') }}">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Method *</label>
+                    <label class="form-label">{{ __('Method *') }}</label>
                     <select name="payment_method_id" class="form-select" required>
                         @foreach($paymentMethods as $pm)
                             <option value="{{ $pm->id }}">{{ $pm->name }}</option>
@@ -179,17 +178,17 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Amount (Cents) *</label>
+                    <label class="form-label">{{ __('Amount (Cents) *') }}</label>
                     <input type="number" name="amount" id="qp_amount" class="form-control" required min="1">
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Reference</label>
+                    <label class="form-label">{{ __('Reference') }}</label>
                     <input type="text" name="reference" class="form-control" placeholder="Bank transfer / receipt ref">
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-success">Record Payment</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-success">{{ __('Record Payment') }}</button>
             </div>
         </form>
     </div>
@@ -200,26 +199,26 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Invoice: <span id="vi_number"></span></h5>
+                <h5 class="modal-title">{{ __('Invoice') }}: <span id="vi_number"></span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <p class="mb-2"><strong>Customer:</strong> <span id="vi_customer"></span> | <strong>Status:</strong> <span id="vi_status" class="badge bg-primary text-uppercase"></span></p>
+                <p class="mb-2"><strong>{{ __('Customer') }}:</strong> <span id="vi_customer"></span> | <strong>{{ __('Status') }}:</strong> <span id="vi_status" class="badge bg-primary text-uppercase"></span></p>
                 <table class="table table-bordered align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>Description</th>
-                            <th class="text-end">Qty</th>
-                            <th class="text-end">Unit Price</th>
-                            <th class="text-end">Tax</th>
-                            <th class="text-end">Line Total</th>
+                            <th>{{ __('Description') }}</th>
+                            <th class="text-end">{{ __('Qty') }}</th>
+                            <th class="text-end">{{ __('Unit Price') }}</th>
+                            <th class="text-end">{{ __('Tax') }}</th>
+                            <th class="text-end">{{ __('Line Total') }}</th>
                         </tr>
                     </thead>
                     <tbody id="vi_items"></tbody>
                 </table>
                 <div class="d-flex justify-content-between align-items-center">
-                    <a id="vi_print_btn" href="#" target="_blank" class="btn btn-outline-dark btn-sm"><i class="bx bx-printer"></i> Print / PDF</a>
-                    <div class="fw-bold fs-5">Total: <span id="vi_total"></span></div>
+                    <a id="vi_print_btn" href="#" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="bx bx-printer"></i> {{ __('Print / PDF') }}</a>
+                    <div class="fw-bold fs-5">{{ __('Total') }}: <span id="vi_total"></span></div>
                 </div>
             </div>
         </div>

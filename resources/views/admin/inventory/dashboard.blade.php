@@ -1,17 +1,16 @@
-@extends('admin.layouts.app')
-@section('title', 'Inventory Analytics Dashboard')
+﻿@extends('admin.layouts.app')
+@section('title', __('Inventory Analytics'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
-                <h4 class="mb-0">Inventory & Warehouse Analytics</h4>
-                <p class="mb-0 font-13 text-secondary">Stock valuation, warehouse capacity distribution, low-stock alerts, and movement ledger</p>
+                <h4 class="mb-0">{{ __('Inventory & Warehouse Analytics') }}</h4>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.warehouses.index') }}" class="btn btn-sm btn-outline-primary">Warehouses</a>
-                <a href="{{ route('admin.products.index') }}" class="btn btn-sm btn-primary">Products Catalog</a>
+                <a href="{{ route('admin.warehouses.index') }}" class="btn btn-sm btn-outline-primary">{{ __('Warehouses') }}</a>
+                <a href="{{ route('admin.products.index') }}" class="btn btn-sm btn-primary">{{ __('Products Catalog') }}</a>
             </div>
         </div>
 
@@ -21,9 +20,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Catalog SKUs</p>
+                                <p class="mb-0 text-secondary">{{ __('Catalog SKUs') }}</p>
                                 <h4 class="my-1">{{ number_format($stats['products_count']) }}</h4>
-                                <p class="mb-0 font-13 text-primary">{{ $stats['categories_count'] }} Categories</p>
+                                <p class="mb-0 font-13 text-primary">{{ $stats['categories_count'] }} {{ __('Categories') }}</p>
                             </div>
                             <div class="widgets-icons bg-light-primary text-primary ms-auto"><i class='bx bxs-package'></i></div>
                         </div>
@@ -35,9 +34,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Total Units On Hand</p>
+                                <p class="mb-0 text-secondary">{{ __('Total Units On Hand') }}</p>
                                 <h4 class="my-1 text-success">{{ number_format($stats['total_units']) }}</h4>
-                                <p class="mb-0 font-13 text-secondary">Across {{ $stats['warehouses_count'] }} Warehouses</p>
+                                <p class="mb-0 font-13 text-secondary">{{ $stats['warehouses_count'] }} {{ __('Warehouses') }}</p>
                             </div>
                             <div class="widgets-icons bg-light-success text-success ms-auto"><i class='bx bxs-cube'></i></div>
                         </div>
@@ -49,11 +48,10 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Stock Cost Valuation</p>
+                                <p class="mb-0 text-secondary">{{ __('Stock Cost Valuation') }}</p>
                                 <h4 class="my-1">${{ number_format($stats['inventory_valuation'] / 100, 2) }}</h4>
-                                <p class="mb-0 font-13 text-warning">Weighted cost basis</p>
                             </div>
-                            <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bxs-Coin-stack bx-dollar'></i></div>
+                            <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bx-dollar'></i></div>
                         </div>
                     </div>
                 </div>
@@ -63,9 +61,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Low Stock Alerts</p>
+                                <p class="mb-0 text-secondary">{{ __('Low Stock Alerts') }}</p>
                                 <h4 class="my-1 text-danger">{{ number_format($stats['low_stock_count']) }}</h4>
-                                <p class="mb-0 font-13 text-danger">At or below reorder point</p>
                             </div>
                             <div class="widgets-icons bg-light-danger text-danger ms-auto"><i class='bx bxs-error'></i></div>
                         </div>
@@ -79,8 +76,7 @@
             <div class="col-xl-8 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-body">
-                        <h6 class="mb-1">Units On Hand by Warehouse</h6>
-                        <small class="text-secondary">Real-time physical stock distribution</small>
+                        <h6 class="mb-1">{{ __('Units On Hand by Warehouse') }}</h6>
                         <div id="invWarehouseBar" style="min-height: 290px;"></div>
                     </div>
                 </div>
@@ -88,8 +84,7 @@
             <div class="col-xl-4 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-body">
-                        <h6 class="mb-1">Stock Movement Volume</h6>
-                        <small class="text-secondary">Inbound vs. Outbound vs. Adjustments</small>
+                        <h6 class="mb-1">{{ __('Stock Movement Volume') }}</h6>
                         <div id="invMovementDonut" class="mt-3" style="min-height: 270px;"></div>
                     </div>
                 </div>
@@ -100,11 +95,11 @@
             <div class="col-xl-6 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-body">
-                        <h6 class="mb-3">Low Stock Replenishment Alerts</h6>
+                        <h6 class="mb-3">{{ __('Low Stock Replenishment Alerts') }}</h6>
                         <div class="table-responsive">
                             <table class="table align-middle mb-0 table-hover">
                                 <thead class="table-light">
-                                    <tr><th>SKU</th><th>Product</th><th>Warehouse</th><th>On Hand</th><th>Reorder</th></tr>
+                                    <tr><th>{{ __('SKU') }}</th><th>{{ __('Product') }}</th><th>{{ __('Warehouse') }}</th><th>{{ __('Qty') }}</th><th>{{ __('Alerts') }}</th></tr>
                                 </thead>
                                 <tbody>
                                     @forelse($lowStockItems as $item)
@@ -132,7 +127,7 @@
                         <div class="table-responsive">
                             <table class="table align-middle mb-0 table-hover">
                                 <thead class="table-light">
-                                    <tr><th>SKU</th><th>Warehouse</th><th>Type</th><th>Qty</th><th>Source</th></tr>
+                                    <tr><th>{{ __('SKU') }}</th><th>{{ __('Warehouse') }}</th><th>{{ __('Type') }}</th><th>{{ __('Qty') }}</th><th>{{ __('Source') }}</th></tr>
                                 </thead>
                                 <tbody>
                                     @forelse($recentMovements as $mv)

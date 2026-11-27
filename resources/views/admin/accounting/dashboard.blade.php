@@ -1,17 +1,17 @@
-@extends('admin.layouts.app')
-@section('title', 'Finance Analytics Dashboard')
+﻿@extends('admin.layouts.app')
+@section('title', __('Finance Analytics'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
-                <h4 class="mb-0">Finance & Treasury Analytics</h4>
-                <p class="mb-0 font-13 text-secondary">General ledger volume, cash inflows, refunds, and chart of accounts breakdown</p>
+                <h4 class="mb-0">{{ __('Finance & Treasury Analytics') }}</h4>
+                <p class="mb-0 font-13 text-secondary">{{ __('General ledger volume, cash inflows, refunds, and chart of accounts breakdown') }}</p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.accounting.accounts') }}" class="btn btn-sm btn-outline-primary">Chart of Accounts</a>
-                <a href="{{ route('admin.accounting.transactions') }}" class="btn btn-sm btn-primary">Ledger Transactions</a>
+                <a href="{{ route('admin.accounting.accounts') }}" class="btn btn-sm btn-outline-primary">{{ __('Chart of Accounts') }}</a>
+                <a href="{{ route('admin.accounting.transactions') }}" class="btn btn-sm btn-primary">{{ __('Ledger Transactions') }}</a>
             </div>
         </div>
 
@@ -22,9 +22,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Posted Ledger Volume</p>
+                                <p class="mb-0 text-secondary">{{ __('Posted Ledger Volume') }}</p>
                                 <h4 class="my-1">${{ number_format($stats['total_ledger_volume'] / 100, 2) }}</h4>
-                                <p class="mb-0 font-13 text-primary">{{ number_format($stats['posted_transactions']) }} Posted · {{ $stats['draft_transactions'] }} Draft</p>
+                                <p class="mb-0 font-13 text-primary">{{ number_format($stats['posted_transactions']) }} Â· {{ $stats['draft_transactions'] }} {{ __('Draft') }}</p>
                             </div>
                             <div class="widgets-icons bg-light-primary text-primary ms-auto"><i class='bx bxs-book-content'></i></div>
                         </div>
@@ -36,9 +36,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Cash Collected</p>
+                                <p class="mb-0 text-secondary">{{ __('Cash Collected') }}</p>
                                 <h4 class="my-1 text-success">${{ number_format($stats['payments_collected'] / 100, 2) }}</h4>
-                                <p class="mb-0 font-13 text-success"><i class='bx bxs-up-arrow align-middle'></i> Settled inflows</p>
+                                <p class="mb-0 font-13 text-success"><i class='bx bxs-up-arrow align-middle'></i> {{ __('Completed') }}</p>
                             </div>
                             <div class="widgets-icons bg-light-success text-success ms-auto"><i class='bx bxs-wallet'></i></div>
                         </div>
@@ -50,9 +50,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Processed Refunds</p>
+                                <p class="mb-0 text-secondary">{{ __('Processed Refunds') }}</p>
                                 <h4 class="my-1 text-danger">${{ number_format($stats['refunds_total'] / 100, 2) }}</h4>
-                                <p class="mb-0 font-13 text-secondary">Net: ${{ number_format(($stats['payments_collected'] - $stats['refunds_total']) / 100, 2) }}</p>
+                                <p class="mb-0 font-13 text-secondary">${{ number_format(($stats['payments_collected'] - $stats['refunds_total']) / 100, 2) }}</p>
                             </div>
                             <div class="widgets-icons bg-light-danger text-danger ms-auto"><i class='bx bx-revision'></i></div>
                         </div>
@@ -64,9 +64,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Active Ledger Accounts</p>
+                                <p class="mb-0 text-secondary">{{ __('Active Ledger Accounts') }}</p>
                                 <h4 class="my-1">{{ $stats['accounts_count'] }}</h4>
-                                <p class="mb-0 font-13 text-warning">Double-entry balanced</p>
+                                <p class="mb-0 font-13 text-warning">{{ __('Double-entry balanced') }}</p>
                             </div>
                             <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bxs-layer'></i></div>
                         </div>
@@ -80,8 +80,7 @@
             <div class="col-xl-8 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-body">
-                        <h6 class="mb-1">6-Month Cash Inflow vs. Refunds</h6>
-                        <small class="text-secondary">Monthly treasury settlement trend</small>
+                        <h6 class="mb-1">{{ __('6-Month Cash Inflow vs. Refunds') }}</h6>
                         <div id="financeCashChart" style="min-height: 300px;"></div>
                     </div>
                 </div>
@@ -89,8 +88,7 @@
             <div class="col-xl-4 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-body">
-                        <h6 class="mb-1">Chart of Accounts Composition</h6>
-                        <small class="text-secondary">Accounts grouped by classification</small>
+                        <h6 class="mb-1">{{ __('Chart of Accounts') }}</h6>
                         <div id="financeAccountsDonut" class="mt-3" style="min-height: 280px;"></div>
                     </div>
                 </div>
@@ -102,11 +100,11 @@
             <div class="col-xl-7 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-body">
-                        <h6 class="mb-3">Recent Ledger Transactions</h6>
+                        <h6 class="mb-3">{{ __('Recent Ledger Transactions') }}</h6>
                         <div class="table-responsive">
                             <table class="table align-middle mb-0 table-hover">
                                 <thead class="table-light">
-                                    <tr><th>Transaction #</th><th>Date</th><th>Amount</th><th>Status</th></tr>
+                                    <tr><th>{{ __('Transaction #') }}</th><th>{{ __('Date') }}</th><th>{{ __('Total Amount') }}</th><th>{{ __('Status') }}</th></tr>
                                 </thead>
                                 <tbody>
                                     @forelse($recentTransactions as $txn)
@@ -132,7 +130,7 @@
                         <div class="table-responsive">
                             <table class="table align-middle mb-0 table-hover">
                                 <thead class="table-light">
-                                    <tr><th>Payment #</th><th>Method</th><th class="text-end">Amount</th></tr>
+                                    <tr><th>{{ __('Payment #') }}</th><th>{{ __('Method') }}</th><th class="text-end">{{ __('Amount') }}</th></tr>
                                 </thead>
                                 <tbody>
                                     @forelse($recentPayments as $pay)

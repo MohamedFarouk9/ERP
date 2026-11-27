@@ -1,24 +1,24 @@
 @extends('admin.layouts.app')
 
-@section('title', 'CRM Deals Pipeline')
+@section('title', __('Deals Pipeline'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">CRM</div>
+            <div class="breadcrumb-title pe-3">{{ __('CRM') }}</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.crm.dashboard') }}">CRM Analytics</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Deals Pipeline</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.crm.dashboard') }}">{{ __('CRM Analytics') }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('Deals Pipeline') }}</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto">
                 @can('crm.deals.manage')
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createDealModal">
-                    <i class="bx bx-plus me-1"></i> New Deal
+                    <i class="bx bx-plus me-1"></i> {{ __('New Deal') }}
                 </button>
                 @endcan
             </div>
@@ -26,14 +26,14 @@
 
         <div class="card radius-10">
             <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
-                <h6 class="mb-0">Sales Opportunities</h6>
+                <h6 class="mb-0">{{ __('Sales Opportunities') }}</h6>
                 <select id="dealStageFilter" class="form-select form-select-sm" style="width: 180px;">
-                    <option value="">All Stages</option>
-                    <option value="qualified">Qualified</option>
-                    <option value="proposal">Proposal</option>
-                    <option value="negotiation">Negotiation</option>
-                    <option value="won">Won</option>
-                    <option value="lost">Lost</option>
+                    <option value="">{{ __('All Stages') }}</option>
+                    <option value="qualified">{{ __('Qualified') }}</option>
+                    <option value="proposal">{{ __('Proposal') }}</option>
+                    <option value="negotiation">{{ __('Negotiation') }}</option>
+                    <option value="won">{{ __('Won') }}</option>
+                    <option value="lost">{{ __('Lost') }}</option>
                 </select>
             </div>
             <div class="card-body">
@@ -41,15 +41,15 @@
                     <table id="crmDealsTable" class="table table-striped table-bordered w-100">
                         <thead>
                             <tr>
-                                <th>Deal #</th>
-                                <th>Title</th>
-                                <th>Customer</th>
-                                <th>Owner</th>
-                                <th>Value</th>
-                                <th>Prob.</th>
-                                <th>Close Date</th>
-                                <th>Stage</th>
-                                <th>Move Stage</th>
+                                <th>{{ __('Deal #') }}</th>
+                                <th>{{ __('Title') }}</th>
+                                <th>{{ __('Customer') }}</th>
+                                <th>{{ __('Owner') }}</th>
+                                <th>{{ __('Value') }}</th>
+                                <th>{{ __('Prob.') }}</th>
+                                <th>{{ __('Close Date') }}</th>
+                                <th>{{ __('Stage') }}</th>
+                                <th>{{ __('Move Stage') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -65,53 +65,53 @@
         <div class="modal-content">
             <form id="createDealForm">
                 <div class="modal-header">
-                    <h5 class="modal-title">Create Deal Opportunity</h5>
+                    <h5 class="modal-title">{{ __('Create Deal Opportunity') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-md-8">
-                            <label class="form-label">Deal Title *</label>
+                            <label class="form-label">{{ __('Deal Title *') }}</label>
                             <input type="text" name="title" class="form-control" required>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Value ($) *</label>
+                            <label class="form-label">{{ __('Value ($) *') }}</label>
                             <input type="number" step="0.01" min="0" name="value_dollars" class="form-control" value="10000.00" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Customer</label>
+                            <label class="form-label">{{ __('Customer') }}</label>
                             <select name="customer_id" class="form-select">
-                                <option value="">None / Prospect</option>
+                                <option value="">--</option>
                                 @foreach($customers as $customer)
-                                    <option value="{{ $customer->id }}">{{ $customer->code }} — {{ $customer->name }}</option>
+                                    <option value="{{ $customer->id }}">{{ $customer->code }} â€” {{ $customer->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Linked Lead</label>
+                            <label class="form-label">{{ __('Linked Lead') }}</label>
                             <select name="lead_id" class="form-select">
-                                <option value="">None</option>
+                                <option value="">--</option>
                                 @foreach($leads as $lead)
-                                    <option value="{{ $lead->id }}">{{ $lead->lead_code }} — {{ $lead->name }}</option>
+                                    <option value="{{ $lead->id }}">{{ $lead->lead_code }} â€” {{ $lead->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Stage *</label>
+                            <label class="form-label">{{ __('Stage') }} *</label>
                             <select name="stage" class="form-select" required>
-                                <option value="qualified">Qualified (25%)</option>
-                                <option value="proposal">Proposal (50%)</option>
-                                <option value="negotiation">Negotiation (75%)</option>
-                                <option value="won">Won (100%)</option>
-                                <option value="lost">Lost (0%)</option>
+                                <option value="qualified">{{ __('Qualified (25%)') }}</option>
+                                <option value="proposal">{{ __('Proposal (50%)') }}</option>
+                                <option value="negotiation">{{ __('Negotiation (75%)') }}</option>
+                                <option value="won">{{ __('Won (100%)') }}</option>
+                                <option value="lost">{{ __('Lost (0%)') }}</option>
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Expected Close Date</label>
+                            <label class="form-label">{{ __('Expected Close Date') }}</label>
                             <input type="date" name="expected_close_date" class="form-control" value="{{ now()->addDays(30)->toDateString() }}">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Owner</label>
+                            <label class="form-label">{{ __('Owner') }}</label>
                             <select name="owner_id" class="form-select">
                                 @foreach($owners as $owner)
                                     <option value="{{ $owner->id }}">{{ $owner->name }}</option>
@@ -119,14 +119,14 @@
                             </select>
                         </div>
                         <div class="col-12">
-                            <label class="form-label">Notes</label>
+                            <label class="form-label">{{ __('Notes') }}</label>
                             <textarea name="notes" class="form-control" rows="2"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Create Deal</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Create Deal') }}</button>
                 </div>
             </form>
         </div>
@@ -199,10 +199,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!res.ok) throw new Error(data.message || 'Failed to create deal.');
             bootstrap.Modal.getInstance(document.getElementById('createDealModal')).hide();
             this.reset();
-            Swal.fire('Deal Created', data.message, 'success');
+            Swal.fire(@json(__('Deal Created')), data.message, 'success');
             table.ajax.reload(null, false);
         } catch (err) {
-            Swal.fire('Error', err.message, 'error');
+            Swal.fire(@json(__('Error')), err.message, 'error');
         }
     });
 
@@ -217,11 +217,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({ stage })
             });
             const data = await res.json();
-            if (!res.ok) throw new Error(data.message || 'Failed to update stage.');
-            Swal.fire('Stage Updated', data.message, 'success');
+            if (!res.ok) throw new Error(data.message || @json(__('Action failed.')));
+            Swal.fire(@json(__('Stage Updated')), data.message, 'success');
             table.ajax.reload(null, false);
         } catch (err) {
-            Swal.fire('Error', err.message, 'error');
+            Swal.fire(@json(__('Error')), err.message, 'error');
             table.ajax.reload(null, false);
         }
     });

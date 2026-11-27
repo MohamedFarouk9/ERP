@@ -1,16 +1,16 @@
 @extends('admin.layouts.app')
 
-@section('title', 'POS Receipt ' . $sale->receipt_number)
+@section('title', __('Point of Sale Receipt') . ' ' . $sale->receipt_number)
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="d-flex justify-content-between align-items-center mb-3 d-print-none">
             <a href="{{ route('admin.pos.terminal') }}" class="btn btn-outline-secondary btn-sm">
-                <i class="bx bx-arrow-back me-1"></i> Back to Terminal
+                <i class="bx bx-arrow-back me-1"></i> {{ __('Back to Terminal') }}
             </a>
             <button type="button" onclick="window.print()" class="btn btn-primary btn-sm">
-                <i class="bx bx-printer me-1"></i> Print Receipt
+                <i class="bx bx-printer me-1"></i> {{ __('Print Receipt') }}
             </button>
         </div>
 
@@ -18,33 +18,33 @@
             <div class="card-body p-4">
                 <div class="text-center border-bottom pb-3 mb-3">
                     <h4 class="mb-1 fw-bold">{{ $tenant->name ?? config('app.name') }}</h4>
-                    <div class="text-muted small">Point of Sale Receipt</div>
+                    <div class="text-muted small">{{ __('Point of Sale Receipt') }}</div>
                     <div class="mt-2 fw-semibold">{{ $sale->receipt_number }}</div>
                     <div class="text-muted small">{{ optional($sale->sale_date)->format('M d, Y H:i:s') }}</div>
                 </div>
 
                 <div class="small mb-3">
                     <div class="d-flex justify-content-between">
-                        <span class="text-muted">Cashier:</span>
+                        <span class="text-muted">{{ __('Cashier') }}:</span>
                         <span>{{ $sale->cashier->name ?? 'System' }}</span>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <span class="text-muted">Shift:</span>
+                        <span class="text-muted">{{ __('Shift') }}:</span>
                         <span>{{ $sale->shift->shift_number ?? '-' }}</span>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <span class="text-muted">Customer:</span>
-                        <span>{{ $sale->customer->name ?? 'Walk-in Customer' }}</span>
+                        <span class="text-muted">{{ __('Customer') }}:</span>
+                        <span>{{ $sale->customer->name ?? __('Walk-in Customer') }}</span>
                     </div>
                 </div>
 
                 <table class="table table-sm border-top border-bottom mb-3">
                     <thead>
                         <tr>
-                            <th>Item</th>
-                            <th class="text-center">Qty</th>
-                            <th class="text-end">Price</th>
-                            <th class="text-end">Total</th>
+                            <th>{{ __('Item') }}</th>
+                            <th class="text-center">{{ __('Qty') }}</th>
+                            <th class="text-end">{{ __('Price') }}</th>
+                            <th class="text-end">{{ __('Total') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,35 +64,35 @@
 
                 <div class="small">
                     <div class="d-flex justify-content-between mb-1">
-                        <span class="text-muted">Subtotal</span>
+                        <span class="text-muted">{{ __('Subtotal') }}</span>
                         <span>${{ number_format(($sale->subtotal ?? 0) / 100, 2) }}</span>
                     </div>
                     @if(($sale->discount_amount ?? 0) > 0)
                     <div class="d-flex justify-content-between mb-1">
-                        <span class="text-muted">Discount</span>
+                        <span class="text-muted">{{ __('Discount') }}</span>
                         <span class="text-danger">-${{ number_format(($sale->discount_amount ?? 0) / 100, 2) }}</span>
                     </div>
                     @endif
                     <div class="d-flex justify-content-between mb-2">
-                        <span class="text-muted">Tax</span>
+                        <span class="text-muted">{{ __('Tax') }}</span>
                         <span>${{ number_format(($sale->tax_amount ?? 0) / 100, 2) }}</span>
                     </div>
                     <div class="d-flex justify-content-between fs-6 fw-bold border-top pt-2 mb-2">
-                        <span>Total</span>
+                        <span>{{ __('Total') }}</span>
                         <span>${{ number_format(($sale->total_amount ?? 0) / 100, 2) }}</span>
                     </div>
                     <div class="d-flex justify-content-between mb-1">
-                        <span class="text-muted">Payment ({{ strtoupper($sale->payment_type) }})</span>
+                        <span class="text-muted">{{ __('Payment') }} ({{ strtoupper($sale->payment_type) }})</span>
                         <span>${{ number_format(($sale->amount_tendered ?? 0) / 100, 2) }}</span>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <span class="text-muted">Change</span>
+                        <span class="text-muted">{{ __('Change') }}</span>
                         <span>${{ number_format(($sale->change_due ?? 0) / 100, 2) }}</span>
                     </div>
                 </div>
 
                 <div class="text-center border-top pt-3 mt-4 text-muted small">
-                    Thank you for your business!
+                    {{ __('Thank you for your business!') }}
                 </div>
             </div>
         </div>

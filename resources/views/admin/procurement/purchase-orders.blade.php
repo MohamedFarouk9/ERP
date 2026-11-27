@@ -1,5 +1,5 @@
-@extends('admin.layouts.app')
-@section('title', 'Purchase Orders')
+﻿@extends('admin.layouts.app')
+@section('title', __('Purchase Orders'))
 
 @section('content')
 <div class="wrapper">
@@ -7,12 +7,11 @@
         <div class="page-content">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div>
-                    <h4 class="mb-0">Purchase Orders</h4>
-                    <small class="text-muted">Order stock from suppliers and auto-increment Inventory on Goods Receipt</small>
+                    <h4 class="mb-0">{{ __('Purchase Orders') }}</h4>
                 </div>
                 @can('procurement.orders.create')
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPoModal">
-                        <i class="bx bx-plus"></i> New Purchase Order
+                        <i class="bx bx-plus"></i> {{ __('New Purchase Order') }}
                     </button>
                 @endcan
             </div>
@@ -23,13 +22,13 @@
                         <table id="posDataTable" class="table table-striped table-bordered align-middle w-100">
                             <thead class="table-light">
                                 <tr>
-                                    <th>PO #</th>
-                                    <th>Supplier</th>
-                                    <th>Order Date</th>
-                                    <th>Items</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Actions</th>
+                                    <th>{{ __('PO #') }}</th>
+                                    <th>{{ __('Supplier') }}</th>
+                                    <th>{{ __('Order Date') }}</th>
+                                    <th>{{ __('Items') }}</th>
+                                    <th>{{ __('Total') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th class="text-end">{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -46,25 +45,25 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.procurement.orders.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Create Purchase Order</h5>
+                <h5 class="modal-title">{{ __('Create Purchase Order') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div class="row g-3 mb-3">
-                    <div class="col-md-3"><label class="form-label">PO # *</label><input type="text" name="po_number" class="form-control" required value="PO-{{ date('YmdHis') }}"></div>
+                    <div class="col-md-3"><label class="form-label">{{ __('PO # *') }}</label><input type="text" name="po_number" class="form-control" required value="PO-{{ date('YmdHis') }}"></div>
                     <div class="col-md-3">
-                        <label class="form-label">Supplier *</label>
+                        <label class="form-label">{{ __('Supplier *') }}</label>
                         <select name="supplier_id" class="form-select" required>
                             @foreach($suppliers as $s)<option value="{{ $s->id }}">{{ $s->code }} - {{ $s->name }}</option>@endforeach
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Receiving Warehouse *</label>
+                        <label class="form-label">{{ __('Receiving Warehouse *') }}</label>
                         <select name="warehouse_id" class="form-select" required>
                             @foreach($warehouses as $w)<option value="{{ $w->id }}">{{ $w->code }} - {{ $w->name }}</option>@endforeach
                         </select>
                     </div>
-                    <div class="col-md-3"><label class="form-label">Order Date *</label><input type="date" name="order_date" class="form-control" required value="{{ date('Y-m-d') }}"></div>
+                    <div class="col-md-3"><label class="form-label">{{ __('Order Date *') }}</label><input type="date" name="order_date" class="form-control" required value="{{ date('Y-m-d') }}"></div>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -73,7 +72,7 @@
                 </div>
                 <table class="table table-bordered align-middle" id="poItemsTable">
                     <thead class="table-light">
-                        <tr><th>Product *</th><th style="width:15%">Qty *</th><th style="width:20%">Unit Cost (Cents) *</th><th style="width:15%">Tax (bps)</th><th style="width:50px"></th></tr>
+                        <tr><th>{{ __('Product *') }}</th><th style="width:15%">{{ __('Qty *') }}</th><th style="width:20%">{{ __('Unit Cost (Cents) *') }}</th><th style="width:15%">{{ __('Tax (bps)') }}</th><th style="width:50px"></th></tr>
                     </thead>
                     <tbody>
                         <tr>
@@ -91,8 +90,8 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Purchase Order</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Create Purchase Order') }}</button>
             </div>
         </form>
     </div>

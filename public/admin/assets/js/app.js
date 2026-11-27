@@ -27,9 +27,10 @@ $(function() {
 			}, 600), !1
 		})
 	}), $(function() {
-		for (var e = window.location, o = $(".metismenu li a").filter(function() {
-				return this.href == e
-			}).addClass("").parent().addClass("mm-active"); o.is("li");) o = o.parent("").addClass("mm-show").parent("").addClass("mm-active")
+		var e = window.location.href;
+		$(".metismenu li a").filter(function() {
+			return this.href == e;
+		}).parent().addClass("mm-active");
 	}), $(function() {
 		$("#menu").metisMenu()
 	}), $(".chat-toggle-btn").on("click", function() {

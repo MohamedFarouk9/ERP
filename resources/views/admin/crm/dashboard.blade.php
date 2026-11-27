@@ -1,34 +1,34 @@
 @extends('admin.layouts.app')
 
-@section('title', 'CRM Analytics')
+@section('title', __('CRM Analytics'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">CRM</div>
+            <div class="breadcrumb-title pe-3">{{ __('CRM') }}</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="bx bx-home-alt"></i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">CRM Analytics</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('CRM Analytics') }}</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto d-flex gap-2">
                 @can('crm.leads.view')
                 <a href="{{ route('admin.crm.leads.index') }}" class="btn btn-primary btn-sm px-3">
-                    <i class="bx bx-user-plus me-1"></i> Leads
+                    <i class="bx bx-user-plus me-1"></i> {{ __('Leads') }}
                 </a>
                 @endcan
                 @can('crm.deals.view')
                 <a href="{{ route('admin.crm.deals.index') }}" class="btn btn-outline-success btn-sm px-3">
-                    <i class="bx bx-briefcase me-1"></i> Deals Pipeline
+                    <i class="bx bx-briefcase me-1"></i> {{ __('Deals Pipeline') }}
                 </a>
                 @endcan
                 @can('crm.activities.view')
                 <a href="{{ route('admin.crm.activities.index') }}" class="btn btn-outline-secondary btn-sm px-3">
-                    <i class="bx bx-calendar-check me-1"></i> Activities
+                    <i class="bx bx-calendar-check me-1"></i> {{ __('Activities') }}
                 </a>
                 @endcan
             </div>
@@ -41,9 +41,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Total Leads</p>
+                                <p class="mb-0 text-secondary">{{ __('Total Leads') }}</p>
                                 <h4 class="my-1 text-primary">{{ $stats['total_leads'] ?? 0 }}</h4>
-                                <p class="mb-0 font-13">{{ $stats['conversion_rate'] ?? 0 }}% conversion rate</p>
+                                <p class="mb-0 font-13">{{ $stats['conversion_rate'] ?? 0 }}%</p>
                             </div>
                             <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
                                 <i class="bx bx-user-voice"></i>
@@ -57,9 +57,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Open Pipeline</p>
+                                <p class="mb-0 text-secondary">{{ __('Open Pipeline') }}</p>
                                 <h4 class="my-1 text-info">${{ number_format(($stats['open_pipeline_value'] ?? 0) / 100, 2) }}</h4>
-                                <p class="mb-0 font-13">Active opportunities</p>
+                                <p class="mb-0 font-13">{{ __('Active opportunities') }}</p>
                             </div>
                             <div class="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">
                                 <i class="bx bx-trending-up"></i>
@@ -73,9 +73,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Won Revenue</p>
+                                <p class="mb-0 text-secondary">{{ __('Won Revenue') }}</p>
                                 <h4 class="my-1 text-success">${{ number_format(($stats['won_revenue'] ?? 0) / 100, 2) }}</h4>
-                                <p class="mb-0 font-13">{{ $stats['win_rate'] ?? 0 }}% win rate</p>
+                                <p class="mb-0 font-13">{{ $stats['win_rate'] ?? 0 }}%</p>
                             </div>
                             <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
                                 <i class="bx bx-trophy"></i>
@@ -89,9 +89,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Open Activities</p>
+                                <p class="mb-0 text-secondary">{{ __('Open Activities') }}</p>
                                 <h4 class="my-1 text-warning">{{ $stats['open_activities'] ?? 0 }}</h4>
-                                <p class="mb-0 font-13">Scheduled follow-ups</p>
+                                <p class="mb-0 font-13">{{ __('Scheduled follow-ups') }}</p>
                             </div>
                             <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto">
                                 <i class="bx bx-phone-call"></i>
@@ -107,7 +107,7 @@
             <div class="col-12 col-lg-8 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-header">
-                        <h6 class="mb-0">Pipeline Value by Stage</h6>
+                        <h6 class="mb-0">{{ __('Pipeline Value by Stage') }}</h6>
                     </div>
                     <div class="card-body">
                         <div id="crmStageChart" style="height: 310px;"></div>
@@ -117,7 +117,7 @@
             <div class="col-12 col-lg-4 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-header">
-                        <h6 class="mb-0">Leads by Source</h6>
+                        <h6 class="mb-0">{{ __('Leads by Source') }}</h6>
                     </div>
                     <div class="card-body d-flex align-items-center justify-content-center">
                         <div id="crmSourceChart" class="w-100"></div>
@@ -131,17 +131,17 @@
             <div class="col-12 col-lg-6 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0">Top Open Deals</h6>
-                        <a href="{{ route('admin.crm.deals.index') }}" class="btn btn-sm btn-outline-primary">View Pipeline</a>
+                        <h6 class="mb-0">{{ __('Top Open Deals') }}</h6>
+                        <a href="{{ route('admin.crm.deals.index') }}" class="btn btn-sm btn-outline-primary">{{ __('View Pipeline') }}</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>Deal</th>
-                                        <th>Stage</th>
-                                        <th class="text-end">Value</th>
+                                        <th>{{ __('Deals Pipeline') }}</th>
+                                        <th>{{ __('Stage') }}</th>
+                                        <th class="text-end">{{ __('Value') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -166,17 +166,17 @@
             <div class="col-12 col-lg-6 d-flex">
                 <div class="card radius-10 w-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0">Upcoming Activities</h6>
-                        <a href="{{ route('admin.crm.activities.index') }}" class="btn btn-sm btn-outline-primary">View All</a>
+                        <h6 class="mb-0">{{ __('Upcoming Activities') }}</h6>
+                        <a href="{{ route('admin.crm.activities.index') }}" class="btn btn-sm btn-outline-primary">{{ __('View All') }}</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>Type</th>
-                                        <th>Subject</th>
-                                        <th>Due</th>
+                                        <th>{{ __('Type') }}</th>
+                                        <th>{{ __('Subject') }}</th>
+                                        <th>{{ __('Due At') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

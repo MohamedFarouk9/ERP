@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Sections')
 
 @section('content')
@@ -22,11 +22,11 @@
                     <table id="sectionsTable" class="table table-striped table-bordered" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                {{-- <th>Name</th> --}}
-                                <th>Label</th>
-                                <th>Products Count</th>
-                                <th>Action</th>
+                                <th>{{ __('ID') }}</th>
+                                {{-- <th>{{ __('Name') }}</th> --}}
+                                <th>{{ __('Label') }}</th>
+                                <th>{{ __('Products Count') }}</th>
+                                <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>

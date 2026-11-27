@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Section Details')
 
 @section('content')
@@ -27,23 +27,23 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <label class="form-label">Name</label><br>
+                            <label class="form-label">{{ __('Name') }}</label><br>
                             <strong>{{ $section->name }}</strong>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Label</label><br>
+                            <label class="form-label">{{ __('Label') }}</label><br>
                             <strong>{{ $section->label }}</strong>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Products Count</label><br>
+                            <label class="form-label">{{ __('Products Count') }}</label><br>
                             <span class="badge bg-info">{{ $section->products->count() }}</span>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Created</label><br>
+                            <label class="form-label">{{ __('Created') }}</label><br>
                             {{ $section->created_at->format('M d, Y H:i') }}
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Last Updated</label><br>
+                            <label class="form-label">{{ __('Last Updated') }}</label><br>
                             {{ $section->updated_at->format('M d, Y H:i') }}
                         </div>
                     </div>
@@ -61,11 +61,11 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
-                                        <th>Category</th>
+                                        <th>{{ __('Image') }}</th>
+                                        <th>{{ __('Name') }}</th>
+                                        <th>{{ __('Price') }}</th>
+                                        <th>{{ __('Status') }}</th>
+                                        <th>{{ __('Category') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -5,7 +5,7 @@ $(document).ready(function() {
         var form = $(this);
         var submitBtn = form.find('button[type="submit"]');
         var originalHtml = submitBtn.html();
-        submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Saving...');
+        submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> {{ __('Saving...') }}');
 
         var isMultipart = form.attr('enctype') === 'multipart/form-data';
         var ajaxOptions = {
@@ -25,8 +25,8 @@ $(document).ready(function() {
 
                 Swal.fire({
                     icon: 'success',
-                    title: 'Success',
-                    text: response.message || 'Operation successful!',
+                    title: @json(__('Success')),
+                    text: response.message || @json(__('Operation successful!')),
                     confirmButtonColor: '#3085d6',
                 }).then(function() {
                     var redirectUrl = response.redirect || form.data('redirect');
@@ -42,7 +42,7 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 submitBtn.prop('disabled', false).html(originalHtml);
-                let msg = 'An error occurred.';
+                let msg = @json(__('An error occurred.'));
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     msg = xhr.responseJSON.message;
                 }
@@ -51,7 +51,7 @@ $(document).ready(function() {
                 }
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
+                    title: @json(__('Error')),
                     text: msg,
                     confirmButtonColor: '#d33',
                 });

@@ -1,23 +1,22 @@
-@extends('admin.layouts.app')
-@section('title', 'Teams & Hierarchy')
+﻿@extends('admin.layouts.app')
+@section('title', __('Teams & Leads'))
 
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
         <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
             <div>
-                <h4 class="mb-0">Teams & Team Leads</h4>
-                <small class="text-muted">Hierarchical teams linked to departments with multi-team member assignments</small>
+                <h4 class="mb-0">{{ __('Teams & Team Leads') }}</h4>
             </div>
             <div class="d-flex gap-2">
                 @can('users.teams.assign')
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#assignMemberModal">
-                        <i class="bx bx-user-check"></i> Assign Member
+                        <i class="bx bx-user-check"></i> {{ __('Assign Member') }}
                     </button>
                 @endcan
                 @can('users.teams.create')
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTeamModal">
-                        <i class="bx bx-plus"></i> Add Team
+                        <i class="bx bx-plus"></i> {{ __('Add Team') }}
                     </button>
                 @endcan
             </div>
@@ -29,11 +28,11 @@
                     <table class="table table-striped table-bordered align-middle erp-datatable w-100">
                         <thead class="table-light">
                             <tr>
-                                <th>Team Name</th>
-                                <th>Department</th>
-                                <th>Parent Team</th>
-                                <th>Members</th>
-                                <th class="text-end">Actions</th>
+                                <th>{{ __('Team Name') }}</th>
+                                <th>{{ __('Department') }}</th>
+                                <th>{{ __('Parent Team') }}</th>
+                                <th>{{ __('Members') }}</th>
+                                <th class="text-end">{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -79,30 +78,30 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.organization.teams.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Create Team</h5>
+                <h5 class="modal-title">{{ __('Create Team') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
-                <div class="col-12"><label class="form-label">Team Name *</label><input type="text" name="name" class="form-control" required></div>
+                <div class="col-12"><label class="form-label">{{ __('Team Name *') }}</label><input type="text" name="name" class="form-control" required></div>
                 <div class="col-md-6">
-                    <label class="form-label">Department</label>
+                    <label class="form-label">{{ __('Department') }}</label>
                     <select name="department_id" class="form-select">
-                        <option value="">-- Optional --</option>
+                        <option value="">{{ __('-- Optional --') }}</option>
                         @foreach($departments as $d)<option value="{{ $d->id }}">{{ $d->code }} - {{ $d->name }}</option>@endforeach
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Parent Team</label>
+                    <label class="form-label">{{ __('Parent Team') }}</label>
                     <select name="parent_id" class="form-select">
-                        <option value="">-- Root Team --</option>
+                        <option value="">{{ __('-- Root Team --') }}</option>
                         @foreach($teams as $t)<option value="{{ $t->id }}">{{ $t->name }}</option>@endforeach
                     </select>
                 </div>
-                <div class="col-12"><label class="form-label">Description</label><textarea name="description" class="form-control" rows="2"></textarea></div>
+                <div class="col-12"><label class="form-label">{{ __('Description') }}</label><textarea name="description" class="form-control" rows="2"></textarea></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Team</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Create Team') }}</button>
             </div>
         </form>
     </div>
@@ -115,31 +114,31 @@
             @csrf
             @method('PUT')
             <div class="modal-header">
-                <h5 class="modal-title">Edit Team</h5>
+                <h5 class="modal-title">{{ __('Edit Team') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
-                <div class="col-md-7"><label class="form-label">Team Name *</label><input type="text" name="name" id="et_name" class="form-control" required></div>
-                <div class="col-md-5"><label class="form-label">Slug</label><input type="text" name="slug" id="et_slug" class="form-control"></div>
+                <div class="col-md-7"><label class="form-label">{{ __('Team Name *') }}</label><input type="text" name="name" id="et_name" class="form-control" required></div>
+                <div class="col-md-5"><label class="form-label">{{ __('Slug') }}</label><input type="text" name="slug" id="et_slug" class="form-control"></div>
                 <div class="col-md-6">
-                    <label class="form-label">Department</label>
+                    <label class="form-label">{{ __('Department') }}</label>
                     <select name="department_id" id="et_dept" class="form-select">
-                        <option value="">-- Optional --</option>
+                        <option value="">{{ __('-- Optional --') }}</option>
                         @foreach($departments as $d)<option value="{{ $d->id }}">{{ $d->code }} - {{ $d->name }}</option>@endforeach
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Parent Team</label>
+                    <label class="form-label">{{ __('Parent Team') }}</label>
                     <select name="parent_id" id="et_parent" class="form-select">
-                        <option value="">-- Root Team --</option>
+                        <option value="">{{ __('-- Root Team --') }}</option>
                         @foreach($teams as $t)<option value="{{ $t->id }}">{{ $t->name }}</option>@endforeach
                     </select>
                 </div>
-                <div class="col-12"><label class="form-label">Description</label><textarea name="description" id="et_desc" class="form-control" rows="2"></textarea></div>
+                <div class="col-12"><label class="form-label">{{ __('Description') }}</label><textarea name="description" id="et_desc" class="form-control" rows="2"></textarea></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update Team</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update Team') }}</button>
             </div>
         </form>
     </div>
@@ -151,18 +150,18 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.organization.teams.members') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Assign Staff to Team</h5>
+                <h5 class="modal-title">{{ __('Assign Staff to Team') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body row g-3">
                 <div class="col-12">
-                    <label class="form-label">Team *</label>
+                    <label class="form-label">{{ __('Team *') }}</label>
                     <select name="team_id" class="form-select" required>
                         @foreach($teams as $t)<option value="{{ $t->id }}">{{ $t->name }}</option>@endforeach
                     </select>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Staff Member *</label>
+                    <label class="form-label">{{ __('Staff Member *') }}</label>
                     <select name="user_id" class="form-select" required>
                         @foreach($users as $u)<option value="{{ $u->id }}">{{ $u->name }} ({{ $u->email }})</option>@endforeach
                     </select>
@@ -175,8 +174,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Assign Member</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Assign Member') }}</button>
             </div>
         </form>
     </div>

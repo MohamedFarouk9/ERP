@@ -1,5 +1,5 @@
-@extends('admin.layouts.app')
-@section('title', 'Tenant Roles')
+﻿@extends('admin.layouts.app')
+@section('title', __('Roles & RBAC'))
 
 @section('content')
 <div class="wrapper">
@@ -7,12 +7,11 @@
         <div class="page-content">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div>
-                    <h4 class="mb-0">Tenant Roles & RBAC</h4>
-                    <small class="text-muted">Manage roles and assign granular module permissions</small>
+                    <h4 class="mb-0">{{ __('Tenant Roles & RBAC') }}</h4>
                 </div>
                 @can('users.roles.create')
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createRoleModal">
-                        <i class="bx bx-plus"></i> Add Role
+                        <i class="bx bx-plus"></i> {{ __('Add Role') }}
                     </button>
                 @endcan
             </div>
@@ -23,12 +22,12 @@
                         <table class="table table-striped table-bordered align-middle erp-datatable w-100">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Role Name</th>
-                                    <th>Slug</th>
-                                    <th>Permissions</th>
-                                    <th>Assigned Users</th>
-                                    <th>Type</th>
-                                    <th class="text-end">Actions</th>
+                                    <th>{{ __('Role Name') }}</th>
+                                    <th>{{ __('Slug') }}</th>
+                                    <th>{{ __('Permissions') }}</th>
+                                    <th>{{ __('Assigned Users') }}</th>
+                                    <th>{{ __('Type') }}</th>
+                                    <th class="text-end">{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,21 +78,21 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.roles.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Create Role</h5>
+                <h5 class="modal-title">{{ __('Create Role') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
-                        <label class="form-label">Role Name *</label>
+                        <label class="form-label">{{ __('Role Name *') }}</label>
                         <input type="text" name="name" class="form-control" required placeholder="Inventory Clerk">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Slug</label>
+                        <label class="form-label">{{ __('Slug') }}</label>
                         <input type="text" name="slug" class="form-control" placeholder="inventory-clerk">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Description</label>
+                        <label class="form-label">{{ __('Description') }}</label>
                         <input type="text" name="description" class="form-control">
                     </div>
                 </div>
@@ -115,8 +114,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Role</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Create Role') }}</button>
             </div>
         </form>
     </div>
@@ -129,21 +128,21 @@
             @csrf
             @method('PUT')
             <div class="modal-header">
-                <h5 class="modal-title">Edit Role & Permissions</h5>
+                <h5 class="modal-title">{{ __('Edit Role & Permissions') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
-                        <label class="form-label">Role Name *</label>
+                        <label class="form-label">{{ __('Role Name *') }}</label>
                         <input type="text" name="name" id="er_name" class="form-control" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Slug</label>
+                        <label class="form-label">{{ __('Slug') }}</label>
                         <input type="text" name="slug" id="er_slug" class="form-control">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Description</label>
+                        <label class="form-label">{{ __('Description') }}</label>
                         <input type="text" name="description" id="er_description" class="form-control">
                     </div>
                 </div>
@@ -165,8 +164,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update Role</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update Role') }}</button>
             </div>
         </form>
     </div>

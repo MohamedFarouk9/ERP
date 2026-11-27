@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Order Tracking - ' . $order->order_number)
 
 @section('content')
@@ -119,7 +119,7 @@
                             @csrf
                             <div class="mb-3">
                                 <select name="status" class="form-select" required>
-                                    <option value="">Select Status</option>
+                                    <option value="">{{ __('Select Status') }}</option>
                                     <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pending</option>
                                     <option value="processing" {{ $order->status === 'processing' ? 'selected' : '' }}>Processing</option>
                                     <option value="shipped" {{ $order->status === 'shipped' ? 'selected' : '' }}>Shipped</option>
@@ -127,7 +127,7 @@
                                     <option value="cancelled" {{ $order->status === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Update Status</button>
+                            <button type="submit" class="btn btn-primary w-100">{{ __('Update Status') }}</button>
                         </form>
                     </div>
                 </div>

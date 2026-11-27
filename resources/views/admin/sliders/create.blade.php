@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Add Slider')
 
 @section('content')
@@ -13,7 +13,7 @@
                 <form class="ajax-form" method="POST" action="{{ route('admin.sliders.store') }}" enctype="multipart/form-data" data-redirect="{{route('admin.sliders.index')}}">
                     @csrf
                     <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
+                        <label for="image" class="form-label">{{ __('Image') }}</label>
                         <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*" required>
                         @error('image')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -24,7 +24,7 @@
                         <label class="form-check-label" for="is_active">Active</label>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Add Slider</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Add Slider') }}</button>
                     </div>
                 </form>
             </div>

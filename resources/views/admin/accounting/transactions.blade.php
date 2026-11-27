@@ -1,5 +1,5 @@
-@extends('admin.layouts.app')
-@section('title', 'Accounting Transactions')
+﻿@extends('admin.layouts.app')
+@section('title', __('Accounting Transactions'))
 
 @section('content')
 <div class="wrapper">
@@ -7,12 +7,11 @@
         <div class="page-content">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div>
-                    <h4 class="mb-0">Accounting Transactions</h4>
-                    <small class="text-muted">Double-entry general ledger transactions with debit/credit balance enforcement</small>
+                    <h4 class="mb-0">{{ __('Accounting Transactions') }}</h4>
                 </div>
                 @can('accounting.transactions.create')
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTransactionModal">
-                        <i class="bx bx-plus"></i> New Transaction
+                        <i class="bx bx-plus"></i> {{ __('New Transaction') }}
                     </button>
                 @endcan
             </div>
@@ -23,13 +22,13 @@
                         <table id="transactionsDataTable" class="table table-striped table-bordered align-middle w-100">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Transaction #</th>
-                                    <th>Date</th>
-                                    <th>Reference</th>
-                                    <th>Notes</th>
-                                    <th>Total Amount</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Actions</th>
+                                    <th>{{ __('Transaction #') }}</th>
+                                    <th>{{ __('Date') }}</th>
+                                    <th>{{ __('Reference') }}</th>
+                                    <th>{{ __('Notes') }}</th>
+                                    <th>{{ __('Total Amount') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th class="text-end">{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -46,34 +45,34 @@
         <form class="modal-content ajax-form" method="POST" action="{{ route('admin.accounting.transactions.store') }}">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Create Draft Accounting Transaction</h5>
+                <h5 class="modal-title">{{ __('Create Draft Accounting Transaction') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div class="row g-3 mb-3">
                     <div class="col-md-3">
-                        <label class="form-label">Transaction # *</label>
+                        <label class="form-label">{{ __('Transaction # *') }}</label>
                         <input type="text" name="transaction_number" class="form-control" required value="TXN-{{ date('YmdHis') }}">
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Date *</label>
+                        <label class="form-label">{{ __('Date *') }}</label>
                         <input type="date" name="transaction_date" class="form-control" required value="{{ date('Y-m-d') }}">
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Financial Period</label>
+                        <label class="form-label">{{ __('Financial Period') }}</label>
                         <select name="financial_period_id" class="form-select">
-                            <option value="">-- Optional --</option>
+                            <option value="">{{ __('-- Optional --') }}</option>
                             @foreach($periods as $p)
                                 <option value="{{ $p->id }}">{{ $p->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Reference Type</label>
+                        <label class="form-label">{{ __('Reference Type') }}</label>
                         <input type="text" name="reference_type" class="form-control" value="Manual">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Notes</label>
+                        <label class="form-label">{{ __('Notes') }}</label>
                         <input type="text" name="notes" class="form-control" placeholder="Description of this ledger entry">
                     </div>
                 </div>
@@ -87,10 +86,10 @@
                     <table class="table table-bordered align-middle" id="txnLinesTable">
                         <thead class="table-light">
                             <tr>
-                                <th style="width: 35%">Account *</th>
-                                <th style="width: 20%">Debit (Cents)</th>
-                                <th style="width: 20%">Credit (Cents)</th>
-                                <th>Line Description</th>
+                                <th style="width: 35%">{{ __('Account *') }}</th>
+                                <th style="width: 20%">{{ __('Debit (Cents)') }}</th>
+                                <th style="width: 20%">{{ __('Credit (Cents)') }}</th>
+                                <th>{{ __('Line Description') }}</th>
                                 <th style="width: 50px"></th>
                             </tr>
                         </thead>
@@ -134,8 +133,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save Draft Transaction</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Cancel") }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Save Draft Transaction') }}</button>
             </div>
         </form>
     </div>
@@ -155,10 +154,10 @@
                 <table class="table table-bordered align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>Account</th>
-                            <th>Description</th>
-                            <th class="text-end">Debit</th>
-                            <th class="text-end">Credit</th>
+                            <th>{{ __('Account') }}</th>
+                            <th>{{ __('Description') }}</th>
+                            <th class="text-end">{{ __('Debit') }}</th>
+                            <th class="text-end">{{ __('Credit') }}</th>
                         </tr>
                     </thead>
                     <tbody id="vt_lines"></tbody>

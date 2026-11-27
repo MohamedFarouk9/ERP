@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'Slider Details')
 
 @section('content')
@@ -11,11 +11,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="mb-3">
-                    <label class="form-label">Image</label><br>
+                    <label class="form-label">{{ __('Image') }}</label><br>
                     <img src="{{ $slider->image }}" alt="Slider Image" class="img-thumbnail" width="200">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Status</label><br>
+                    <label class="form-label">{{ __('Status') }}</label><br>
                     @if($slider->is_active)
                         <span class="badge bg-success">Active</span>
                     @else
