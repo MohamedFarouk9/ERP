@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use Modules\Accounting\Database\Seeders\AccountingDatabaseSeeder;
 use Modules\Core\Database\Seeders\CoreDatabaseSeeder;
 use Modules\Crm\Database\Seeders\CrmDatabaseSeeder;
+use Modules\Finance\Database\Seeders\FinanceDatabaseSeeder;
 use Modules\Hrm\Database\Seeders\HrmDatabaseSeeder;
 use Modules\Inventory\Database\Seeders\InventoryDatabaseSeeder;
 use Modules\Payments\Database\Seeders\PaymentsDatabaseSeeder;
@@ -34,6 +35,7 @@ class DatabaseSeeder extends Seeder
             HrmDatabaseSeeder::class,
             PosDatabaseSeeder::class,
             CrmDatabaseSeeder::class,
+            FinanceDatabaseSeeder::class,
         ]);
     }
 }

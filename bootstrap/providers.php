@@ -6,6 +6,7 @@ use App\Providers\AppServiceProvider;
 use Modules\Accounting\Providers\AccountingServiceProvider;
 use Modules\Core\Providers\CoreServiceProvider;
 use Modules\Crm\Providers\CrmServiceProvider;
+use Modules\Finance\Providers\FinanceServiceProvider;
 use Modules\Hrm\Providers\HrmServiceProvider;
 use Modules\Inventory\Providers\InventoryServiceProvider;
 use Modules\Payments\Providers\PaymentsServiceProvider;
@@ -26,4 +27,5 @@ return [
     HrmServiceProvider::class,
     PosServiceProvider::class,
     CrmServiceProvider::class,
+    FinanceServiceProvider::class,
 ];

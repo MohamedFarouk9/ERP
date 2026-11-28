@@ -21,6 +21,7 @@ class FeatureController extends Controller
     {
         $availableModules = [
             'accounting' => 'Accounting & General Ledger',
+            'finance' => 'Finance (Expenses, Budgets & Reports)',
             'inventory' => 'Inventory & Warehouses',
             'sales' => 'Sales Orders & Invoices',
             'payments' => 'Payments & Refunds',

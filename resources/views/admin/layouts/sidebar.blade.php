@@ -199,6 +199,62 @@
             @endcan
         @endif
 
+        <!-- Finance (Flat Section) -->
+        @if($featureManager->isEnabled('finance') && (auth()->user()?->can('finance.expenses.view') || auth()->user()?->can('finance.budgets.view') || auth()->user()?->can('finance.reports.view')))
+            <li class="menu-label">{{ __('Finance') }}</li>
+            @can('finance.expenses.view')
+                <li>
+                    <a href="{{ route('admin.finance.expenses.index') }}">
+                        <div class="parent-icon"><i class='bx bx-receipt'></i></div>
+                        <div class="menu-title">{{ __('Expenses') }}</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.finance.expense-categories.index') }}">
+                        <div class="parent-icon"><i class='bx bx-category-alt'></i></div>
+                        <div class="menu-title">{{ __('Expense Category') }}</div>
+                    </a>
+                </li>
+            @endcan
+            @can('finance.reports.view')
+                <li>
+                    <a href="{{ route('admin.finance.cashflow') }}">
+                        <div class="parent-icon"><i class='bx bx-trending-up'></i></div>
+                        <div class="menu-title">{{ __('Cashflow') }}</div>
+                    </a>
+                </li>
+            @endcan
+            @can('finance.budgets.view')
+                <li>
+                    <a href="{{ route('admin.finance.budgets.index') }}">
+                        <div class="parent-icon"><i class='bx bx-bar-chart-square'></i></div>
+                        <div class="menu-title">{{ __('Budgeting') }}</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.finance.taxes.index') }}">
+                        <div class="parent-icon"><i class='bx bx-purchase-tag-alt'></i></div>
+                        <div class="menu-title">{{ __('Taxes') }}</div>
+                    </a>
+                </li>
+            @endcan
+            @can('finance.reports.view')
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon"><i class='bx bx-pie-chart-alt-2'></i></div>
+                        <div class="menu-title">{{ __('Reports') }}</div>
+                    </a>
+                    <ul>
+                        <li><a href="{{ route('admin.finance.reports.expense-summary') }}"><i class="bx {{ $subArrow }}"></i>{{ __('Expense Summary') }}</a></li>
+                        <li><a href="{{ route('admin.finance.reports.income-summary') }}"><i class="bx {{ $subArrow }}"></i>{{ __('Income Summary') }}</a></li>
+                        <li><a href="{{ route('admin.finance.reports.profit-loss') }}"><i class="bx {{ $subArrow }}"></i>{{ __('Profit & Loss') }}</a></li>
+                        <li><a href="{{ route('admin.finance.reports.income-vs-expense') }}"><i class="bx {{ $subArrow }}"></i>{{ __('Income vs Expense') }}</a></li>
+                        <li><a href="{{ route('admin.finance.reports.tax-summary') }}"><i class="bx {{ $subArrow }}"></i>{{ __('Tax Summary') }}</a></li>
+                    </ul>
+                </li>
+            @endcan
+        @endif
+
         <!-- Finance & Ledger (Flat Section) -->
         @if($featureManager->isEnabled('accounting') && (auth()->user()?->can('accounting.accounts.view') || auth()->user()?->can('accounting.transactions.view')))
             <li class="menu-label">{{ __('Finance & Ledger') }}</li>

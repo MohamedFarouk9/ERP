@@ -99,6 +99,12 @@ class UsersDatabaseSeeder extends Seeder
             ['crm', 'deals', 'manage', 'Manage CRM Deals & Stages'],
             ['crm', 'activities', 'view', 'View CRM Activities'],
             ['crm', 'activities', 'manage', 'Manage CRM Activities'],
+            // Finance
+            ['finance', 'expenses', 'view', 'View Expenses & Categories'],
+            ['finance', 'expenses', 'manage', 'Manage & Pay Expenses'],
+            ['finance', 'budgets', 'view', 'View Budgets & Tax Rates'],
+            ['finance', 'budgets', 'manage', 'Manage Budgets & Tax Rates'],
+            ['finance', 'reports', 'view', 'View Cashflow & Financial Reports'],
         ];
 
         $allPermissions = [];

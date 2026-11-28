@@ -78,6 +78,9 @@ class SetLocaleMiddleware
             'Role' => 'الدور',
             'System role' => 'دور النظام',
             'Feature' => 'الميزة',
+            'Expense' => 'المصروف',
+            'Tax rate' => 'معدل الضريبة',
+            'Budget' => 'الميزانية',
         ];
 
         $patterns = [

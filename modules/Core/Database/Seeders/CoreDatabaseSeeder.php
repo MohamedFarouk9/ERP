@@ -29,7 +29,7 @@ class CoreDatabaseSeeder extends Seeder
         app(TenantContext::class)->set($tenant);
 
         $featureManager = app(FeatureManager::class);
-        foreach (['accounting', 'inventory', 'sales', 'payments', 'procurement', 'hrm', 'pos', 'crm'] as $feature) {
+        foreach (['accounting', 'finance', 'inventory', 'sales', 'payments', 'procurement', 'hrm', 'pos', 'crm'] as $feature) {
             $featureManager->enable($feature, $tenant->id);
         }
     }
