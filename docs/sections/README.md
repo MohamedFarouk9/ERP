@@ -4,18 +4,19 @@ Welcome to your **complete business & code playbook** for the ERP. Unlike techni
 
 ---
 
-## How All 10 Sections Work Together as One Company
+## How All 11 Sections Work Together as One Company
 
 ```mermaid
 flowchart TD
     CRM["4. CRM (Leads & Deals)"] -->|"Convert Lead -> Customer"| SALES["2. Sales & Billing (Orders & Invoices)"]
     SALES -->|"SalesOrderConfirmed (Stock OUT)"| INV["5. Inventory & Stock (Warehouses & Ledger)"]
-    POS["3. Point of Sale (Counter Shifts & Sales)"] -->|"PosSaleCompleted (Stock OUT)"| INV
+    POS["3. Point of Sale (Terminal, Orders, Barcodes/QR & Receipts)"] -->|"PosSaleCompleted (Stock OUT)"| INV
     PROC["6. Procurement (Suppliers, POs & Bills)"] -->|"PurchaseOrderReceived (Stock IN)"| INV
 
-    SALES -->|"InvoiceIssued (Dr AR / Cr Revenue)"| ACC["7. Finance & Accounting (Double-Entry GL)"]
+    SALES -->|"InvoiceIssued (Dr AR / Cr Revenue)"| ACC["7. Accounting (Double-Entry General Ledger)"]
     PAY["8. Payments & Treasury (Collections & Refunds)"] -->|"PaymentCompleted (Marks Invoice Paid)"| SALES
     PAY -->|"PaymentCompleted (Dr Cash / Cr AR)"| ACC
+    FIN["11. Finance Operations (Expenses, Cashflow, Budgets, Taxes & Reports)"] -->|"ExpenseApproved (Dr Expense / Cr Cash)"| ACC
 
     HRM["9. Organization & HRM (Staff, Attendance, Payroll)"] -->|"PayrollPaid Event"| SYS["10. System, Security & Audit Trail"]
     SYS -->|"Tenancy, Feature Flags, RBAC, EN/AR RTL"| DASH["1. Executive & Department Dashboards"]
@@ -29,14 +30,15 @@ flowchart TD
 | :--- | :--- | :--- | :--- |
 | 1 | **Dashboards** | Live KPIs & ApexCharts across the entire company | [01-dashboards-analytics.md](01-dashboards-analytics.md) |
 | 2 | **Sales & Billing** | B2B Customers, Sales Orders & Full Invoicing Lifecycle | [02-sales-and-billing.md](02-sales-and-billing.md) |
-| 3 | **Point of Sale (POS)** | Fast Retail Counter, Cash Drawer Shifts & Thermal Receipts | [03-point-of-sale.md](03-point-of-sale.md) |
+| 3 | **Point of Sale (POS)** | Fast Retail Counter, POS Orders, Shifts, Barcode/QR Print & Thermal Print Settings | [03-point-of-sale.md](03-point-of-sale.md) |
 | 4 | **CRM** | Capturing Leads, Tracking Deals Pipeline & Follow-up Calls | [04-crm.md](04-crm.md) |
 | 5 | **Inventory & Stock** | Product Catalog, Warehouses & Tamper-Proof Stock Ledger | [05-inventory-and-stock.md](05-inventory-and-stock.md) |
 | 6 | **Procurement & AP** | Suppliers, Purchase Orders, Goods Receipt & Vendor Bills | [06-procurement-and-ap.md](06-procurement-and-ap.md) |
-| 7 | **Finance & Ledger** | Chart of Accounts, Fiscal Periods & Double-Entry Accounting | [07-finance-and-ledger.md](07-finance-and-ledger.md) |
+| 7 | **Accounting & General Ledger** | Chart of Accounts, Fiscal Periods & Double-Entry General Ledger | [07-finance-and-ledger.md](07-finance-and-ledger.md) |
 | 8 | **Payments & Treasury** | Collecting Payments & Concurrency-Safe Refunds | [08-payments-and-treasury.md](08-payments-and-treasury.md) |
 | 9 | **Organization & HR** | Employees, Attendance, Leaves, Payroll Runs, Depts & Teams | [09-organization-and-hrm.md](09-organization-and-hrm.md) |
 | 10 | **System & Security** | Multi-Tenancy, Feature Flags, RBAC, Audit Log & EN/AR RTL | [10-system-security-and-i18n.md](10-system-security-and-i18n.md) |
+| 11 | **Finance Operations** | Expenses, Expense Categories, Cashflow, Budgeting, Tax Rates & 5 Financial Reports | [11-finance-operations.md](11-finance-operations.md) |
 
 ---
 

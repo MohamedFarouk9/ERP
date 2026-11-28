@@ -1,4 +1,6 @@
-# Section 07: Finance & General Ledger (`modules/Accounting/`)
+# Section 07: Accounting & General Ledger (`modules/Accounting/`)
+
+> **Note**: Operational finance tools (**Expenses, Expense Categories, Cashflow, Budgeting, Taxes, and 5 Financial Reports**) live in their own dedicated module `modules/Finance/` — see **[Section 11: Finance Operations](11-finance-operations.md)**. This section covers the core **Double-Entry General Ledger** (`modules/Accounting/`).
 
 ## 1. Why Your Business Needs This Section
 Revenue on a sales screen is **not** the same as profit or bank balance. Every serious company needs a **Double-Entry General Ledger** where every dollar has both a source and a destination (`Total Debits === Total Credits`), fiscal periods can be locked after month-end, and routine sales/payment entries post automatically without manual bookkeeping errors.
