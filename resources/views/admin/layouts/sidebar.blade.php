@@ -101,12 +101,40 @@
                         <div class="menu-title">{{ __('POS Terminal') }}</div>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.pos.orders.index') }}">
+                        <div class="parent-icon"><i class='bx bx-receipt'></i></div>
+                        <div class="menu-title">{{ __('POS Orders') }}</div>
+                    </a>
+                </li>
             @endcan
             @can('pos.shifts.view')
                 <li>
                     <a href="{{ route('admin.pos.shifts.index') }}">
                         <div class="parent-icon"><i class='bx bx-time-five'></i></div>
                         <div class="menu-title">{{ __('Shifts & Sales') }}</div>
+                    </a>
+                </li>
+            @endcan
+            @can('pos.terminal.view')
+                <li>
+                    <a href="{{ route('admin.pos.barcodes') }}">
+                        <div class="parent-icon"><i class='bx bx-barcode'></i></div>
+                        <div class="menu-title">{{ __('Barcode Print') }}</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.pos.qrcodes') }}">
+                        <div class="parent-icon"><i class='bx bx-qr'></i></div>
+                        <div class="menu-title">{{ __('QR Code Print') }}</div>
+                    </a>
+                </li>
+            @endcan
+            @can('pos.shifts.manage')
+                <li>
+                    <a href="{{ route('admin.pos.print-settings') }}">
+                        <div class="parent-icon"><i class='bx bx-printer'></i></div>
+                        <div class="menu-title">{{ __('Print Settings') }}</div>
                     </a>
                 </li>
             @endcan

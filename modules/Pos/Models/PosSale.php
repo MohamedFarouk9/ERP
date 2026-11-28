@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Core\Traits\BelongsToTenant;
+use Modules\Sales\Models\Customer;
 use Modules\Users\Traits\Auditable;
 
 class PosSale extends Model
@@ -60,6 +61,14 @@ class PosSale extends Model
     public function shift(): BelongsTo
     {
         return $this->belongsTo(PosShift::class, 'pos_shift_id');
+    }
+
+    /**
+     * @return BelongsTo<Customer, $this>
+     */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     /**

@@ -15,6 +15,7 @@ use Modules\Inventory\Models\Product;
 use Modules\Inventory\Models\Warehouse;
 use Modules\Pos\Actions\CompletePosSaleAction;
 use Modules\Pos\Http\Requests\CompletePosSaleRequest;
+use Modules\Pos\Models\PosPrintSetting;
 use Modules\Pos\Models\PosSale;
 use Modules\Pos\Models\PosShift;
 use Modules\Sales\Models\Customer;
@@ -54,9 +55,10 @@ class PosTerminalController extends Controller
 
     public function receipt(string $id, TenantContext $tenantContext): View
     {
-        $sale = PosSale::with(['items', 'cashier', 'shift'])->findOrFail($id);
+        $sale = PosSale::with(['items', 'cashier', 'shift', 'customer'])->findOrFail($id);
         $tenant = $tenantContext->require();
+        $printSettings = PosPrintSetting::first();
 
-        return view('admin.pos.receipt', compact('sale', 'tenant'));
+        return view('admin.pos.receipt', compact('sale', 'tenant', 'printSettings'));
     }
 }

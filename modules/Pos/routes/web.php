@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Modules\Pos\Http\Controllers\PosDashboardController;
+use Modules\Pos\Http\Controllers\PosPrintController;
 use Modules\Pos\Http\Controllers\PosShiftController;
 use Modules\Pos\Http\Controllers\PosTerminalController;
 
@@ -25,6 +26,23 @@ Route::prefix('admin/pos')
         Route::get('/receipts/{id}', [PosTerminalController::class, 'receipt'])
             ->middleware('can:pos.terminal.view')
             ->name('receipt');
+
+        // POS Orders, Barcode Print, QR Print & Print Settings
+        Route::get('/orders', [PosPrintController::class, 'orders'])
+            ->middleware('can:pos.terminal.view')
+            ->name('orders.index');
+        Route::get('/barcodes', [PosPrintController::class, 'barcodes'])
+            ->middleware('can:pos.terminal.view')
+            ->name('barcodes');
+        Route::get('/qrcodes', [PosPrintController::class, 'qrcodes'])
+            ->middleware('can:pos.terminal.view')
+            ->name('qrcodes');
+        Route::get('/print-settings', [PosPrintController::class, 'settings'])
+            ->middleware('can:pos.shifts.manage')
+            ->name('print-settings');
+        Route::post('/print-settings', [PosPrintController::class, 'updateSettings'])
+            ->middleware('can:pos.shifts.manage')
+            ->name('print-settings.update');
 
         // Register Shifts & Sales History
         Route::get('/shifts', [PosShiftController::class, 'index'])
